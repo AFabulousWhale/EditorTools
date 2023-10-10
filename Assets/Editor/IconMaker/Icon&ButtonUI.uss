@@ -1,0 +1,23 @@
+.title-style {
+    background-color: rgb(62, 62, 62);
+    height: 10%;
+    flex-grow: 1;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 8px;
+    flex-shrink: 1;
+}
+
+.text-style {
+    color: rgb(154, 154, 154);
+}
+
+.box-style {
+    background-color: rgb(42, 42, 42);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}

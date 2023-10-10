@@ -1,0 +1,10 @@
+.row-style {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0);
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100px;
+    align-self: auto;
+    flex-direction: row;
+    position: relative;
+}
