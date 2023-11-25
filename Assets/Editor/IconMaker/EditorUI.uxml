@@ -73,7 +73,7 @@
                             <ui:VisualElement name="Values" style="flex-grow: 1; width: 79%; flex-direction: row;">
                                 <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 100%; margin-right: 0; margin-left: 10px;">
                                     <uie:ObjectField name="AnimationController" type="UnityEditor.Animations.AnimatorController, UnityEditor.CoreModule" label="Animation Controller" allow-scene-objects="false" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />
-                                    <ui:DropdownField index="-1" name="Animations" label="Animation" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />
+                                    <ui:DropdownField index="-1" name="Animation" label="Animation" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />
                                     <ui:Slider picking-mode="Ignore" value="0" high-value="100" name="AnimationFrame" show-input-field="true" label="Animation Frame" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />
                                 </ui:VisualElement>
                             </ui:VisualElement>

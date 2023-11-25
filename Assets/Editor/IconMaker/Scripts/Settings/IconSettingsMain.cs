@@ -22,6 +22,8 @@ public class IconSettingsMain
 
     public Camera cam;
 
+
+
     /// <summary>
     /// can right click the labels to reset, copy and paste the values between icons
     /// </summary>
@@ -97,8 +99,8 @@ public class IconSettingsMain
         if (currentSetting.toggle != null)
         {
             currentSetting.toggle = root.Q<Toggle>($"{elementName}{togglePrefix}");
-            currentSetting.cameraView = root.Q<VisualElement>("CameraView");
         }
+        currentSetting.cameraView = root.Q<VisualElement>("CameraView");
         iconMaker = EditorWindowMain.iconMaker;
     }
 }

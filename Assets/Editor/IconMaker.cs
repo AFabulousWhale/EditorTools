@@ -6,6 +6,8 @@ using System.IO;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
+using Unity.EditorCoroutines.Editor;
+using UnityEditor.Animations;
 
 public class IconMaker : EditorWindow
 {
@@ -47,8 +49,8 @@ public class IconMaker : EditorWindow
 
     List<AnimationClip> animClips = new();
     List<string> animNames = new();
-    List<int> animHash = new();
-    int currentAnimHash;
+    List<AnimatorState> animStates = new();
+    AnimatorState currentAnimatorState;
     Animator anim;
 
     Renderer prefabRend;
@@ -87,13 +89,13 @@ public class IconMaker : EditorWindow
         saveLocation = root.Q<TextField>("IconSaveLocation");
         
         animationSettings = root.Q<VisualElement>("AnimationSettings");
-        animations = root.Q<DropdownField>("Animations");
+        animations = root.Q<DropdownField>("Animation");
         animationFrame = root.Q<Slider>("AnimationFrame");
         animationController = root.Q<ObjectField>("AnimationController");
 
-        animationFrame.RegisterValueChangedCallback(ChangeAnimStage);
-        animations.RegisterValueChangedCallback(SetAnimStage);
-        animationController.RegisterValueChangedCallback(UpdateController);
+        animationFrame.RegisterValueChangedCallback(AnimSliderCaller);
+        animations.RegisterValueChangedCallback(AnimationUpdateCaller);
+        animationController.RegisterValueChangedCallback(AnimControllerCaller);
 
         iconUsedLabel = root.Q<Label>("IconUsedLabel");
         buttons = root.Q<VisualElement>("IconButtons");
@@ -216,26 +218,22 @@ public class IconMaker : EditorWindow
         }
         if (objectForItems.Count > 0)
         {
-            if (ChildRendCheck(objectForItems[currentViewedObject])) //checking if the selected object has a mesh renderer
+            //spawns a camera and sets all the values to show the object currently selected
+            SpawnCamera();
+            if (selectedOBJ != null)
             {
-                //spawns a camera and sets all the values to show the object currently selected
-                SpawnCamera();
-                if (selectedOBJ != null)
-                {
-                    CheckApplyAll(selectedOBJ);
-                    ResetData();
-                }
-                selectedOBJ = objectForItems[currentViewedObject];
-                iconPreviewBox.style.display = DisplayStyle.Flex;
-                selectedObjectCount = $"{objectForItems.Count} Objects Currently Selected";
-                iconAmount.lowValue = 1;
-                iconAmount.highValue = objectForItems.Count;
-                iconAmount.value = (currentViewedObject + 1);
-                iconNameLabel.text = objectForItems[currentViewedObject].name;
-                iconAmount.title = $"{iconAmount.value}/{iconAmount.highValue}";
-                CheckDatabase();
-                DisplayAnimSettings();
+                CheckApplyAll(selectedOBJ);
+                ResetData();
             }
+            selectedOBJ = objectForItems[currentViewedObject];
+            iconPreviewBox.style.display = DisplayStyle.Flex;
+            iconAmount.lowValue = 1;
+            iconAmount.highValue = objectForItems.Count;
+            iconAmount.value = (currentViewedObject + 1);
+            iconNameLabel.text = objectForItems[currentViewedObject].name;
+            iconAmount.title = $"{iconAmount.value}/{iconAmount.highValue}";
+            CheckDatabase();
+            DisplayAnimSettings();
         }
     }
     #endregion End - Selected Object Changes
@@ -248,6 +246,8 @@ public class IconMaker : EditorWindow
         {
             animationSettings.style.display = DisplayStyle.Flex;
             anim = newPrefab.GetComponent<Animator>();
+            UpdateController();
+            SetAnimStage();
         }
         else
         {
@@ -255,25 +255,60 @@ public class IconMaker : EditorWindow
         }
     }
 
-    void UpdateController(IChangeEvent evt)
+    void AnimControllerCaller(IChangeEvent evt)
+    {
+        UpdateController();
+    }
+
+    void AnimationUpdateCaller(IChangeEvent evt)
+    {
+        SetAnimStage();
+    }
+
+    void AnimSliderCaller(IChangeEvent evt)
+    {
+        ChangeAnimStage();
+    }
+
+    /// <summary>
+    /// updates the drop down display for the clips you can play
+    /// </summary>
+    /// <param name="evt"></param>
+    void UpdateController()
     {
         anim.runtimeAnimatorController = (RuntimeAnimatorController)animationController.value;
         animClips.Clear();
         animNames.Clear();
-        animHash.Clear();
+        animStates.Clear();
         animations.choices.Clear();
-        foreach (AnimationClip ac in anim.runtimeAnimatorController.animationClips)
+        for (int i = 0; i < anim.runtimeAnimatorController.animationClips.Length; i++)
         {
             Debug.Log("adding components");
-            animClips.Add(ac);
-            animHash.Add(anim.GetCurrentAnimatorStateInfo(0).nameHash);
-            animNames.Add(ac.name);
+            animClips.Add(anim.runtimeAnimatorController.animationClips[i]);
+
+            AnimatorController ac = anim.runtimeAnimatorController as AnimatorController;
+            AnimatorControllerLayer[] acLayers = ac.layers;
+
+            //loops through the anim states on the controller and adds them to a list, in case there is more than one so they can be selected from the drop down
+            foreach (AnimatorControllerLayer layer in acLayers)
+            {
+                ChildAnimatorState[] animStatesLocal = layer.stateMachine.states;
+                foreach (ChildAnimatorState j in animStatesLocal)
+                {
+                    animStates.Add(j.state);
+                }
+            }
+            animNames.Add(ac.animationClips[i].name);
         }
         animations.value = null;
         animations.choices = animNames;
     }
 
-    void SetAnimStage(IChangeEvent evt)
+    /// <summary>
+    /// makes the slider values the same length of the clip
+    /// </summary>
+    /// <param name="evt"></param>
+    void SetAnimStage()
     {
         for (int i = 0; i < animNames.Count; i++)
         {
@@ -281,17 +316,23 @@ public class IconMaker : EditorWindow
             {
                 Debug.Log("found anim");
                 animationFrame.highValue = animClips[i].length;
-                currentAnimHash = animHash[i];
+                currentAnimatorState = animStates[i];
             }
         }
+        ChangeAnimStage();
     }
 
-    void ChangeAnimStage(IChangeEvent evt)
+    /// <summary>
+    /// sets the frame of the animation based on the slider
+    /// </summary>
+    /// <param name="evt"></param>
+    void ChangeAnimStage()
     {
+        Debug.Log("updating anim");
         anim.speed = 0.0f;
-        anim.Play(currentAnimHash, -1, animationFrame.value);
-        cameraView.style.backgroundImage = GetRenderTexture();
+        anim.Play(currentAnimatorState.name, 0, animationFrame.value);
         anim.Update(Time.deltaTime);
+        cameraView.style.backgroundImage = GetRenderTexture();
     }
     #endregion End - Animation Settings
 
@@ -319,20 +360,37 @@ public class IconMaker : EditorWindow
     {
         DestroyImmediate(newPrefab);
         newPrefab = (GameObject)PrefabUtility.InstantiatePrefab(objectForItems[currentViewedObject]); //spawns in a new object in from of the camera for the camera to render
+        newPrefab.transform.position = pos.defaultValue;
+        newPrefab.transform.rotation = Quaternion.Euler(rot.defaultValue);
+        newPrefab.transform.localScale = new Vector3(scale.defaultValue, scale.defaultValue, scale.defaultValue);
+        newPrefab.name = "IconObjectPrefab";
+        anim = newPrefab.GetComponent<Animator>();
+
         foreach (var item in settings)
         {
             item.currentPrefab = newPrefab;
             item.cam = cam;
         }
-        newPrefab.name = "IconObjectPrefab";
-        if(ChildRendCheck(newPrefab))
-        {
-            prefabRend = rendererObject.GetComponent<Renderer>();
-        }
-        newPrefab.transform.position = pos.defaultValue;
-        newPrefab.transform.rotation = Quaternion.Euler(rot.defaultValue);
-        cameraView.style.backgroundImage = GetRenderTexture();
+        prefabRend = rendererObject.GetComponent<Renderer>();
         cam.orthographicSize = prefabRend.bounds.extents.y + prefabRend.bounds.extents.x;
+        EditorCoroutineUtility.StartCoroutineOwnerless(WaitForObjectToSpawn());
+        IEnumerator WaitForObjectToSpawn()
+        {
+            yield return new WaitUntil(() => newPrefab != null);
+            RenderCamera();
+        }
+    }
+
+    void RenderCamera()
+    {
+        if (AnimationCheck(newPrefab)) //if the object has an animator then sets the animation before rendering the camera
+        {
+            ChangeAnimStage();
+        }
+        else
+        {
+            cameraView.style.backgroundImage = GetRenderTexture();
+        }
     }
     #endregion End - Icon Setup
 

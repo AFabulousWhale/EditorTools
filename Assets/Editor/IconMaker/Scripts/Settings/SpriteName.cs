@@ -13,9 +13,6 @@ public class SpriteName : TextType
         base.currentSetting = this;
         base.Init();
     }
-    public override void ChangeSingleValues(GameObject objectToUpdate)
-    {
-    }
     public override void SaveIndividualData(Data objectToSave)
     {
         objectToSave.spriteName = field.value;

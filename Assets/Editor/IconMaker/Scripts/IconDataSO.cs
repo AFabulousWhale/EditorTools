@@ -16,7 +16,7 @@ public class Data
     public string name;
     public GameObject prefab;
     public string spriteName;
-    public Vector3 posOffset;
+    public Vector2 posOffset;
     public Vector3 rotOffset;
     public float scaleOffset;
     public Color32 BGColor;
