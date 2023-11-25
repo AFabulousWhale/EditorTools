@@ -61,9 +61,9 @@ MonoBehaviour:
   - name: Character_Hologram_Female_01
     prefab: {fileID: 1318303238961424, guid: 3470766f22e216142aa097c5eaa5a1c1, type: 3}
     spriteName: Character_Hologram_Female_01
-    posOffset: {x: -0.42, y: -9.18}
-    rotOffset: {x: 0, y: 31.68, z: 0}
-    scaleOffset: 4.57
+    posOffset: {x: -0.42, y: -2.38}
+    rotOffset: {x: 7.11, y: -2.2, z: 0}
+    scaleOffset: 1.86
     BGColor:
       serializedVersion: 2
       rgba: 16777215
@@ -87,13 +87,13 @@ MonoBehaviour:
       rgba: 16777215
   - name: Character_Android_Female_01
     prefab: {fileID: 1675277247628234, guid: c071869dabd01174ba88c8f43a9cc9be, type: 3}
-    spriteName: 
+    spriteName: Character_Android_Female_01
     posOffset: {x: 0, y: 0}
     rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 0
+    scaleOffset: 1
     BGColor:
       serializedVersion: 2
-      rgba: 0
+      rgba: 16777215
   - name: Character_Hacker_Female_01
     prefab: {fileID: 1189353972192656, guid: 200bc6ccceeac474080a49c821b89775, type: 3}
     spriteName: Character_Hacker_Female_01
@@ -166,3 +166,75 @@ MonoBehaviour:
     BGColor:
       serializedVersion: 2
       rgba: 16777215
+  - name: SM_Prop_Bottle_01
+    prefab: {fileID: 1095600368890880, guid: 21e1771c27a671147b188378c5b1da6e, type: 3}
+    spriteName: SM_Prop_Bottle_01
+    posOffset: {x: 0.07, y: -0.67}
+    rotOffset: {x: 0, y: 0, z: -29.5}
+    scaleOffset: 5.41
+    BGColor:
+      serializedVersion: 2
+      rgba: 4289177599
+  - name: SM_Prop_Bottle_03
+    prefab: {fileID: 1586275792966676, guid: 36671c50e5b866247937253a255b19aa, type: 3}
+    spriteName: SM_Prop_Bottle_03
+    posOffset: {x: 0.07, y: 0.13}
+    rotOffset: {x: 0, y: 0, z: -29.5}
+    scaleOffset: 0.9
+    BGColor:
+      serializedVersion: 2
+      rgba: 4289177599
+  - name: SM_Prop_Bottle_02
+    prefab: {fileID: 1168353465961796, guid: 315f2acd02ded7a458e8ae77a8d7db44, type: 3}
+    spriteName: SM_Prop_Bottle_02
+    posOffset: {x: 0.07, y: -0.67}
+    rotOffset: {x: 0, y: 0, z: -29.5}
+    scaleOffset: 5.41
+    BGColor:
+      serializedVersion: 2
+      rgba: 4289177599
+  - name: SM_Prop_Drone_Insect_01
+    prefab: {fileID: 1079592782461814, guid: 0b87aededde5f3345bc2ac6b21c0b5ac, type: 3}
+    spriteName: SM_Prop_Drone_Insect_01
+    posOffset: {x: 0.07, y: 0.13}
+    rotOffset: {x: 0, y: 0, z: -29.5}
+    scaleOffset: 0.9
+    BGColor:
+      serializedVersion: 2
+      rgba: 4289177599
+  - name: SM_Prop_DeadZub_01
+    prefab: {fileID: 1631867685276284, guid: a981b0231c6c9d54498045dcdea75e5d, type: 3}
+    spriteName: SM_Prop_DeadZub_01
+    posOffset: {x: 0.07, y: 0.13}
+    rotOffset: {x: 0, y: 0, z: -29.5}
+    scaleOffset: 0.9
+    BGColor:
+      serializedVersion: 2
+      rgba: 4289177599
+  - name: SM_Prop_Box_Empty_01
+    prefab: {fileID: 1092547817694420, guid: b377a79f6a3b3ac44ba919ed12be6ce4, type: 3}
+    spriteName: SM_Prop_Box_Empty_01
+    posOffset: {x: 0.07, y: -0.67}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 5.41
+    BGColor:
+      serializedVersion: 2
+      rgba: 4289177599
+  - name: SM_Prop_Box_Supplies_01
+    prefab: {fileID: 1183212502589018, guid: 8c52c17108ac4d14b93017d91e804006, type: 3}
+    spriteName: 
+    posOffset: {x: 0.07, y: -0.67}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0
+    BGColor:
+      serializedVersion: 2
+      rgba: 0
+  - name: SM_Prop_Box_RobotParts_01
+    prefab: {fileID: 1629148013400474, guid: 1ee01e3914857ae4fa119ebdb8148880, type: 3}
+    spriteName: SM_Prop_Box_RobotParts_01
+    posOffset: {x: 0.07, y: -0.67}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 5.41
+    BGColor:
+      serializedVersion: 2
+      rgba: 4289177599

@@ -66,7 +66,7 @@ public class IconSettingsMain
         {
             if (currentSetting.toggle.value)
             {
-                foreach (var item in Selection.gameObjects)
+                foreach (var item in currentSetting.iconMaker.objectForItems)
                 {
                     Data data = new();
                     data.prefab = item;

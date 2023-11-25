@@ -13,27 +13,11 @@ MonoBehaviour:
   m_Name: DatabaseSO
   m_EditorClassIdentifier: 
   objectDatabase:
-  - cost: 1
-    prefab: {fileID: 1987785710828114, guid: 88a3f83471118ef4a84c3eaaf4a90b70, type: 3}
-    icon: {fileID: 21300000, guid: d347f0bc152f5c246bd07f980f19d3c9, type: 3}
-    name: SM_Sign_02
-  - cost: 0
-    prefab: {fileID: 1129707343421066, guid: eb84224342a883d49a76493e407fce4c, type: 3}
-    icon: {fileID: 21300000, guid: 7931fddc1be720a44a969efc5272cde7, type: 3}
-    name: SM_Prop_Cage_03
-  - cost: 0
-    prefab: {fileID: 1711636093078420, guid: ecbd9f2c941a7504b9b67d7b47a790db, type: 3}
-    icon: {fileID: 21300000, guid: 4bdf12f21a866ac47b9bbbb275c6077f, type: 3}
-    name: SM_Prop_Glass_01
-  - cost: 0
-    prefab: {fileID: 1007010316781446, guid: 2fd2487a59257a74492e0db8b42539ab, type: 3}
-    icon: {fileID: 0}
-    name: SM_Prop_FoodTray_02
   - cost: 0
     prefab: {fileID: 1095600368890880, guid: 21e1771c27a671147b188378c5b1da6e, type: 3}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: e2d66336e52187f43812c14ecc798817, type: 3}
     name: SM_Prop_Bottle_01
   - cost: 0
     prefab: {fileID: 1168353465961796, guid: 315f2acd02ded7a458e8ae77a8d7db44, type: 3}
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 7fba3cdf4b99a5e42987f8ccab5784cb, type: 3}
     name: SM_Prop_Bottle_02

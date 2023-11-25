@@ -255,6 +255,7 @@ public class IconMaker : EditorWindow
         }
     }
 
+    //all called by the fields changing the values to update them
     void AnimControllerCaller(IChangeEvent evt)
     {
         UpdateController();
@@ -276,32 +277,36 @@ public class IconMaker : EditorWindow
     /// <param name="evt"></param>
     void UpdateController()
     {
-        anim.runtimeAnimatorController = (RuntimeAnimatorController)animationController.value;
-        animClips.Clear();
-        animNames.Clear();
-        animStates.Clear();
-        animations.choices.Clear();
-        for (int i = 0; i < anim.runtimeAnimatorController.animationClips.Length; i++)
+        if (animationController.value != null)
         {
-            Debug.Log("adding components");
-            animClips.Add(anim.runtimeAnimatorController.animationClips[i]);
-
-            AnimatorController ac = anim.runtimeAnimatorController as AnimatorController;
-            AnimatorControllerLayer[] acLayers = ac.layers;
-
-            //loops through the anim states on the controller and adds them to a list, in case there is more than one so they can be selected from the drop down
-            foreach (AnimatorControllerLayer layer in acLayers)
+            anim.runtimeAnimatorController = (RuntimeAnimatorController)animationController.value;
+            animClips.Clear();
+            animNames.Clear();
+            animStates.Clear();
+            animations.choices.Clear();
+            for (int i = 0; i < anim.runtimeAnimatorController.animationClips.Length; i++)
             {
-                ChildAnimatorState[] animStatesLocal = layer.stateMachine.states;
-                foreach (ChildAnimatorState j in animStatesLocal)
+                Debug.Log("adding components");
+                animClips.Add(anim.runtimeAnimatorController.animationClips[i]);
+
+                AnimatorController ac = anim.runtimeAnimatorController as AnimatorController;
+                AnimatorControllerLayer[] acLayers = ac.layers;
+
+                //loops through the anim states on the controller and adds them to a list, in case there is more than one so they can be selected from the drop down
+                foreach (AnimatorControllerLayer layer in acLayers)
                 {
-                    animStates.Add(j.state);
+                    ChildAnimatorState[] animStatesLocal = layer.stateMachine.states;
+                    foreach (ChildAnimatorState j in animStatesLocal)
+                    {
+                        animStates.Add(j.state);
+                    }
                 }
+                animNames.Add(ac.animationClips[i].name);
             }
-            animNames.Add(ac.animationClips[i].name);
+            animations.choices = animNames;
+            animations.value = animNames[0];
+            SetAnimStage();
         }
-        animations.value = null;
-        animations.choices = animNames;
     }
 
     /// <summary>
@@ -310,16 +315,19 @@ public class IconMaker : EditorWindow
     /// <param name="evt"></param>
     void SetAnimStage()
     {
-        for (int i = 0; i < animNames.Count; i++)
+        if (animations.value != null)
         {
-            if(animNames[i] == animations.value)
+            for (int i = 0; i < animNames.Count; i++)
             {
-                Debug.Log("found anim");
-                animationFrame.highValue = animClips[i].length;
-                currentAnimatorState = animStates[i];
+                if (animNames[i] == animations.value)
+                {
+                    Debug.Log("found anim");
+                    animationFrame.highValue = animClips[i].length;
+                    currentAnimatorState = animStates[i];
+                }
             }
+            ChangeAnimStage();
         }
-        ChangeAnimStage();
     }
 
     /// <summary>
@@ -332,6 +340,7 @@ public class IconMaker : EditorWindow
         anim.speed = 0.0f;
         anim.Play(currentAnimatorState.name, 0, animationFrame.value);
         anim.Update(Time.deltaTime);
+
         cameraView.style.backgroundImage = GetRenderTexture();
     }
     #endregion End - Animation Settings
@@ -383,9 +392,9 @@ public class IconMaker : EditorWindow
 
     void RenderCamera()
     {
-        if (AnimationCheck(newPrefab)) //if the object has an animator then sets the animation before rendering the camera
+        if (AnimationCheck(newPrefab) && animations.value != null && animationController.value != null) //if the object has an animator then sets the animation before rendering the camera
         {
-            ChangeAnimStage();
+             ChangeAnimStage();
         }
         else
         {
@@ -464,6 +473,12 @@ public class IconMaker : EditorWindow
         }
         return false;
     }
+
+    /// <summary>
+    /// checks if the passed in object has an animator
+    /// </summary>
+    /// <param name="objectToCheck"></param>
+    /// <returns></returns>
     bool AnimationCheck(GameObject objectToCheck)
     {
         if(objectToCheck.GetComponent<Animator>())
@@ -498,6 +513,11 @@ public class IconMaker : EditorWindow
         return false;
     }
 
+    /// <summary>
+    /// checks if the passed in object has a renderer
+    /// </summary>
+    /// <param name="objectToCheck"></param>
+    /// <returns></returns>
     public bool RendererCheck(GameObject objectToCheck)
     {
         if(objectToCheck.activeSelf) //if the gameobject is visible
