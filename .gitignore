@@ -10,6 +10,10 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
+Assets/Editor/IconMaker/Icons
+Assets/Kevin Iglesias
+Assets/PolygonSciFiCity
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/

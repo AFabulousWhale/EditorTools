@@ -15,9 +15,276 @@
 }
 
 .box-style {
-    background-color: rgb(42, 42, 42);
+    background-color: rgb(27, 34, 55);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+#Tabs {
+    flex-direction: row;
+    background-color: rgb(229, 223, 223);
+    -unity-font-style: bold;
+    font-size: 14px;
+    flex-grow: 0;
+    height: auto;
+}
+
+.tab {
+    flex-grow: 1;
+    height: 21px;
+    position: relative;
+    flex-shrink: 1;
+    background-color: rgb(185, 183, 183);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    color: rgb(10, 10, 10);
+}
+
+.currentlySelectedTab {
+    background-color: rgb(147, 145, 145);
+}
+
+#TabContent {
+    background-color: rgb(255, 255, 255);
+    font-size: 20px;
+}
+
+.unselectedContent {
+    display: none;
+    opacity: 1;
+}
+
+.Vector3Style {
+    margin-top: 4px;
+    margin-right: 10px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    width: auto;
+    transform-origin: center;
+    font-size: 14px;
+}
+
+.Vector3Style > Label {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    -unity-font-style: normal;
+    padding-right: 50px;
+    width: 30%;
+}
+
+.Vector3Style > VisualElement {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    width: 50%;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: stretch;
+    align-self: auto;
+    right: 0;
+    flex-grow: 1;
+}
+
+.Vector3Style > FloatInput {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 9px;
+    width: 50%;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: stretch;
+    align-self: auto;
+    right: 0;
+    flex-grow: 1;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.Vector3Style > IMGUIContainer {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 9px;
+    width: 50%;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: stretch;
+    align-self: auto;
+    right: 0;
+    flex-grow: 1;
+}
+
+.Vector3Style > VisualElement Label {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    width: auto;
+    -unity-font-style: normal;
+    padding-right: 23px;
+    padding-left: 0;
+    right: 0;
+    left: 9px;
+    align-self: center;
+    align-items: center;
+    -unity-text-align: upper-left;
+    height: auto;
+}
+
+.Vector3Style > VisualElement FloatInput {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    width: auto;
+    -unity-font-style: normal;
+    padding-right: 0;
+    padding-left: 0;
+    left: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    flex-grow: 1;
+    right: 0;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.button-style {
+    -unity-font-style: bold;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    background-color: rgb(88, 88, 88);
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    align-self: center;
+}
+
+.button-style:hover {
+    -unity-font-style: bold;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    background-color: rgb(103, 103, 103);
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    align-self: center;
+}
+
+.button-style:active {
+    -unity-font-style: bold;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    background-color: rgb(70, 96, 124);
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    align-self: center;
+}
+
+.foldout-style {
+    -unity-font-style: bold;
+    font-size: 15px;
+}
+
+.unity-base-field {
+}
+
+.row-style {
+    flex-grow: 1;
+    flex-direction: row;
+    align-self: auto;
+    justify-content: flex-start;
+    align-items: auto;
+    width: auto;
+    height: auto;
+}
+
+.text-VE {
+    flex-grow: 0;
+    font-size: 14px;
+    -unity-font-style: normal;
+    margin-top: 0;
+    margin-right: 50px;
+    margin-bottom: 0;
+    margin-left: 10px;
+    width: 25%;
+}
+
+.field-VE {
+    margin-left: 25px;
+    margin-right: 10px;
+    width: 30%;
+    flex-grow: 1;
+}
+
+.text-VE > Label {
+    flex-grow: 1;
+    font-size: 14px;
+    -unity-font-style: normal;
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    width: auto;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    flex-shrink: 0;
+}
+
+.menu-button-style {
+    width: 25px;
+    height: 25px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-top: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
 }

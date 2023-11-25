@@ -16,18 +16,24 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        root = this.GetComponent<UIDocument>().rootVisualElement; //setting the root element to be the main UI root
         AddButtons();
     }
 
     public void AddButtons()
     {
+        root = this.GetComponent<UIDocument>().rootVisualElement; //setting the root element to be the main UI root
         RemoveButtons();
         AddRow();
         for (int i = 0; i < UI.buttons.Count; i++)
         {
             Button button = new(); //creates a new button for each element in the menu based on the max amount of buttons set
             button.name = UI.buttons[i].name;
+            button.AddToClassList(UI.buttonStyle);
+
+            if (UI.buttons[i].icon != null)
+            {
+                button.style.backgroundImage = new StyleBackground(UI.buttons[i].icon);
+            }
 
             if (row.childCount >= UI.rowCount) //if the current row has reached the desired amount then make a new row
             {

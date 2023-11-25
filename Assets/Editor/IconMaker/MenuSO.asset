@@ -12,9 +12,166 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914c27227ffe286488ae27d7c697176d, type: 3}
   m_Name: MenuSO
   m_EditorClassIdentifier: 
-  rowCount: 0
+  rowCount: 20
+  buttonStyle: menu-button-style
   buttons:
-  - icon: {fileID: 21300000, guid: 43be74a3c85f07c48a318c2fb968ce07, type: 3}
+  - icon: {fileID: 0}
     name: button0
-  - icon: {fileID: 21300000, guid: c0f974eee960b4b458f0e5f41bffe21f, type: 3}
+  - icon: {fileID: 0}
     name: button1
+  - icon: {fileID: 0}
+    name: button2
+  - icon: {fileID: 0}
+    name: button3
+  - icon: {fileID: 0}
+    name: button4
+  - icon: {fileID: 0}
+    name: button5
+  - icon: {fileID: 0}
+    name: button6
+  - icon: {fileID: 0}
+    name: button7
+  - icon: {fileID: 0}
+    name: button8
+  - icon: {fileID: 0}
+    name: button9
+  - icon: {fileID: 0}
+    name: button10
+  - icon: {fileID: 0}
+    name: button11
+  - icon: {fileID: 0}
+    name: button12
+  - icon: {fileID: 0}
+    name: button13
+  - icon: {fileID: 0}
+    name: button14
+  - icon: {fileID: 0}
+    name: button15
+  - icon: {fileID: 0}
+    name: button16
+  - icon: {fileID: 0}
+    name: button17
+  - icon: {fileID: 0}
+    name: button18
+  - icon: {fileID: 0}
+    name: button19
+  - icon: {fileID: 0}
+    name: button20
+  - icon: {fileID: 0}
+    name: button21
+  - icon: {fileID: 0}
+    name: button22
+  - icon: {fileID: 0}
+    name: button23
+  - icon: {fileID: 0}
+    name: button24
+  - icon: {fileID: 0}
+    name: button25
+  - icon: {fileID: 0}
+    name: button26
+  - icon: {fileID: 0}
+    name: button27
+  - icon: {fileID: 0}
+    name: button28
+  - icon: {fileID: 0}
+    name: button29
+  - icon: {fileID: 0}
+    name: button30
+  - icon: {fileID: 0}
+    name: button31
+  - icon: {fileID: 0}
+    name: button32
+  - icon: {fileID: 0}
+    name: button33
+  - icon: {fileID: 0}
+    name: button34
+  - icon: {fileID: 0}
+    name: button35
+  - icon: {fileID: 0}
+    name: button36
+  - icon: {fileID: 0}
+    name: button37
+  - icon: {fileID: 0}
+    name: button38
+  - icon: {fileID: 0}
+    name: button39
+  - icon: {fileID: 0}
+    name: button40
+  - icon: {fileID: 0}
+    name: button41
+  - icon: {fileID: 0}
+    name: button42
+  - icon: {fileID: 0}
+    name: button43
+  - icon: {fileID: 0}
+    name: button44
+  - icon: {fileID: 0}
+    name: button45
+  - icon: {fileID: 0}
+    name: button46
+  - icon: {fileID: 0}
+    name: button47
+  - icon: {fileID: 0}
+    name: button48
+  - icon: {fileID: 0}
+    name: button49
+  - icon: {fileID: 0}
+    name: button50
+  - icon: {fileID: 0}
+    name: button51
+  - icon: {fileID: 0}
+    name: button52
+  - icon: {fileID: 0}
+    name: button53
+  - icon: {fileID: 0}
+    name: button54
+  - icon: {fileID: 0}
+    name: button55
+  - icon: {fileID: 0}
+    name: button56
+  - icon: {fileID: 0}
+    name: button57
+  - icon: {fileID: 0}
+    name: button58
+  - icon: {fileID: 0}
+    name: button59
+  - icon: {fileID: 0}
+    name: button60
+  - icon: {fileID: 0}
+    name: button61
+  - icon: {fileID: 0}
+    name: button62
+  - icon: {fileID: 0}
+    name: button63
+  - icon: {fileID: 0}
+    name: button64
+  - icon: {fileID: 0}
+    name: button65
+  - icon: {fileID: 0}
+    name: button66
+  - icon: {fileID: 0}
+    name: button67
+  - icon: {fileID: 0}
+    name: button68
+  - icon: {fileID: 0}
+    name: button69
+  - icon: {fileID: 0}
+    name: button70
+  - icon: {fileID: 0}
+    name: button71
+  - icon: {fileID: 0}
+    name: button72
+  - icon: {fileID: 0}
+    name: button73
+  - icon: {fileID: 0}
+    name: button74
+  - icon: {fileID: 0}
+    name: button75
+  - icon: {fileID: 0}
+    name: button76
+  - icon: {fileID: 0}
+    name: button77
+  - icon: {fileID: 0}
+    name: button78
+  - icon: {fileID: 0}
+    name: button79

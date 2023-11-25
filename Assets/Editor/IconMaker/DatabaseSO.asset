@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 575fac0d0a927444ba4b35ef0cfcf74f, type: 3}
+  m_Name: DatabaseSO
+  m_EditorClassIdentifier: 
+  objectDatabase:
+  - cost: 0
+    prefab: {fileID: 1204520943074578, guid: 59a5653262854594e875c0d1614e19ad, type: 3}
+    icon: {fileID: 21300000, guid: 73958cab0fdc1df47a68d2017fc64070, type: 3}
+    name: SM_Sign_Neon_09
+  - cost: 0
+    prefab: {fileID: 1637145686889916, guid: 9baabcdff9f934e4f93321577d7858e5, type: 3}
+    icon: {fileID: 0}
+    name: SM_Icon_Lightning

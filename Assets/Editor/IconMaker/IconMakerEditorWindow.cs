@@ -16,18 +16,28 @@ public class IconMakerEditorWindow : EditorWindow
     int maxButtons, buttonsPerRow;
 
     List<Sprite> spritesGenerated;
+    bool generatingBoth, generatingAll;
 
+    string databaseName;
 
-    Label selectedObjectCount, gridText, gridTextExtra;
+    Label menuObjectCount, iconObjectCount, gridText, gridTextExtra;
+    TextField nameOfDB;
     bool usingObjects;
     Toggle usingObjectsToggle;
-    SliderInt buttonCountText, rowCountText;
-    Button generateMenu;
+    SliderInt maxButtonCountText, buttonsPerRowText;
+    Button generateMenu, generateIcons, generateBoth, generateDatabase, addDatabase, clearDatabase, generateAll, generateMenuFromDatabase;
+
+    ObjectDataBaseSO database, dataTest;
+
+    RenderTexture renderTexture;
+    VisualElement camera;
 
     [MenuItem("Window/EditorTools/Icon&ButtonMaker")]
     public static void ShowExample()
     {
-        EditorWindow.GetWindow<IconMakerEditorWindow>("Icon and Button Maker"); //shows the icon window if not already displayed
+        EditorWindow editorWindow = EditorWindow.GetWindow<IconMakerEditorWindow>("Icon and Button Maker"); //shows the icon window if not already displayed
+        editorWindow.autoRepaintOnSceneChange = true;
+        editorWindow.Show();
     }
 
     public void CreateGUI()
@@ -38,72 +48,165 @@ public class IconMakerEditorWindow : EditorWindow
         VisualElement UXMLFile = tree.Instantiate();
         root.Add(UXMLFile);
 
-        selectedObjectCount = root.Q<Label>("SelectedObjectCount");
-        buttonCountText = root.Q<SliderInt>("MaxButtonCountSlider");
-        rowCountText = root.Q<SliderInt>("ButtonsPerRowSlider");
+        //sets up all the visual element variables based on the Icon&Button Maker UXMl file
+        menuObjectCount = root.Q<Label>("MenuObjectCount");
+        iconObjectCount = root.Q<Label>("IconObjectCount");
+        maxButtonCountText = root.Q<SliderInt>("MaxButtonCountSlider");
+        buttonsPerRowText = root.Q<SliderInt>("ButtonsPerRowSlider");
         usingObjectsToggle = root.Q<Toggle>("UsingObjectToggle");
         generateMenu = root.Q<Button>("GenerateMenuButton");
+        generateIcons = root.Q<Button>("GenerateIconsButton");
+        generateBoth = root.Q<Button>("GenerateBothButtons");
         gridText = root.Q<Label>("GridSize");
         gridTextExtra = root.Q<Label>("GridSizeExtra");
+        nameOfDB = root.Q<TextField>("DatabaseName");
+        generateDatabase = root.Q<Button>("GenerateNewDatabase");
+        addDatabase = root.Q<Button>("AddToDatabase");
+        clearDatabase = root.Q<Button>("ClearDatabase");
+        generateAll = root.Q<Button>("GenerateDatabaseIconsMenu");
+        generateMenuFromDatabase = root.Q<Button>("GenerateFromDatabase");
 
-        //else
-        //{
-        //    GUILayout.Label($"{Selection.gameObjects.Length} Currently Selected Objects");
-        //    if (GUILayout.Button("Create Icon(s) From Selected Object(s)"))
-        //    {
-        //        IconGeneration();
-        //    }
-        //    if (GUILayout.Button("Create Icon(s) And Button(s) From Selected Object(s)"))
-        //    {
-        //        IconGeneration();
-        //        GenerateButtons();
-        //    }
-        //}
+        camera = root.Q<VisualElement>("CameraView");
+
+        //sets up the buttons to have click events - generating the desired things
+        generateMenu.RegisterCallback<ClickEvent>(GenerateMenu);
+        generateIcons.RegisterCallback<ClickEvent>(IconGeneration);
+        generateBoth.RegisterCallback<ClickEvent>(GenerateBoth);
+        generateDatabase.RegisterCallback<ClickEvent>(GenerateDatabase);
+        addDatabase.RegisterCallback<ClickEvent>(GenerateDatabase);
+        clearDatabase.RegisterCallback<ClickEvent>(ClearDatabase);
+        generateAll.RegisterCallback<ClickEvent>(GenerateAll);
+        generateMenuFromDatabase.RegisterCallback<ClickEvent>(MenuFromDatabase);
+
+        GameObject camPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Editor/IconMaker/IconCamera.prefab"); //instantiates a camera to render the objects
+        GameObject camOBJ = (GameObject)PrefabUtility.InstantiatePrefab(camPrefab);
+        camOBJ.transform.position = new Vector3(-500, 0, 0);
+        cam = camOBJ.GetComponent<Camera>(); //spawns in a new camera prefab to generate the icon from
+    }
+
+    public void Awake()
+    {
+        renderTexture = new RenderTexture((int)position.width,
+            (int)position.height,
+            (int)RenderTextureFormat.ARGB32);
+    }
+
+
+    public void Update()
+    {
+        if (cam != null)
+        {
+            cam.targetTexture = renderTexture;
+            cam.Render();
+            cam.targetTexture = null;
+        }
+        if (renderTexture.width != position.width ||
+            renderTexture.height != position.height)
+            renderTexture = new RenderTexture((int)position.width,
+                (int)position.height,
+                (int)RenderTextureFormat.ARGB32);
     }
 
     private void OnGUI()
     {
+        GUI.DrawTexture(new Rect(0.0f, 0.0f, position.width, position.height), renderTexture);
+        //setting the bool values to the values within the uxml file
         usingObjects = usingObjectsToggle.value;
-        maxButtons = buttonCountText.value;
-        buttonsPerRow = rowCountText.value;
+        maxButtons = maxButtonCountText.value;
+        buttonsPerRow = buttonsPerRowText.value;
+        databaseName = nameOfDB.value;
 
-        int rowNumber = maxButtons / buttonsPerRow;
-        gridText.text = $"This will create a Grid of {rowNumber} rows, each with {buttonsPerRow} buttons";
 
+        //displaying the number of objects per row (depending if you have decided to select objects for the menu or not)
+        int rowNumber = 0;
+        int buttonNumber = 0;
+        if(usingObjects)
+        {
+            if (Selection.count < buttonsPerRow)
+            {
+                rowNumber = 1;
+                buttonNumber = Selection.count;
+            }
+            else
+            {
+                rowNumber = Selection.count / buttonsPerRow;
+                buttonNumber = buttonsPerRow;
+            }
+        }
+        else
+        {
+            if (maxButtons < buttonsPerRow)
+            {
+                rowNumber = 1;
+                buttonNumber = maxButtons;
+            }
+            else
+            {
+                rowNumber = maxButtons / buttonsPerRow;
+                buttonNumber = buttonsPerRow;
+            }
+        }
+
+        gridText.text = $"This will create a Grid of {rowNumber} rows, each with {buttonNumber} buttons";
+
+
+        //calculates how many rows will be needed depending on the max objects and the specified row count
         int buttonDiff = rowNumber * buttonsPerRow;
-        if(buttonDiff == maxButtons)
+        if(buttonDiff == maxButtons || buttonDiff == Selection.count)
         {
             gridTextExtra.style.display = DisplayStyle.None;
         }
         else
         {
-            gridTextExtra.style.display = DisplayStyle.Flex;
-            gridTextExtra.text = $"With an extra row of {maxButtons - buttonDiff} buttons";
+            if (buttonNumber >= buttonsPerRow)
+            {
+                gridTextExtra.style.display = DisplayStyle.Flex;
+                if (usingObjects)
+                {
+                    gridTextExtra.text = $"With an extra row of {Selection.count - buttonDiff} buttons";
+                }
+                else
+                {
+                    gridTextExtra.text = $"With an extra row of {maxButtons - buttonDiff} buttons";
+                }
+            }
         }
 
+        //hides and displays certain visual elements within the UI depending if booleans are true/false
         if(usingObjects)
         {
-            buttonCountText.style.display = DisplayStyle.None;
-            rowCountText.style.display = DisplayStyle.None;
-            gridText.style.display = DisplayStyle.None;
-            gridTextExtra.style.display = DisplayStyle.None;
+            menuObjectCount.style.display = DisplayStyle.Flex;
+            maxButtonCountText.style.display = DisplayStyle.None;
 
+            //if you are using objects, you can't generate a menu if no objects are selected so the button is hidden
             if (Selection.gameObjects.Length == 0)
             {
+                gridText.style.display = DisplayStyle.None;
+                gridTextExtra.style.display = DisplayStyle.None;
                 generateMenu.style.display = DisplayStyle.None;
             }
             else
             {
+                gridText.style.display = DisplayStyle.Flex;
                 generateMenu.style.display = DisplayStyle.Flex;
             }
         }
         else
         {
-            buttonCountText.style.display = DisplayStyle.Flex;
-            rowCountText.style.display = DisplayStyle.Flex;
+            menuObjectCount.style.display = DisplayStyle.None;
+            maxButtonCountText.style.display = DisplayStyle.Flex;
             generateMenu.style.display = DisplayStyle.Flex;
             gridText.style.display = DisplayStyle.Flex;
         }    
+
+        if(NewDatabase())
+        {
+            generateMenuFromDatabase.style.display = DisplayStyle.None;
+        }
+        else if (!NewDatabase())
+        {
+            generateMenuFromDatabase.style.display = DisplayStyle.Flex;
+        }
     }
 
     //this is called when selection of gameobjects have been updated
@@ -111,20 +214,83 @@ public class IconMakerEditorWindow : EditorWindow
     {
         if (Selection.gameObjects.Length == 0)
         {
-            selectedObjectCount.text = "No Object Currently Selected";
+            menuObjectCount.text = "No Object Currently Selected";
+            iconObjectCount.text = "No Object Currently Selected";
+            generateIcons.style.display = DisplayStyle.None;
+            generateBoth.style.display = DisplayStyle.None;
+            addDatabase.style.display = DisplayStyle.None;
+            clearDatabase.style.display = DisplayStyle.None;
+            generateDatabase.style.display = DisplayStyle.None;
+            generateAll.style.display = DisplayStyle.None;
         }
         else
         {
-            selectedObjectCount.text = $"{Selection.gameObjects.Length} Currently Selected Objects";
+            menuObjectCount.text = $"{Selection.gameObjects.Length} Currently Selected Objects";
+            iconObjectCount.text = $"{Selection.gameObjects.Length} Currently Selected Objects";
+            generateIcons.style.display = DisplayStyle.Flex;
+            generateBoth.style.display = DisplayStyle.Flex;
+
+            //displays whether to add to database or create a new one based on if the name already exists
+            if (NewDatabase())
+            {
+                generateDatabase.style.display = DisplayStyle.Flex;
+                generateAll.style.display = DisplayStyle.Flex;
+                addDatabase.style.display = DisplayStyle.None;
+                clearDatabase.style.display = DisplayStyle.None;
+            }
+            else if (!NewDatabase())
+            {
+                generateDatabase.style.display = DisplayStyle.None;
+                generateAll.style.display = DisplayStyle.None;
+                addDatabase.style.display = DisplayStyle.Flex;
+                clearDatabase.style.display = DisplayStyle.Flex;
+            }
         }
+    }
+
+    /// <summary>
+    /// geneates both icons and a menu for the icons
+    /// </summary>
+    /// <param name="evt"></param>
+    void GenerateBoth(ClickEvent evt)
+    {
+        generatingBoth = true;
+        maxButtons = Selection.count;
+        IconGeneration(evt);
+        GenerateMenu(evt);
+    }
+
+    /// <summary>
+    /// generates a database and menu
+    /// </summary>
+    void GenerateAll(ClickEvent evt)
+    {
+        generatingAll = true;
+        GenerateDatabase(evt);
+        maxButtons = database.objectDatabase.Count;
+        GenerateMenu(evt);
+    }
+
+    /// <summary>
+    /// generates a menu from an exisitng database
+    /// </summary>
+    void MenuFromDatabase(ClickEvent evt)
+    {
+        generatingAll = true;
+        maxButtons = database.objectDatabase.Count;
+        GenerateMenu(evt);
     }
 
     /// <summary>
     /// Generates icons for objects in the game
     /// </summary>
-    private void IconGeneration()
+    private void IconGeneration(ClickEvent evt)
     {
-        spritesGenerated.Clear();
+        if (spritesGenerated.Count > 0)
+        {
+            spritesGenerated.Clear();
+        }
+
         foreach(var item in Selection.gameObjects)
         {
             iconName = item.name;
@@ -210,26 +376,102 @@ public class IconMakerEditorWindow : EditorWindow
     /// <summary>
     /// Function to generate menu buttons based on set amount
     /// </summary>
-    void GenerateButtons()
+    void GenerateMenu(ClickEvent evt)
     {
         MenuUISO menu = ScriptableObject.CreateInstance<MenuUISO>(); //creates a new scriptable object with all of the button data for the menus
         menu.rowCount = buttonsPerRow;
-        for (int i = 0; i < spritesGenerated.Count; i++)
+
+        for (int i = 0; i < maxButtons; i++)
         {
-            ButtonData newButton = new();
-            newButton.name = "button" + i;
-            newButton.icon = spritesGenerated[i];
-            menu.buttons.Add(newButton);
+            ButtonData button = new();
+            button.name = "button" + i;
+
+            if(generatingAll)
+            {
+                button.icon = database.objectDatabase[i].icon;
+            }
+
+            if (generatingBoth)
+            {
+                button.icon = spritesGenerated[i];
+            }
+
+            menu.buttons.Add(button);
         }
+        generatingBoth = false;
+        generatingAll = false;
+
         AssetDatabase.CreateAsset(menu, "Assets/Editor/IconMaker/MenuSO.asset");
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+        UIController controller = GameObject.FindAnyObjectByType<UIController>();
+        controller.UI = menu;
+        controller.AddButtons();
+    }
 
-        if (Application.isPlaying) //regenerates buttons if in play mode - to update the menu visuals
+    /// <summary>
+    /// checking the validity of the database and whether the name already exists
+    /// </summary>
+    /// <returns></returns>
+    bool NewDatabase()
+    {
+        dataTest = AssetDatabase.LoadAssetAtPath<ObjectDataBaseSO>($"Assets/Editor/IconMaker/{databaseName}.asset");
+
+        if (dataTest == null)
         {
-            UIController controller = GameObject.FindAnyObjectByType<UIController>();
-            controller.UI = menu;
-            controller.AddButtons();
+            dataTest = ScriptableObject.CreateInstance<ObjectDataBaseSO>();
+            return true;
         }
+        return false;
+    }
+
+    /// <summary>
+    /// will generate a database for the selected objects
+    /// </summary>
+    void GenerateDatabase(ClickEvent evt)
+    {
+        IconGeneration(evt);
+        for (int i = 0; i < Selection.count; i++)
+        {
+            ObjectData data = new();
+            data.prefab = Selection.gameObjects[i];
+            data.name = data.prefab.name;
+            data.icon = spritesGenerated[i];
+
+            bool inDataBase = false;
+            //checking if the database already contains the selected item, if it does then continue to the next one
+            if (!NewDatabase())
+            {
+                database = dataTest;
+                foreach (ObjectData objects in database.objectDatabase)
+                {
+                    if (objects.prefab == data.prefab)
+                    {
+                        inDataBase = true;
+                        break;
+                    }
+                }
+            }
+            database = dataTest;
+
+            if (!inDataBase)
+            {
+                database.objectDatabase.Add(data);
+            }
+        }
+        //create a new scriptable object if it's a new name
+        if (NewDatabase())
+        {
+            AssetDatabase.CreateAsset(database, $"Assets/Editor/IconMaker/{databaseName}.asset");
+        }
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
+
+    void ClearDatabase(ClickEvent evt)
+    {
+        AssetDatabase.DeleteAsset($"Assets/Editor/IconMaker/{databaseName}.asset");
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 }

@@ -8,3 +8,21 @@
     flex-direction: row;
     position: relative;
 }
+
+.button-style {
+    width: 75px;
+    height: 75px;
+    background-color: rgb(156, 24, 86);
+    border-left-color: rgb(89, 9, 46);
+    border-right-color: rgb(89, 9, 46);
+    border-top-color: rgb(89, 9, 46);
+    border-bottom-color: rgb(89, 9, 46);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

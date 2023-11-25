@@ -9,6 +9,8 @@ public class MenuUISO : ScriptableObject
     [SerializeField]
     public int rowCount;
     [SerializeField]
+    public string buttonStyle;
+    [SerializeField]
     public List<ButtonData> buttons = new();
 }
 

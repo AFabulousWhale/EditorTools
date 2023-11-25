@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Small Popups/Scriptable Object classes">
+    <Position X="0.5" Y="0.5" Height="0.443" Width="5.046" />
+  </Comment>
+  <Class Name="DatabaseMaker">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQBAICUAIAAwAAFAgEAgAKAAAAaAACBAAIUAIABCAQA=</HashCode>
+      <FileName>Assets\Editor\DatabaseMaker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditorWindowMain">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAQAAAABAAAABhEAAAAAAEBEAAAAAAIDAAAACgIA=</HashCode>
+      <FileName>Assets\Editor\EditorWindowMain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IconMaker">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gDKbpAYpCEAUgCGhAEEioKBDAAOAIAmAACCACwBCAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuMaker">
+    <Position X="16" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="MenuMaker.MenuType">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Editor\MenuMaker.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIgIAAkAAAAJAAgCEggABACAACACAAAAACAAAACAAA=</HashCode>
+      <FileName>Assets\Editor\MenuMaker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IconDataSO">
+    <Position X="2.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\IconDataSO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Data">
+    <Position X="0.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAEAAAJAAAAFAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\IconDataSO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditorPopup">
+    <Position X="5.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kABAAAEAAAAAAAAAEAAAAAAAIAAAQAAIAAKAAAABABA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\IconSuccessPopup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TransferIconDetails">
+    <Position X="4" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAEEAAAABAAAAAAAAAAAAgAAQAIAAAKAAAAAAAQ=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\TransferIconDetails.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BG" Collapsed="true">
+    <Position X="2.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\BG.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ColorType" Collapsed="true">
+    <Position X="3.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\ColorType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FloatType" Collapsed="true">
+    <Position X="9.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\FloatType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IconSettingsMain" Collapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABOAEAAAAAEAAgAAgIAAAACAABgAAAIASAAICAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\IconSettingsMain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Position" Collapsed="true">
+    <Position X="5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\Position.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rotation" Collapsed="true">
+    <Position X="7.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\Rotation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scale" Collapsed="true">
+    <Position X="9.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\Scale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriteName" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\SpriteName.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextType" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\TextType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector3Type" Collapsed="true">
+    <Position X="6.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAACAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\IconMaker\Scripts\Settings\Vector3Type.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseMenu">
+    <Position X="17.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\MenuMaker\DatabaseMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuSettingsMain" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEEAAAAAAAAAAAgAACIECAAAIAAAAKCAAACAAA=</HashCode>
+      <FileName>Assets\Editor\MenuMaker\MenuSettingsMain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SelectionMenu">
+    <Position X="20" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAASAAA=</HashCode>
+      <FileName>Assets\Editor\MenuMaker\SelectionMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SetValueMenu">
+    <Position X="22.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAIAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Assets\Editor\MenuMaker\SetValueMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
