@@ -11,7 +11,6 @@ public class IconMaker : EditorWindow
 {
     string selectedObjectCount = "No Object Currently Selected";
     Camera cam;
-    public string iconName;
 
     GameObject camOBJ, newPrefab, selectedOBJ;
 
@@ -21,6 +20,7 @@ public class IconMaker : EditorWindow
     ProgressBar iconAmount;
     Button leftButton, rightButton, generateIcon, generateAllIcons, autoNameButton;
     VisualElement iconPreviewBox, cameraView, popup, buttons, applyToAllToggles, iconLabels, animationSettings;
+    TextField saveLocation;
 
     Toggle databaseAllToggle, databaseDatabaseToggle, databaseNewToggle;
     DropdownField animations;
@@ -39,7 +39,7 @@ public class IconMaker : EditorWindow
     Rotation rot => new(root);
     Scale scale => new(root);
     BG BG => new(root);
-    public SpriteName spriteName => new(root);
+    SpriteName spriteName => new(root);
 
     List<IconSettingsMain> settings => new() { pos, rot, scale, BG, spriteName };
 
@@ -49,7 +49,6 @@ public class IconMaker : EditorWindow
     List<string> animNames = new();
     List<int> animHash = new();
     int currentAnimHash;
-    Animation currentAnim;
     Animator anim;
 
     Renderer prefabRend;
@@ -65,6 +64,8 @@ public class IconMaker : EditorWindow
     {
         this.root = root;
     }
+
+    #region Editor Window Setup
     /// <summary>
     /// setting up values for the IconMaker TAB
     /// </summary>
@@ -83,6 +84,7 @@ public class IconMaker : EditorWindow
         autoNameButton = root.Q<Button>("AutoNameButton");
         applyToAllToggles = root.Q<VisualElement>("IconToggles");
         iconLabels = root.Q<VisualElement>("IconLabels");
+        saveLocation = root.Q<TextField>("IconSaveLocation");
         
         animationSettings = root.Q<VisualElement>("AnimationSettings");
         animations = root.Q<DropdownField>("Animations");
@@ -127,7 +129,9 @@ public class IconMaker : EditorWindow
             cam.backgroundColor = BG.field.value; //setting the camera background color to the selected color for the icon
         }
     }
+    #endregion End - Editor Window Setup
 
+    #region Database and Menu Manager
     void ToggleChange(IChangeEvent evt)
     {
         databaseMaker.NewDatabase();
@@ -135,7 +139,9 @@ public class IconMaker : EditorWindow
         DatabaseToggleCheck();
         ObjectsSelected();
     }
+    #endregion End - Database and Menu Manager
 
+    #region Selected Object Changes
     /// <summary>
     /// Checks if any gameobjects are being selected
     /// </summary>
@@ -232,6 +238,8 @@ public class IconMaker : EditorWindow
             }
         }
     }
+    #endregion End - Selected Object Changes
+
     #region Animation Settings
     void DisplayAnimSettings()
     {
@@ -328,6 +336,8 @@ public class IconMaker : EditorWindow
     }
     #endregion End - Icon Setup
 
+    #region Data Handling
+
     /// <summary>
     /// saves the changed values for the prefab to a scriptable object so it can be accessed again
     /// </summary>
@@ -366,9 +376,36 @@ public class IconMaker : EditorWindow
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
+    void ResetData()
+    {
+        rot.field.value = new Vector3(0, 0, 0);
+        pos.field.value = new Vector3(0, 0, 0);
+        scale.field.value = 1;
+        BG.field.value = new Color32(255, 255, 255, 0);
+        spriteName.field.value = selectedOBJ.name;
+    }
+
+    void ResetName(ClickEvent evt)
+    {
+        spriteName.field.value = selectedOBJ.name;
+    }
+    #endregion End - Data Handling
 
     #region Checks
 
+    /// <summary>
+    /// Checks if the save location entered exists
+    /// </summary>
+    /// <returns></returns>
+    bool FilePathCheck()
+    {
+        //check if directory doesn't exit
+        if (Directory.Exists(saveLocation.value))
+        {
+            return true;
+        }
+        return false;
+    }
     bool AnimationCheck(GameObject objectToCheck)
     {
         if(objectToCheck.GetComponent<Animator>())
@@ -558,21 +595,14 @@ public class IconMaker : EditorWindow
         }
     }
     #endregion End - Checks
-    void ResetData()
-    {
-        rot.field.value = new Vector3(0, 0, 0);
-        pos.field.value = new Vector3(0, 0, 0);
-        scale.field.value = 1;
-        BG.field.value = new Color32(255, 255, 255, 0);
-        spriteName.field.value = selectedOBJ.name;
-    }
-
-    void ResetName(ClickEvent evt)
-    {
-        spriteName.field.value = selectedOBJ.name;
-    }
 
     #region Icon Generation
+
+    void ErrorPopup()
+    {
+        iconPopup.labelText = "The specified save location does not exist, please enter a valid file path";
+        UnityEditor.PopupWindow.Show(popup.worldBound, iconPopup);
+    }
 
     /// <summary>
     /// shows the next icon in the Gameobject Selection array
@@ -581,7 +611,6 @@ public class IconMaker : EditorWindow
     /// <param name="amount"></param>
     public void NextIcon(ClickEvent evt, int amount)
     {
-
         CheckApplyAll(selectedOBJ);
         currentViewedObject += amount;
         currentViewedObject = Mathf.Clamp(currentViewedObject, 0, (objectForItems.Count - 1));
@@ -615,18 +644,26 @@ public class IconMaker : EditorWindow
     /// <param name="evt"></param>
     public void GenerateAllIcons(ClickEvent evt)
     {
-        if(currentViewedObject != 0)
+        if (FilePathCheck())
         {
-            NextIcon(evt, -currentViewedObject);
-        }
-        IconGeneration(evt); //generates the first icon
+            iconPopup.labelText = "All Icons Have Been Created Sucessfully!";
+            if (currentViewedObject != 0)
+            {
+                NextIcon(evt, -currentViewedObject);
+            }
+            IconGeneration(evt); //generates the first icon
 
-        for (int i = 0; i < (objectForItems.Count); i++) //progresses the icon and generates it for every selected gameobject
-        {
-            NextIcon(evt, 1);
-            IconGeneration(evt);
+            for (int i = 0; i < (objectForItems.Count); i++) //progresses the icon and generates it for every selected gameobject
+            {
+                NextIcon(evt, 1);
+                IconGeneration(evt);
+            }
+            UnityEditor.PopupWindow.Show(popup.worldBound, iconPopup);
         }
-        UnityEditor.PopupWindow.Show(popup.worldBound, iconPopup);
+        else
+        {
+            ErrorPopup();
+        }
     }
 
     /// <summary>
@@ -634,11 +671,19 @@ public class IconMaker : EditorWindow
     /// </summary>
     public void IconGeneration(ClickEvent evt)
     {
-        iconName = selectedOBJ.name;
-        GetIcon(GetRenderTexture());
-        if(objectForItems.Count == 1)
+        if (FilePathCheck())
         {
-            UnityEditor.PopupWindow.Show(popup.worldBound, iconPopup);
+            iconPopup.labelText = "All Icons Have Been Created Sucessfully!";
+            spriteName.field.value = selectedOBJ.name;
+            GetIcon(GetRenderTexture());
+            if (objectForItems.Count == 1)
+            {
+                UnityEditor.PopupWindow.Show(popup.worldBound, iconPopup);
+            }
+        }
+        else
+        {
+            ErrorPopup();
         }
     }
 
@@ -687,8 +732,7 @@ public class IconMaker : EditorWindow
     /// <returns></returns>
     public void GetIcon(Texture2D tex)
     {
-        iconName = spriteName.field.value;
-        string filePath = $"Assets/Editor/IconMaker/Icons/{iconName} sprite.png";
+        string filePath = $"{saveLocation.value}/{spriteName.field.value} sprite.png";
         // Encode texture into PNG
         byte[] bytes = ImageConversion.EncodeToPNG(tex);
 

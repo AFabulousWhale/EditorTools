@@ -28,18 +28,16 @@
                     <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IconUsedLabel" style="-unity-text-align: upper-center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; -unity-font-style: bold; display: none;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Changes" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: auto; flex-shrink: 1; flex-wrap: nowrap; flex-basis: auto; width: auto; position: relative; left: auto; top: auto;">
-                    <ui:Foldout text="File Settings" name="FileSettings" class="foldout-style">
-                        <ui:VisualElement name="FileSettings" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; align-self: auto; margin-left: 5px; margin-right: 0;">
-                            <ui:VisualElement name="Text" class="text-VE" style="flex-grow: 1; width: 15%;">
-                                <ui:Label tabindex="-1" text="Save Location" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IconLocationLabel" style="-unity-font-style: normal; padding-right: 0; padding-left: 0; width: auto; margin-right: 4px; margin-top: 4px; margin-bottom: 4px; margin-left: 4px;" />
-                                <ui:Label tabindex="-1" text="Icon Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IconNameLabel" style="-unity-font-style: normal; padding-right: 0; width: auto; margin-right: 4px; margin-top: 4px; margin-bottom: 4px; margin-left: 4px; padding-top: 0; padding-bottom: 0; padding-left: 0;" />
-                            </ui:VisualElement>
-                            <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 80%;">
-                                <ui:Label tabindex="-1" text="Assets/Editor/IconMaker/Icons" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SaveLocation" style="-unity-font-style: italic; padding-left: 0; padding-right: 0; width: auto; margin-right: 4px; font-size: 14px; margin-top: 4px; margin-bottom: 4px; margin-left: 4px;" />
-                                <ui:VisualElement name="Name" class="Vector3Style" style="flex-grow: 1; flex-direction: row; padding-right: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
-                                    <ui:TextField picking-mode="Ignore" value="filler text" name="SpriteNameIconChanges" style="padding-right: 0; flex-shrink: 1; flex-grow: 1; width: auto; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-                                    <ui:Label tabindex="-1" text="Sprite.png" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PrefixLabel" style="-unity-font-style: normal; width: auto; font-size: 12px; -unity-text-align: middle-left; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
-                                    <ui:Button text="Auto Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AutoNameButton" style="align-self: auto; width: auto; margin-left: 4px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 10px;" />
+                    <ui:Foldout text="File Settings" name="FileSettings" class="foldout-style" style="margin-right: 5px; margin-left: 5px;">
+                        <ui:VisualElement name="FileSettings" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; align-self: auto; margin-left: 3px; margin-right: 16px;">
+                            <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 79%; flex-direction: column; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                                <ui:VisualElement name="Save" style="flex-grow: 1; flex-direction: row; width: 100%; margin-right: 0; margin-left: 10px; position: relative;">
+                                    <ui:TextField picking-mode="Ignore" label="Save Location" value="Assets/Editor/IconMaker/Icons" name="IconSaveLocation" class="Vector3Style" style="margin-right: 4px; margin-left: 4px; flex-grow: 1; width: auto;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="Name" class="Vector3Style" style="flex-grow: 1; flex-direction: row; padding-right: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; width: 100%;">
+                                    <ui:TextField picking-mode="Ignore" value="filler text" name="SpriteNameIconChanges" label="Icon Name" class="Vector3Style" style="padding-right: 0; flex-shrink: 0; flex-grow: 1; width: auto; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+                                    <ui:Label tabindex="-1" text="Sprite.png" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PrefixLabel" style="-unity-font-style: normal; width: auto; font-size: 12px; -unity-text-align: middle-left; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; display: flex;" />
+                                    <ui:Button text="Auto Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AutoNameButton" style="align-self: auto; width: auto; margin-left: 4px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 10px; display: flex;" />
                                 </ui:VisualElement>
                             </ui:VisualElement>
                         </ui:VisualElement>
@@ -47,17 +45,11 @@
                     <ui:Foldout text="Basic Settings" value="true" name="BasicSettingFO" class="foldout-style" style="margin-top: 5px; margin-bottom: 5px;">
                         <ui:VisualElement name="BasicSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row;">
                             <ui:VisualElement name="Values" style="flex-grow: 1; flex-direction: row; width: 79%;">
-                                <ui:VisualElement name="Text" class="text-VE" style="flex-grow: 0; width: 15%; flex-shrink: 0;">
-                                    <ui:Label tabindex="-1" text="Position Offset" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                                    <ui:Label tabindex="-1" text="Rotation Offset" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                                    <ui:Label tabindex="-1" text="Scale Multiplier" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                                    <ui:Label tabindex="-1" text="Background Color" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                                </ui:VisualElement>
-                                <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 80%; margin-left: 10px; margin-right: 0; flex-shrink: 1;">
-                                    <ui:Vector3Field name="PosIconChanges" usage-hints="None" class="Vector3Style" style="margin-left: 4px; margin-right: 4px; flex-grow: 1; flex-shrink: 0;" />
-                                    <ui:Vector3Field name="RotIconChanges" class="Vector3Style" style="margin-right: 4px; margin-left: 4px; flex-shrink: 0; flex-grow: 1;" />
-                                    <ui:FloatField value="1" name="ScaleIconChanges" class="Vector3Style" style="margin-right: 4px; margin-left: 4px; flex-shrink: 0; flex-grow: 1;" />
-                                    <uie:ColorField value="#FFFFFF00" name="BGIconChanges" show-alpha="true" show-eye-dropper="true" class="Vector3Style" style="margin-left: 4px; margin-right: 4px; flex-shrink: 0; flex-grow: 1; flex-direction: row; width: auto;" />
+                                <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 100%; margin-left: 10px; margin-right: 0; flex-shrink: 1;">
+                                    <ui:Vector3Field name="PosIconChanges" usage-hints="None" label="Position Offset" class="Vector3Style" style="margin-left: 4px; margin-right: 4px; flex-grow: 1; flex-shrink: 0;" />
+                                    <ui:Vector3Field name="RotIconChanges" label="Rotation Offset" class="Vector3Style" style="margin-right: 4px; margin-left: 4px; flex-shrink: 0; flex-grow: 1; font-size: 14px;" />
+                                    <ui:FloatField value="1" name="ScaleIconChanges" label="Scale Multiplier" class="Vector3Style" style="margin-right: 4px; margin-left: 4px; flex-shrink: 0; flex-grow: 1; font-size: 14px;" />
+                                    <uie:ColorField value="#FFFFFF00" name="BGIconChanges" show-alpha="true" show-eye-dropper="true" label="Background Color" class="Vector3Style" style="margin-left: 4px; margin-right: 4px; flex-shrink: 0; flex-grow: 1; flex-direction: row; width: auto; margin-top: 4px; margin-bottom: 4px; font-size: 14px;" />
                                 </ui:VisualElement>
                             </ui:VisualElement>
                             <ui:VisualElement name="IconToggles" style="flex-grow: 0; flex-direction: row; margin-right: 0; margin-left: 12px; padding-left: 0; left: 0; width: 20%; display: none; flex-shrink: 0;">
@@ -77,16 +69,13 @@
                         </ui:VisualElement>
                     </ui:Foldout>
                     <ui:Foldout text="Animation Settings" value="true" name="IconAnimationSettings" class="foldout-style" style="margin-top: 5px; margin-bottom: 5px;">
-                        <ui:VisualElement name="AnimationSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row;">
-                            <ui:VisualElement name="Text" class="text-VE" style="flex-grow: 1; width: 15%;">
-                                <ui:Label tabindex="-1" text="Animation Controller" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                                <ui:Label tabindex="-1" text="Animation" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                                <ui:Label tabindex="-1" text="Animation Frame" parse-escape-sequences="true" display-tooltip-when-elided="true" />
-                            </ui:VisualElement>
-                            <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 80%; margin-right: 0;">
-                                <uie:ObjectField name="AnimationController" type="UnityEditor.Animations.AnimatorController, UnityEditor.CoreModule" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-                                <ui:DropdownField index="-1" name="Animations" />
-                                <ui:Slider picking-mode="Ignore" value="0" high-value="100" name="AnimationFrame" show-input-field="true" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+                        <ui:VisualElement name="AnimationSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row; margin-top: 0; margin-bottom: 0;">
+                            <ui:VisualElement name="Values" style="flex-grow: 1; width: 79%; flex-direction: row;">
+                                <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 100%; margin-right: 0; margin-left: 10px;">
+                                    <uie:ObjectField name="AnimationController" type="UnityEditor.Animations.AnimatorController, UnityEditor.CoreModule" label="Animation Controller" allow-scene-objects="false" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />
+                                    <ui:DropdownField index="-1" name="Animations" label="Animation" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />
+                                    <ui:Slider picking-mode="Ignore" value="0" high-value="100" name="AnimationFrame" show-input-field="true" label="Animation Frame" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />
+                                </ui:VisualElement>
                             </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:Foldout>

@@ -72,73 +72,13 @@
 
 .Vector3Style > Label {
     margin-top: 0;
-    margin-right: 0;
+    margin-right: 10px;
     margin-bottom: 0;
     margin-left: 0;
     -unity-font-style: normal;
     padding-right: 50px;
     width: 30%;
-}
-
-.Vector3Style > VisualElement {
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    width: 50%;
-    justify-content: space-around;
-    flex-direction: row;
-    align-items: stretch;
-    align-self: auto;
-    right: 0;
-    flex-grow: 1;
-}
-
-.Vector3Style > FloatInput {
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 9px;
-    width: 50%;
-    justify-content: space-around;
-    flex-direction: row;
-    align-items: stretch;
-    align-self: auto;
-    right: 0;
-    flex-grow: 1;
-    padding-right: 0;
     padding-left: 0;
-}
-
-.Vector3Style > IMGUIContainer {
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 9px;
-    width: 50%;
-    justify-content: space-around;
-    flex-direction: row;
-    align-items: stretch;
-    align-self: auto;
-    right: 0;
-    flex-grow: 1;
-}
-
-.Vector3Style > VisualElement Label {
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    width: auto;
-    -unity-font-style: normal;
-    padding-right: 23px;
-    padding-left: 0;
-    right: 0;
-    left: 9px;
-    align-self: center;
-    align-items: center;
-    -unity-text-align: upper-left;
-    height: auto;
 }
 
 .Vector3Style > VisualElement FloatInput {
@@ -252,10 +192,12 @@
 }
 
 .field-VE {
-    margin-left: 25px;
-    margin-right: 10px;
-    width: 30%;
+    margin-left: 10px;
+    margin-right: 0;
+    width: 100%;
     flex-grow: 1;
+    -unity-font-style: normal;
+    font-size: 14px;
 }
 
 .text-VE > Label {

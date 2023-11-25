@@ -87,13 +87,13 @@ MonoBehaviour:
       rgba: 16777215
   - name: Character_Robot_01
     prefab: {fileID: 1025864630481856, guid: 6909982d91f86a04e831a86fff27cd80, type: 3}
-    spriteName: 
+    spriteName: Character_Robot_01
     posOffset: {x: 0, y: -5.23, z: 0}
-    rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 0
+    rotOffset: {x: 12.31, y: 46.6, z: 1.28}
+    scaleOffset: 3
     BGColor:
       serializedVersion: 2
-      rgba: 0
+      rgba: 4278190328
   - name: Character_Android_Female_01
     prefab: {fileID: 1675277247628234, guid: c071869dabd01174ba88c8f43a9cc9be, type: 3}
     spriteName: Character_Android_Female_01
@@ -205,6 +205,42 @@ MonoBehaviour:
   - name: Character_Medical_Male_01
     prefab: {fileID: 1119232436347972, guid: 76abcab92ff045d4083fdb3f1c4bbd9f, type: 3}
     spriteName: Character_Medical_Male_01
+    posOffset: {x: 0, y: 0, z: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Bld_Background_Lrg_02
+    prefab: {fileID: 1331304823789064, guid: 31dade7a3305059458fd6662c8492e46, type: 3}
+    spriteName: SM_Bld_Background_Lrg_02
+    posOffset: {x: 0, y: -22.25, z: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Icon_Lightning
+    prefab: {fileID: 1637145686889916, guid: 9baabcdff9f934e4f93321577d7858e5, type: 3}
+    spriteName: SM_Icon_Lightning
+    posOffset: {x: 0, y: 0, z: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Icon_Spanners
+    prefab: {fileID: 1656211306410468, guid: 32713ca9df7701740ab3e8677019c63a, type: 3}
+    spriteName: 
+    posOffset: {x: 0, y: 0, z: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0
+    BGColor:
+      serializedVersion: 2
+      rgba: 0
+  - name: SM_Icon_Health
+    prefab: {fileID: 1582282660195126, guid: 6924b6055d3b89c49be5c9d309e8e14c, type: 3}
+    spriteName: SM_Icon_Health
     posOffset: {x: 0, y: 0, z: 0}
     rotOffset: {x: 0, y: 0, z: 0}
     scaleOffset: 1
