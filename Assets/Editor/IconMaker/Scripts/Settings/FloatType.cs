@@ -10,7 +10,6 @@ public class FloatType : IconSettingsMain
     public override void Init()
     {
         field = root.Q<FloatField>($"{elementName}{elementPrefix}");
-        field.labelElement.RegisterCallback<MouseDownEvent>(ShowPopup, TrickleDown.TrickleDown);
         field.RegisterValueChangedCallback(ValueChangeDetection);
         toggle = root.Q<Toggle>($"{elementName}{togglePrefix}");
         base.currentSetting = this.currentSetting;

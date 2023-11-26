@@ -22,17 +22,6 @@ public class IconSettingsMain
 
     public Camera cam;
 
-
-
-    /// <summary>
-    /// can right click the labels to reset, copy and paste the values between icons
-    /// </summary>
-    /// <param name="evt"></param>
-    public virtual void ShowPopup(MouseDownEvent evt)
-    {
-        UnityEditor.PopupWindow.Show(new Rect(evt.originalMousePosition.x, evt.originalMousePosition.y, 1, 1), new TransferIconDetails());
-    }
-
     /// <summary>
     /// any changes made to these values will update the prefab
     /// </summary>

@@ -11,7 +11,6 @@ public class Vector3Type : IconSettingsMain
     public override void Init()
     {
         field = root.Q<Vector3Field>($"{elementName}{elementPrefix}");
-        field.labelElement.RegisterCallback<MouseDownEvent>(ShowPopup, TrickleDown.TrickleDown);
         field.RegisterValueChangedCallback(ValueChangeDetection);
         toggle = root.Q<Toggle>($"{elementName}{togglePrefix}");
         base.currentSetting = this.currentSetting;

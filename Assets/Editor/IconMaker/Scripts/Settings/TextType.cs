@@ -11,7 +11,6 @@ public class TextType : IconSettingsMain
     public override void Init()
     {
         field = root.Q<TextField>($"{elementName}{elementPrefix}");
-        field.labelElement.RegisterCallback<MouseDownEvent>(ShowPopup, TrickleDown.TrickleDown);
         field.RegisterValueChangedCallback(ValueChangeDetection);
         base.currentSetting = this.currentSetting;
         base.Init();

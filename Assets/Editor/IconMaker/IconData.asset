@@ -61,12 +61,12 @@ MonoBehaviour:
   - name: Character_Hologram_Female_01
     prefab: {fileID: 1318303238961424, guid: 3470766f22e216142aa097c5eaa5a1c1, type: 3}
     spriteName: Character_Hologram_Female_01
-    posOffset: {x: -0.42, y: -2.38}
-    rotOffset: {x: 7.11, y: -2.2, z: 0}
-    scaleOffset: 1.86
+    posOffset: {x: 1.83, y: -12.5}
+    rotOffset: {x: 7.11, y: 61.84, z: 0}
+    scaleOffset: 8.98
     BGColor:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 4783948
   - name: Character_Medical_Male_01
     prefab: {fileID: 1119232436347972, guid: 76abcab92ff045d4083fdb3f1c4bbd9f, type: 3}
     spriteName: Character_Medical_Male_01
@@ -133,12 +133,12 @@ MonoBehaviour:
   - name: Character_Cyber_Male_01
     prefab: {fileID: 1788802827204626, guid: 4ec55b0fc5a631142b1505018530d38b, type: 3}
     spriteName: Character_Cyber_Male_01
-    posOffset: {x: 0, y: 0}
-    rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 1
+    posOffset: {x: -0.43, y: -11.85}
+    rotOffset: {x: -0.5, y: 56.35, z: -3.15}
+    scaleOffset: 5.99
     BGColor:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 2948202316
   - name: SM_Prop_Hologram_Burger_03
     prefab: {fileID: 1308749890117004, guid: c1141c296070e564bbdd3c2eb6bc0c30, type: 3}
     spriteName: SM_Prop_Hologram_Burger_03
@@ -169,30 +169,30 @@ MonoBehaviour:
   - name: SM_Prop_Bottle_01
     prefab: {fileID: 1095600368890880, guid: 21e1771c27a671147b188378c5b1da6e, type: 3}
     spriteName: SM_Prop_Bottle_01
-    posOffset: {x: 0.07, y: -0.67}
-    rotOffset: {x: 0, y: 0, z: -29.5}
-    scaleOffset: 5.41
+    posOffset: {x: 0, y: -0.22}
+    rotOffset: {x: 0, y: 95.86, z: 1.34}
+    scaleOffset: 4.39
     BGColor:
       serializedVersion: 2
-      rgba: 4289177599
+      rgba: 4278190335
   - name: SM_Prop_Bottle_03
     prefab: {fileID: 1586275792966676, guid: 36671c50e5b866247937253a255b19aa, type: 3}
     spriteName: SM_Prop_Bottle_03
-    posOffset: {x: 0.07, y: 0.13}
-    rotOffset: {x: 0, y: 0, z: -29.5}
-    scaleOffset: 0.9
+    posOffset: {x: 0.16, y: -0.13}
+    rotOffset: {x: 0, y: 95.86, z: 1.34}
+    scaleOffset: 1
     BGColor:
       serializedVersion: 2
-      rgba: 4289177599
+      rgba: 4278190335
   - name: SM_Prop_Bottle_02
     prefab: {fileID: 1168353465961796, guid: 315f2acd02ded7a458e8ae77a8d7db44, type: 3}
     spriteName: SM_Prop_Bottle_02
-    posOffset: {x: 0.07, y: -0.67}
-    rotOffset: {x: 0, y: 0, z: -29.5}
-    scaleOffset: 5.41
+    posOffset: {x: 0, y: -0.46}
+    rotOffset: {x: 0, y: 95.86, z: 1.34}
+    scaleOffset: 1
     BGColor:
       serializedVersion: 2
-      rgba: 4289177599
+      rgba: 4278190335
   - name: SM_Prop_Drone_Insect_01
     prefab: {fileID: 1079592782461814, guid: 0b87aededde5f3345bc2ac6b21c0b5ac, type: 3}
     spriteName: SM_Prop_Drone_Insect_01
@@ -238,3 +238,156 @@ MonoBehaviour:
     BGColor:
       serializedVersion: 2
       rgba: 4289177599
+  - name: SM_Sign_Neon_Flat_02
+    prefab: {fileID: 1430341952443612, guid: 46c5b755a31a58842ad7bdb20e773b23, type: 3}
+    spriteName: SM_Sign_Neon_Flat_02
+    posOffset: {x: 0, y: -0.06}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1.67
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Bottles_01
+    prefab: {fileID: 1119607692367964, guid: 8c5efe8072b66414495d7036b80dac59, type: 3}
+    spriteName: SM_Prop_Bottles_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_BenchSeat_01
+    prefab: {fileID: 1803395385396878, guid: 609f07731dd2d944b8eed37e471d9c26, type: 3}
+    spriteName: SM_Prop_BenchSeat_01
+    posOffset: {x: 0, y: -0.06}
+    rotOffset: {x: 0, y: 57.19, z: 0}
+    scaleOffset: 0.17
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: aa
+    prefab: {fileID: 1082716667173560, guid: 54903e98cb7da0047ab01d65018f1d4f, type: 3}
+    spriteName: aa
+    posOffset: {x: 0, y: -0.34}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Advertisement_Pillar_01
+    prefab: {fileID: 1661159153272266, guid: f9a80be48a6254344b5f885cfff4bbb0, type: 3}
+    spriteName: SM_Prop_Advertisement_Pillar_01
+    posOffset: {x: 0, y: -0.8}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_AirConditioningGrid_01
+    prefab: {fileID: 1544087946698594, guid: 7b5c2f4e59886dc448873ceb3e338f97, type: 3}
+    spriteName: SM_Prop_AirConditioningGrid_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_AirConditioningUnit_01
+    prefab: {fileID: 1054224122226918, guid: 481f055a844be084eae4eefebdd9a49f, type: 3}
+    spriteName: SM_Prop_AirConditioningUnit_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Antenna
+    prefab: {fileID: 1627866879844714, guid: 313738dbd200760498b76b1c93a2b3f5, type: 3}
+    spriteName: SM_Prop_Antenna
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Bank_Booth_01
+    prefab: {fileID: 1581644234625476, guid: 9b66d47545314cf40a0a714354e0f870, type: 3}
+    spriteName: SM_Prop_Bank_Booth_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Bank_Booth_Pillar_01
+    prefab: {fileID: 1011655136389130, guid: a1ece4b2496c0e54b8e5d0eea4d5b040, type: 3}
+    spriteName: SM_Prop_Bank_Booth_Pillar_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Bank_Door_01
+    prefab: {fileID: 1291294226849262, guid: 38b38aed3140a8f4aac8bab6dace13da, type: 3}
+    spriteName: SM_Prop_Bank_Door_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Barrier_01
+    prefab: {fileID: 1057758197969386, guid: c444ce6e54943f64a895431df8872a52, type: 3}
+    spriteName: SM_Prop_Barrier_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Barrier_02
+    prefab: {fileID: 1954084764598762, guid: 4bda712f3633c1848a137f9f5f310588, type: 3}
+    spriteName: SM_Prop_Barrier_02
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Barrier_03
+    prefab: {fileID: 1271783961787342, guid: 181f6d5bc4a81994d84a0d68b7a2205d, type: 3}
+    spriteName: SM_Prop_Barrier_03
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Barrier_line_01
+    prefab: {fileID: 1990082954663360, guid: 800458afd8edd8347948cf025aeebfa6, type: 3}
+    spriteName: SM_Prop_Barrier_line_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Barrier_Plastic_01
+    prefab: {fileID: 1108504796630418, guid: 2ef431f56f242194fb0aac1efde07107, type: 3}
+    spriteName: SM_Prop_Barrier_Plastic_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+  - name: SM_Prop_Barrier_Plastic_02
+    prefab: {fileID: 1248124740900242, guid: 75e6fadbd499393488ef69a3ee7c3bdb, type: 3}
+    spriteName: 
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0
+    BGColor:
+      serializedVersion: 2
+      rgba: 0
