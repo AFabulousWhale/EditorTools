@@ -18,13 +18,16 @@ public class IconMaker : EditorWindow
 
     public int currentObjectIndex = 0;
 
-    Label selectedGOLabel, iconNameLabel, iconUsedLabel, animationLabel;
+    Label selectedGOLabel, iconNameLabel, animationLabel;
     ProgressBar iconAmount;
     Button leftButton, rightButton, generateIcon, generateAllIcons, autoNameButton;
     VisualElement iconPreviewBox, cameraView, popup, buttons, applyToAllToggles, iconLabels, animationSettings;
     TextField saveLocation;
 
-    Toggle databaseAllToggle, databaseDatabaseToggle, databaseNewToggle;
+    Toggle databaseAllToggle, databaseEverythingToggle, databaseNewToggle, databaseDatabaseToggle;
+    Label iconUsedLabel, databaseIconTypeLabel;
+    List<GameObject> objectsInDatabase = new();
+
     DropdownField animations;
     Slider animationFrame;
     ObjectField animationController;
@@ -59,7 +62,7 @@ public class IconMaker : EditorWindow
 
     public Sprite iconSprite;
 
-    bool usingOtherMaker;
+    bool usingDatabaseMaker;
 
     public GameObject spawnedObject;
     bool generationReady;
@@ -103,11 +106,13 @@ public class IconMaker : EditorWindow
         animationController.RegisterValueChangedCallback(AnimControllerCaller);
 
         iconUsedLabel = root.Q<Label>("IconUsedLabel");
+        databaseIconTypeLabel = root.Q<Label>("IconInDBLabel");
         buttons = root.Q<VisualElement>("IconButtons");
 
         databaseAllToggle = root.Q<Toggle>("DatabaseAllIcons");
-        databaseDatabaseToggle = root.Q<Toggle>("DatabaseEveryIcons");
+        databaseEverythingToggle = root.Q<Toggle>("DatabaseEveryIcons");
         databaseNewToggle = root.Q<Toggle>("DatabaseNewIcons");
+        databaseDatabaseToggle = root.Q<Toggle>("DatabaseDatabaseIcons");
 
         leftButton.RegisterCallback<ClickEvent, int>(NextIcon, -1);
         rightButton.RegisterCallback<ClickEvent, int>(NextIcon, 1);
@@ -116,8 +121,9 @@ public class IconMaker : EditorWindow
         autoNameButton.RegisterCallback<ClickEvent>(AutoNameClickEvent);
 
         databaseAllToggle.RegisterValueChangedCallback(ToggleChange);
-        databaseDatabaseToggle.RegisterValueChangedCallback(ToggleChange);
+        databaseEverythingToggle.RegisterValueChangedCallback(ToggleChange);
         databaseNewToggle.RegisterValueChangedCallback(ToggleChange);
+        databaseDatabaseToggle.RegisterValueChangedCallback(ToggleChange);
 
         iconPopup.twoButtons = false;
         iconPopup.labelText = "All Icons Have Been Created Sucessfully!";
@@ -139,12 +145,77 @@ public class IconMaker : EditorWindow
     #endregion End - Editor Window Setup
 
     #region Database and Menu Manager
+    /// <summary>
+    /// is called when the database toggles are changed
+    /// </summary>
+    /// <param name="evt"></param>
     void ToggleChange(IChangeEvent evt)
     {
-        databaseMaker.NewDatabase();
+        databaseMaker.ValidDatabaseCheck(); //gets the reference to the database that will be used to generate icons
         databaseMaker.database = databaseMaker.dataTest;
         DatabaseToggleCheck();
         ObjectsSelected();
+    }
+
+    /// <summary>
+    /// checks if the database is being used for icon generation
+    /// </summary>
+    void DatabaseToggleCheck()
+    {
+        if(databaseEverythingToggle.value || databaseAllToggle.value || databaseNewToggle.value || databaseDatabaseToggle.value) //if any toggle is selected
+        {
+            usingDatabaseMaker = true;
+            iconUsedLabel.text = "The 'Icon Maker' is being used by the 'Database Maker'";
+            iconUsedLabel.style.display = DisplayStyle.Flex;
+            buttons.style.display = DisplayStyle.None;
+        }
+        if (databaseEverythingToggle.value) //if the generation is for everything, selected objects and database objects
+        {
+            databaseIconTypeLabel.text = "A Selected Object";
+            databaseIconTypeLabel.style.display = DisplayStyle.Flex;
+            iconObjects.Clear();
+            objectsInDatabase.Clear();
+            foreach (var item in databaseMaker.database.objectDatabase)
+            {
+                objectsInDatabase.Add(item.prefab);
+                iconObjects.Add(item.prefab);
+            }
+            foreach (var item in Selection.gameObjects)
+            {
+                if (ChildRendCheck(item)) //checking if the selected object has a mesh renderer
+                {
+                    iconObjects.Add(item);
+                }
+            }
+            currentObjectIndex = (iconObjects.Count - 1);
+        }
+        else if(databaseDatabaseToggle.value) //if just the database toggle is selected
+        {
+            foreach (var item in databaseMaker.database.objectDatabase)
+            {
+                iconObjects.Add(item.prefab);
+            }
+            currentObjectIndex = 0;
+        }
+        else if (!databaseEverythingToggle.value && !databaseAllToggle.value && !databaseNewToggle.value && !databaseDatabaseToggle.value) //if no toggles
+        {
+            usingDatabaseMaker = false;
+            iconUsedLabel.style.display = DisplayStyle.None;
+            databaseIconTypeLabel.style.display = DisplayStyle.None;
+            buttons.style.display = DisplayStyle.Flex;
+            iconObjects.Clear();
+            if (Selection.gameObjects.Length > 0)
+            {
+                foreach (var item in Selection.gameObjects)
+                {
+                    if (ChildRendCheck(item)) //checking if the selected object has a mesh renderer
+                    {
+                        iconObjects.Add(item);
+                    }
+                }
+            }
+            currentObjectIndex = 0;
+        }
     }
     #endregion End - Database and Menu Manager
 
@@ -172,24 +243,29 @@ public class IconMaker : EditorWindow
         }
         else if (iconObjects.Count == 0) //resets everything if no gameobjects are selected
         {
-            iconLabels.style.display = DisplayStyle.Flex;
-            generateAllIcons.style.display = DisplayStyle.None;
-            rightButton.style.visibility = Visibility.Hidden;
-            leftButton.style.visibility = Visibility.Hidden;
-            if (selectedObjectREF != null)
-            {
-                CheckApplyAll(selectedObjectREF);
-            }
-            selectedObjectREF = null;
-            iconPreviewBox.style.display = DisplayStyle.None;
-            selectedObjectCount = "No Object Currently Selected";
-            if (camOBJ != null && spawnedObject != null)
-            {
-                DestroyImmediate(camOBJ);
-                DestroyImmediate(spawnedObject);
-            }
+            Resets();
         }
         selectedGOLabel.text = selectedObjectCount;
+    }
+
+    public void Resets()
+    {
+        iconLabels.style.display = DisplayStyle.Flex;
+        generateAllIcons.style.display = DisplayStyle.None;
+        rightButton.style.visibility = Visibility.Hidden;
+        leftButton.style.visibility = Visibility.Hidden;
+        if (selectedObjectREF != null)
+        {
+            CheckApplyAll(selectedObjectREF);
+        }
+        selectedObjectREF = null;
+        iconPreviewBox.style.display = DisplayStyle.None;
+        selectedObjectCount = "No Object Currently Selected";
+        if (camOBJ != null && spawnedObject != null)
+        {
+            DestroyImmediate(camOBJ);
+            DestroyImmediate(spawnedObject);
+        }
     }
 
     /// <summary>
@@ -208,7 +284,7 @@ public class IconMaker : EditorWindow
         {
             //shows all the toggles if more than 1 game object is selected
             applyToAllToggles.style.display = DisplayStyle.Flex;
-            if (!usingOtherMaker) //showing the right arrow
+            if (!usingDatabaseMaker) //showing the right arrow
             {
                 generateAllIcons.style.display = DisplayStyle.Flex;
                 rightButton.style.visibility = Visibility.Visible; //shows right arrow as there is more than one object selected
@@ -571,47 +647,6 @@ public class IconMaker : EditorWindow
         }
         return false;
     }
-    void DatabaseToggleCheck()
-    {
-        if (databaseDatabaseToggle.value)
-        {
-            usingOtherMaker = true;
-            iconUsedLabel.text = "The 'Icon Maker' is being used by the 'Database Maker'";
-            iconUsedLabel.style.display = DisplayStyle.Flex;
-            buttons.style.display = DisplayStyle.None;
-            iconObjects.Clear();
-            foreach (var item in databaseMaker.database.objectDatabase)
-            {
-                iconObjects.Add(item.prefab);
-            }
-            foreach (var item in Selection.gameObjects)
-            {
-                if (ChildRendCheck(item)) //checking if the selected object has a mesh renderer
-                {
-                    iconObjects.Add(item);
-                }
-            }
-            currentObjectIndex = (iconObjects.Count - 1);
-        }
-        else
-        {
-            usingOtherMaker = false;
-            iconUsedLabel.style.display = DisplayStyle.None;
-            buttons.style.display = DisplayStyle.Flex;
-            iconObjects.Clear();
-            if (Selection.gameObjects.Length > 0)
-            {
-                foreach (var item in Selection.gameObjects)
-                {
-                    if (ChildRendCheck(item)) //checking if the selected object has a mesh renderer
-                    {
-                        iconObjects.Add(item);
-                    }
-                }
-            }
-            currentObjectIndex = 0;
-        }
-    }
 
     /// <summary>
     /// checking the validity of the database and whether the name already exists
@@ -760,7 +795,17 @@ public class IconMaker : EditorWindow
         iconAmount.title = $"{iconAmount.value}/{iconAmount.highValue}";
         SpawnPrefab();
         DatabaseFieldUpdate();
-
+        if(usingDatabaseMaker)
+        {
+            if(objectsInDatabase.Contains(selectedObjectREF))
+            {
+                databaseIconTypeLabel.text = "Database Object";
+            }
+            else
+            {
+                databaseIconTypeLabel.text = "A Selected Object";
+            }
+        }
         if (currentObjectIndex == iconObjects.Count - 1) //if you're at the end of the list then can't go right anymore but can go left
         {
             rightButton.style.visibility = Visibility.Hidden;

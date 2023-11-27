@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectDatabase:
   - cost: 0
-    prefab: {fileID: 1095600368890880, guid: 21e1771c27a671147b188378c5b1da6e, type: 3}
-    icon: {fileID: 21300000, guid: e2d66336e52187f43812c14ecc798817, type: 3}
-    name: SM_Prop_Bottle_01
+    prefab: {fileID: 1040534666331676, guid: 6e7e49849c96318418dbd28b88bc6d06, type: 3}
+    icon: {fileID: 21300000, guid: b187a260290cab942a0c77866dad9f6f, type: 3}
+    name: SM_Icon_Gun
   - cost: 0
-    prefab: {fileID: 1168353465961796, guid: 315f2acd02ded7a458e8ae77a8d7db44, type: 3}
-    icon: {fileID: 21300000, guid: 7fba3cdf4b99a5e42987f8ccab5784cb, type: 3}
-    name: SM_Prop_Bottle_02
+    prefab: {fileID: 1582282660195126, guid: 6924b6055d3b89c49be5c9d309e8e14c, type: 3}
+    icon: {fileID: 21300000, guid: 579e4ffd3e90afe42a62c1f127e5f309, type: 3}
+    name: SM_Icon_Health

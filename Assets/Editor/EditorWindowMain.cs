@@ -90,6 +90,5 @@ public class EditorWindowMain : EditorWindow
     {
         iconMaker.OnGUI();
         menuMaker.OnGUI();
-        databaseMaker.OnGUI();
     }
 }

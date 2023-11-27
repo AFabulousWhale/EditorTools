@@ -60,7 +60,7 @@
     opacity: 1;
 }
 
-.Vector3Style {
+.IconStyle {
     margin-top: 4px;
     margin-right: 10px;
     margin-bottom: 4px;
@@ -70,7 +70,7 @@
     font-size: 14px;
 }
 
-.Vector3Style > Label {
+.IconStyle > Label {
     margin-top: 0;
     margin-right: 10px;
     margin-bottom: 0;
@@ -81,18 +81,7 @@
     padding-left: 0;
 }
 
-.IconName > Label {
-    margin-top: 0;
-    margin-right: 27px;
-    margin-bottom: 0;
-    margin-left: 0;
-    -unity-font-style: normal;
-    padding-right: 50px;
-    width: 30%;
-    padding-left: 0;
-}
-
-.Vector3Style > VisualElement FloatInput {
+.IconStyle > VisualElement FloatInput {
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 0;
@@ -108,6 +97,27 @@
     right: 0;
     height: auto;
     flex-shrink: 0;
+}
+
+.DBStyle {
+    margin-top: 4px;
+    margin-right: 10px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    width: auto;
+    transform-origin: center;
+    font-size: 14px;
+}
+
+.DBStyle > Label {
+    margin-top: 0;
+    margin-right: 10px;
+    margin-bottom: 0;
+    margin-left: 0;
+    -unity-font-style: normal;
+    padding-right: 50px;
+    width: 95%;
+    padding-left: 0;
 }
 
 .button-style {
@@ -171,6 +181,17 @@
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
     align-self: center;
+}
+
+.IconName > Label {
+    margin-top: 0;
+    margin-right: 27px;
+    margin-bottom: 0;
+    margin-left: 0;
+    -unity-font-style: normal;
+    padding-right: 50px;
+    width: 30%;
+    padding-left: 0;
 }
 
 .foldout-style {

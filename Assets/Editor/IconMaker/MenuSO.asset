@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914c27227ffe286488ae27d7c697176d, type: 3}
   m_Name: MenuSO
   m_EditorClassIdentifier: 
-  rowCount: 20
+  rowCount: 10
   buttonStyle: menu-button-style
   buttons:
   - icon: {fileID: 0}
@@ -115,63 +115,3 @@ MonoBehaviour:
     name: button48
   - icon: {fileID: 0}
     name: button49
-  - icon: {fileID: 0}
-    name: button50
-  - icon: {fileID: 0}
-    name: button51
-  - icon: {fileID: 0}
-    name: button52
-  - icon: {fileID: 0}
-    name: button53
-  - icon: {fileID: 0}
-    name: button54
-  - icon: {fileID: 0}
-    name: button55
-  - icon: {fileID: 0}
-    name: button56
-  - icon: {fileID: 0}
-    name: button57
-  - icon: {fileID: 0}
-    name: button58
-  - icon: {fileID: 0}
-    name: button59
-  - icon: {fileID: 0}
-    name: button60
-  - icon: {fileID: 0}
-    name: button61
-  - icon: {fileID: 0}
-    name: button62
-  - icon: {fileID: 0}
-    name: button63
-  - icon: {fileID: 0}
-    name: button64
-  - icon: {fileID: 0}
-    name: button65
-  - icon: {fileID: 0}
-    name: button66
-  - icon: {fileID: 0}
-    name: button67
-  - icon: {fileID: 0}
-    name: button68
-  - icon: {fileID: 0}
-    name: button69
-  - icon: {fileID: 0}
-    name: button70
-  - icon: {fileID: 0}
-    name: button71
-  - icon: {fileID: 0}
-    name: button72
-  - icon: {fileID: 0}
-    name: button73
-  - icon: {fileID: 0}
-    name: button74
-  - icon: {fileID: 0}
-    name: button75
-  - icon: {fileID: 0}
-    name: button76
-  - icon: {fileID: 0}
-    name: button77
-  - icon: {fileID: 0}
-    name: button78
-  - icon: {fileID: 0}
-    name: button79

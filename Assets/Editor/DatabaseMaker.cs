@@ -11,10 +11,10 @@ public class DatabaseMaker : EditorWindow
 
     public ObjectDataBaseSO database, dataTest;
     TextField databaseName;
-    Toggle generateAllIconsToggle, generateNewIconsToggle, generateEveryIconToggle;
-    VisualElement settings, GOLabels, popup, buttonsVE;
-    Button addToDatabase, clearDatabase, newDatabase;
-    Label allIconsLabel, newIconsLabel, everyIconLabel, inDBLabel;
+    Toggle generateDBIconsToggle, generateNewIconsToggle, generateEveryIconToggle, generateDatabaseIconToggle;
+    VisualElement GOLabels, popup, buttonsVE;
+    Button addToDatabase, clearDatabase, newDatabase, generateIcons;
+    Label inDBLabel;
 
     int inDBCount = 0;
 
@@ -33,37 +33,51 @@ public class DatabaseMaker : EditorWindow
     public void CreateGUI()
     {
         databaseName = root.Q<TextField>("DatabaseName");
-        settings = root.Q<VisualElement>("DatabaseSettings");
         GOLabels = root.Q<VisualElement>("DatabaseGOLabels");
 
         addToDatabase = root.Q<Button>("AddToDatabaseButton");
         clearDatabase = root.Q<Button>("ClearDatabaseButton");
         newDatabase = root.Q<Button>("CreateDatabaseButton");
         buttonsVE = root.Q<VisualElement>("DatabaseButtons");
+        generateIcons = root.Q<Button>("DBCreateIcon");
 
-        generateAllIconsToggle = root.Q<Toggle>("DatabaseAllIcons");
+        generateDBIconsToggle = root.Q<Toggle>("DatabaseAllIcons");
         generateEveryIconToggle = root.Q<Toggle>("DatabaseEveryIcons");
         generateNewIconsToggle = root.Q<Toggle>("DatabaseNewIcons");
-
-        allIconsLabel = root.Q<Label>("DatabaseAllIconsLabel");
-        everyIconLabel = root.Q<Label>("DatabaseEveryIconsLabel");
-        newIconsLabel = root.Q<Label>("DatabaseNewIconsLabel");
+        generateDatabaseIconToggle = root.Q<Toggle>("DatabaseDatabaseIcons");
 
         popup = root.Q<VisualElement>("PopupLayout");
 
         inDBLabel = root.Q<Label>("InDatabaseLabel");
 
+        generateDatabaseIconToggle.RegisterValueChangedCallback(ShowCreateIconsButton);
+
         databaseName.RegisterValueChangedCallback(DatabaseNameChange);
         newDatabase.RegisterCallback<ClickEvent, string>(PopUpCheck, "create");
         addToDatabase.RegisterCallback<ClickEvent, string>(PopUpCheck, "add");
         clearDatabase.RegisterCallback<ClickEvent, string>(PopUpCheck, "clear");
+        generateIcons.RegisterCallback<ClickEvent, string>(PopUpCheck, "icons");
 
         ButtonShowing();
     }
 
-    public void OnGUI()
+    /// <summary>
+    /// called to show the button to create icons just for the database
+    /// </summary>
+    /// <param name="evt"></param>
+    void ShowCreateIconsButton(IChangeEvent evt)
     {
-        ButtonShowing();
+        switch(generateDatabaseIconToggle.value)
+        {
+            case true:
+                generateIcons.style.display = DisplayStyle.Flex;
+                break;
+            case false:
+                iconMaker.iconObjects.Clear();
+                iconMaker.Resets();
+                generateIcons.style.display = DisplayStyle.None;
+                break;
+        }
     }
 
     public void OnSelectionChange()
@@ -73,7 +87,6 @@ public class DatabaseMaker : EditorWindow
         if (Selection.gameObjects.Length > 0)
         {
             GOLabels.style.display = DisplayStyle.None;
-            settings.style.display = DisplayStyle.Flex;
             buttonsVE.style.display = DisplayStyle.Flex;
 
             //loops through the selection of gameobjects to see if any are already in the database
@@ -86,19 +99,23 @@ public class DatabaseMaker : EditorWindow
                 }
             }
 
-            if(inDBCount > 0)
+            if(inDBCount > 0) //showing if objects are already in database, if the only object selected is then it can't be added to the database again
             {
                 inDBLabel.style.display = DisplayStyle.Flex;
                 if (Selection.gameObjects.Length != inDBCount)
                 {
                     inDBLabel.text = $"{inDBCount} selected objects are already in the database and won't be re-added";
-                    settings.style.display = DisplayStyle.Flex;
+                    generateDBIconsToggle.style.display = DisplayStyle.Flex;
+                    generateEveryIconToggle.style.display = DisplayStyle.Flex;
+                    generateNewIconsToggle.style.display = DisplayStyle.Flex;
                     buttonsVE.style.display = DisplayStyle.Flex;
                 }
                 else
                 {
                     inDBLabel.text = $"The objects you have selected is already in the database, please select another";
-                    settings.style.display = DisplayStyle.None;
+                    generateDBIconsToggle.style.display = DisplayStyle.None;
+                    generateEveryIconToggle.style.display = DisplayStyle.None;
+                    generateNewIconsToggle.style.display = DisplayStyle.None;
                     buttonsVE.style.display = DisplayStyle.None;
                 }
             }
@@ -106,7 +123,9 @@ public class DatabaseMaker : EditorWindow
         else
         {
             GOLabels.style.display = DisplayStyle.Flex;
-            settings.style.display = DisplayStyle.None;          
+            generateDBIconsToggle.style.display = DisplayStyle.None;
+            generateEveryIconToggle.style.display = DisplayStyle.None;
+            generateNewIconsToggle.style.display = DisplayStyle.None;
         }
     }
     #endregion End - Editor Window Setup
@@ -118,9 +137,10 @@ public class DatabaseMaker : EditorWindow
     /// <param name="evt"></param>
     public void DatabaseNameChange(IChangeEvent evt)
     {
-        generateAllIconsToggle.value = false;
+        generateDBIconsToggle.value = false;
         generateEveryIconToggle.value = false;
         generateNewIconsToggle.value = false;
+        generateDatabaseIconToggle.value = false;
         ButtonShowing();
     }
 
@@ -129,18 +149,18 @@ public class DatabaseMaker : EditorWindow
     /// </summary>
     public void ButtonShowing()
     {
-        switch (NewDatabase())
+        switch (ValidDatabaseCheck())
         {
             case true: //if it's a new database and the selected objects are over 0 then can create a database from objects
                 addToDatabase.style.display = DisplayStyle.None;
                 clearDatabase.style.display = DisplayStyle.None;
 
-                generateAllIconsToggle.style.display = DisplayStyle.Flex;
-                allIconsLabel.style.display = DisplayStyle.Flex;
+                generateDBIconsToggle.style.display = DisplayStyle.Flex;
                 generateEveryIconToggle.style.display = DisplayStyle.None;
-                everyIconLabel.style.display = DisplayStyle.None;
                 generateNewIconsToggle.style.display = DisplayStyle.None;
-                newIconsLabel.style.display = DisplayStyle.None;
+                generateDatabaseIconToggle.style.display = DisplayStyle.None;
+                generateDatabaseIconToggle.value = false;
+                generateIcons.style.display = DisplayStyle.None;
 
                 if (Selection.gameObjects.Length > 0)
                 {
@@ -155,26 +175,25 @@ public class DatabaseMaker : EditorWindow
                 newDatabase.style.display = DisplayStyle.None;
                 clearDatabase.style.display = DisplayStyle.Flex;
 
-                generateAllIconsToggle.style.display = DisplayStyle.None;
-                allIconsLabel.style.display = DisplayStyle.None;
+                generateDBIconsToggle.style.display = DisplayStyle.None;
 
 
                 if (Selection.gameObjects.Length > 0) //if there are objects selected then you can add them to the database
                 {
                     GOLabels.style.display = DisplayStyle.None;
                     generateEveryIconToggle.style.display = DisplayStyle.Flex;
-                    everyIconLabel.style.display = DisplayStyle.Flex;
                     generateNewIconsToggle.style.display = DisplayStyle.Flex;
-                    newIconsLabel.style.display = DisplayStyle.Flex;
                     addToDatabase.style.display = DisplayStyle.Flex;
+                    generateDatabaseIconToggle.style.display = DisplayStyle.None;
+                    generateDatabaseIconToggle.value = false;
+                    generateIcons.style.display = DisplayStyle.None;
                 }
                 else
                 {
+                    generateDatabaseIconToggle.style.display = DisplayStyle.Flex;
                     GOLabels.style.display = DisplayStyle.Flex;
                     generateEveryIconToggle.style.display = DisplayStyle.None;
-                    everyIconLabel.style.display = DisplayStyle.None;
                     generateNewIconsToggle.style.display = DisplayStyle.None;
-                    newIconsLabel.style.display = DisplayStyle.None;
                     addToDatabase.style.display = DisplayStyle.None;
                 }
                 break;
@@ -190,11 +209,13 @@ public class DatabaseMaker : EditorWindow
     public void PopUpCheck(ClickEvent evt, string buttonType)
     {
         databasePopup.twoButtons = true;
+        ValidDatabaseCheck();
+        database = dataTest;
         switch (buttonType) //used to change the text displayed on the popup
         {
             case "create":
                 databasePopup.labelText = $"This will create a new database with all {Selection.gameObjects.Length} selected objects";
-                if(generateAllIconsToggle.value)
+                if(generateDBIconsToggle.value)
                 {
                     databasePopup.extraText = true;
                     databasePopup.labelTextExtra = $"And create Icons for the {Selection.gameObjects.Length} selected objects";
@@ -227,9 +248,10 @@ public class DatabaseMaker : EditorWindow
                 }
                 break;
             case "clear":
-                NewDatabase();
-                database = dataTest;
                 databasePopup.labelText = $"This will clear the database of {database.objectDatabase.Count} items";
+                break;
+            case "icons":
+                databasePopup.labelText = $"This will create icons for the {database.objectDatabase.Count} items";
                 break;
         }
         EditorCoroutineUtility.StartCoroutineOwnerless(StartCheck());
@@ -251,6 +273,9 @@ public class DatabaseMaker : EditorWindow
                     case "clear":
                         ClearDatabase();
                         break;
+                    case "icons":
+                        GenerateIcons(evt);
+                        break;
                 }
             }
         }
@@ -258,7 +283,7 @@ public class DatabaseMaker : EditorWindow
 
     bool AlreadyInDatabaseCheck(GameObject objectToCheck)
     {
-        if (!NewDatabase())
+        if (!ValidDatabaseCheck())
         {
             database = dataTest;
             for (int i = 0; i < database.objectDatabase.Count; i++)//for each item already saved
@@ -275,6 +300,35 @@ public class DatabaseMaker : EditorWindow
     #endregion End - Checks
 
     #region Database Creation
+
+    /// <summary>
+    /// generates just the icons for the database objects
+    /// </summary>
+    /// <param name="evt"></param>
+    void GenerateIcons(ClickEvent evt)
+    {
+        iconMaker.currentObjectIndex = 0;
+        iconMaker.ObjectsSelected();
+        databasePopup.twoButtons = false;
+        databasePopup.extraText = false;
+        databasePopup.labelText = "Database Icons Have Been Updated Sucessfully!";
+
+        for (int i = 0; i < iconMaker.iconObjects.Count; i++)
+        {
+            ObjectData data = new();
+            data.prefab = iconMaker.iconObjects[i];
+            CreateIcon(evt, data);
+
+            //this is the database that has been found/a new one
+            if (AlreadyInDatabaseCheck(data.prefab))
+            {
+                database.objectDatabase[i].icon = data.icon;
+            }
+
+            EditorUtility.SetDirty(database);
+        }
+        EditorCoroutineUtility.StartCoroutineOwnerless(SaveDatabase());
+    }
     /// <summary>
     /// creates a new database
     /// </summary>
@@ -285,7 +339,7 @@ public class DatabaseMaker : EditorWindow
     void GenerateDatabase(ClickEvent evt)
     {
         bool iconGeneration = false;
-        if (generateAllIconsToggle.value || generateEveryIconToggle.value || generateNewIconsToggle.value) //if any of the toggles are on then icons will be generated
+        if (generateDBIconsToggle.value || generateEveryIconToggle.value || generateNewIconsToggle.value) //if any of the toggles are on then icons will be generated
         {
             iconMaker.currentObjectIndex = 0;
             iconMaker.ObjectsSelected();
@@ -319,7 +373,7 @@ public class DatabaseMaker : EditorWindow
         databasePopup.twoButtons = false;
         databasePopup.extraText = false;
 
-        if (!NewDatabase())
+        if (!ValidDatabaseCheck())
         {
             if (iconGeneration)
             {
@@ -330,7 +384,7 @@ public class DatabaseMaker : EditorWindow
                 databasePopup.labelText = "Database Has Been Updated Sucessfully!";
             }
         }
-        if (NewDatabase())
+        if (ValidDatabaseCheck())
         {
             AssetDatabase.CreateAsset(database, $"{filePath}{databaseName.value}.asset");
             if (iconGeneration)
@@ -387,7 +441,7 @@ public class DatabaseMaker : EditorWindow
     /// checking the validity of the database and whether the name already exists
     /// </summary>
     /// <returns></returns>
-    public bool NewDatabase()
+    public bool ValidDatabaseCheck()
     {
         dataTest = AssetDatabase.LoadAssetAtPath<ObjectDataBaseSO>($"{filePath}{databaseName.value}.asset");
 
