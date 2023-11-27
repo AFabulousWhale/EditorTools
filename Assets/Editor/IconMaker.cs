@@ -656,6 +656,7 @@ public class IconMaker : EditorWindow
         }
         else
         {
+            SpawnCamera();
             ResetData();
             foreach (var setting in settings)
             {

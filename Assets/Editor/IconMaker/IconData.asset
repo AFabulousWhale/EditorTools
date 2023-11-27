@@ -53,24 +53,24 @@ MonoBehaviour:
   - name: SM_Prop_Bottle_01
     prefab: {fileID: 1095600368890880, guid: 21e1771c27a671147b188378c5b1da6e, type: 3}
     spriteName: SM_Prop_Bottle_01
-    posOffset: {x: 0, y: 0}
+    posOffset: {x: 0, y: -0.12}
     rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 1
+    scaleOffset: 0.54
     BGColor:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 4294901997
     animationController: {fileID: 0}
     animName: 
     animFrame: 0
   - name: SM_Prop_Bottle_02
     prefab: {fileID: 1168353465961796, guid: 315f2acd02ded7a458e8ae77a8d7db44, type: 3}
     spriteName: SM_Prop_Bottle_02
-    posOffset: {x: 0, y: 0}
+    posOffset: {x: 0, y: -0.12}
     rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 1
+    scaleOffset: 0.54
     BGColor:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 4294901997
     animationController: {fileID: 0}
     animName: 
     animFrame: 0
@@ -89,12 +89,12 @@ MonoBehaviour:
   - name: SM_Prop_Bottle_03
     prefab: {fileID: 1586275792966676, guid: 36671c50e5b866247937253a255b19aa, type: 3}
     spriteName: SM_Prop_Bottle_03
-    posOffset: {x: 0, y: 0}
+    posOffset: {x: 0, y: -0.12}
     rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 1
+    scaleOffset: 0.54
     BGColor:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 4290969344
     animationController: {fileID: 0}
     animName: 
     animFrame: 0
@@ -439,7 +439,7 @@ MonoBehaviour:
     animFrame: 0
   - name: SM_Icon_Health
     prefab: {fileID: 1582282660195126, guid: 6924b6055d3b89c49be5c9d309e8e14c, type: 3}
-    spriteName: 
+    spriteName: SM_Icon_Health
     posOffset: {x: 0, y: 0}
     rotOffset: {x: 0, y: 0, z: 0}
     scaleOffset: 1
@@ -482,6 +482,102 @@ MonoBehaviour:
     BGColor:
       serializedVersion: 2
       rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Env_Ground_Tile_05
+    prefab: {fileID: 1819152051877572, guid: aa73babdcdc429a42b670bcd4bd3b69d, type: 3}
+    spriteName: 
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 0
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Env_Graffiti_Wall_04
+    prefab: {fileID: 1560030287085454, guid: 7aed49cac7aa42d4585cfa65722c86be, type: 3}
+    spriteName: SM_Env_Graffiti_Wall_04
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Env_Dirt_Mound_Small_01
+    prefab: {fileID: 1052679072039804, guid: 6ff04bde591b8af4284ecf06b1f4e10d, type: 3}
+    spriteName: SM_Env_Dirt_Mound_Small_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Env_Cloud_05
+    prefab: {fileID: 1114286510569834, guid: f3c6f17d5719ea547a79d95b1f9256e4, type: 3}
+    spriteName: SM_Env_Cloud_05
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Env_Railing_01_Pillar
+    prefab: {fileID: 1014393208289658, guid: 52c454d766f33754bb6ecda1a164722c, type: 3}
+    spriteName: SM_Env_Railing_01_Pillar
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Env_Ground_Tile_Floating_Platform_01
+    prefab: {fileID: 1556200662759192, guid: 42eeb2cb84e945f48bfbf7e4a450d54b, type: 3}
+    spriteName: SM_Env_Ground_Tile_Floating_Platform_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Env_Grass_Patch_01
+    prefab: {fileID: 1552400669930392, guid: 42942cf4d2fa1e349871495005540968, type: 3}
+    spriteName: SM_Env_Grass_Patch_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Env_Greeble_Cube_01
+    prefab: {fileID: 1626647699222634, guid: 3a843a0d0b9616045aa9a5220ca6e083, type: 3}
+    spriteName: 
+    posOffset: {x: 0, y: -0.03}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0
+    BGColor:
+      serializedVersion: 2
+      rgba: 0
     animationController: {fileID: 0}
     animName: 
     animFrame: 0
