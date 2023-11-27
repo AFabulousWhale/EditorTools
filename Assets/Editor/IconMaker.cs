@@ -18,7 +18,7 @@ public class IconMaker : EditorWindow
 
     public int currentViewedObject = 0;
 
-    Label selectedGOLabel, iconNameLabel, iconUsedLabel;
+    Label selectedGOLabel, iconNameLabel, iconUsedLabel, animationLabel;
     ProgressBar iconAmount;
     Button leftButton, rightButton, generateIcon, generateAllIcons, autoNameButton;
     VisualElement iconPreviewBox, cameraView, popup, buttons, applyToAllToggles, iconLabels, animationSettings;
@@ -52,6 +52,7 @@ public class IconMaker : EditorWindow
     List<AnimatorState> animStates = new();
     AnimatorState currentAnimatorState;
     Animator anim;
+    string currentAnimName;
 
     Renderer prefabRend;
     GameObject rendererObject;
@@ -92,6 +93,7 @@ public class IconMaker : EditorWindow
         animations = root.Q<DropdownField>("Animation");
         animationFrame = root.Q<Slider>("AnimationFrame");
         animationController = root.Q<ObjectField>("AnimationController");
+        animationLabel = root.Q<Label>("AnimationLabel");
 
         animationFrame.RegisterValueChangedCallback(AnimSliderCaller);
         animations.RegisterValueChangedCallback(AnimationUpdateCaller);
@@ -223,7 +225,7 @@ public class IconMaker : EditorWindow
             if (selectedOBJ != null)
             {
                 CheckApplyAll(selectedOBJ);
-                ResetData();
+                //ResetData();
             }
             selectedOBJ = objectForItems[currentViewedObject];
             iconPreviewBox.style.display = DisplayStyle.Flex;
@@ -233,7 +235,6 @@ public class IconMaker : EditorWindow
             iconNameLabel.text = objectForItems[currentViewedObject].name;
             iconAmount.title = $"{iconAmount.value}/{iconAmount.highValue}";
             CheckDatabase();
-            DisplayAnimSettings();
         }
     }
     #endregion End - Selected Object Changes
@@ -245,13 +246,15 @@ public class IconMaker : EditorWindow
         if (AnimationCheck(newPrefab))
         {
             animationSettings.style.display = DisplayStyle.Flex;
+            animationLabel.style.display = DisplayStyle.None;
             anim = newPrefab.GetComponent<Animator>();
             UpdateController();
-            SetAnimStage();
         }
         else
         {
             animationSettings.style.display = DisplayStyle.None;
+            animationLabel.style.display = DisplayStyle.Flex;
+            ResetAnimData();
         }
     }
 
@@ -304,7 +307,18 @@ public class IconMaker : EditorWindow
                 animNames.Add(ac.animationClips[i].name);
             }
             animations.choices = animNames;
-            animations.value = animNames[0];
+            foreach (var item in animNames)
+            {
+                if(item == currentAnimName)
+                {
+                    animations.value = currentAnimName;
+                    break;
+                }
+                else
+                {
+                    animations.value = animNames[0];
+                }
+            }
             SetAnimStage();
         }
     }
@@ -336,12 +350,15 @@ public class IconMaker : EditorWindow
     /// <param name="evt"></param>
     void ChangeAnimStage()
     {
-        Debug.Log("updating anim");
-        anim.speed = 0.0f;
-        anim.Play(currentAnimatorState.name, 0, animationFrame.value);
-        anim.Update(Time.deltaTime);
+        if (animationController.value != null && animations.value != null)
+        {
+            Debug.Log("updating anim");
+            anim.speed = 0.0f;
+            anim.Play(currentAnimatorState.name, 0, animationFrame.value);
+            anim.Update(Time.deltaTime);
 
-        cameraView.style.backgroundImage = GetRenderTexture();
+            cameraView.style.backgroundImage = GetRenderTexture();
+        }
     }
     #endregion End - Animation Settings
 
@@ -386,19 +403,7 @@ public class IconMaker : EditorWindow
         IEnumerator WaitForObjectToSpawn()
         {
             yield return new WaitUntil(() => newPrefab != null);
-            RenderCamera();
-        }
-    }
-
-    void RenderCamera()
-    {
-        if (AnimationCheck(newPrefab) && animations.value != null && animationController.value != null) //if the object has an animator then sets the animation before rendering the camera
-        {
-             ChangeAnimStage();
-        }
-        else
-        {
-            cameraView.style.backgroundImage = GetRenderTexture();
+            DisplayAnimSettings();
         }
     }
     #endregion End - Icon Setup
@@ -450,6 +455,18 @@ public class IconMaker : EditorWindow
         scale.field.value = 1;
         BG.field.value = new Color32(255, 255, 255, 0);
         spriteName.field.value = selectedOBJ.name;
+        ResetAnimData();
+    }
+
+    void ResetAnimData()
+    {
+        if (AnimationCheck(selectedOBJ))
+        {
+            animationController.value = null;
+            animationFrame.value = 0;
+            animations.choices.Clear();
+            animations.value = null;
+        }
     }
 
     void ResetName(ClickEvent evt)
@@ -600,6 +617,13 @@ public class IconMaker : EditorWindow
             scale.field.value = dataCheck.scaleOffset;
             BG.field.value = dataCheck.BGColor;
             spriteName.field.value = dataCheck.spriteName;
+            if (AnimationCheck(selectedOBJ))
+            {
+                animationFrame.value = dataCheck.animFrame;
+                animationController.value = dataCheck.animationController;
+                currentAnimName = dataCheck.animName;
+                UpdateController();
+            }
             foreach (var setting in settings)
             {
                 setting.ChangeSingleValues(newPrefab);
@@ -629,6 +653,12 @@ public class IconMaker : EditorWindow
             data.scaleOffset = dataCheck.scaleOffset;
             data.BGColor = dataCheck.BGColor;
             data.spriteName = dataCheck.spriteName;
+            if (AnimationCheck(data.prefab))
+            {
+                data.animationController = dataCheck.animationController;
+                data.animFrame = dataCheck.animFrame;
+                data.animName = dataCheck.animName;
+            }
         }
         return data;
     }
@@ -670,6 +700,12 @@ public class IconMaker : EditorWindow
         foreach (var setting in settings)
         {
             setting.SaveIconDataCheck(data, setting);
+        }
+        if (AnimationCheck(obj))
+        {
+            data.animationController = (RuntimeAnimatorController)animationController.value;
+            data.animFrame = animationFrame.value;
+            data.animName = animations.value;
         }
     }
     #endregion End - Checks

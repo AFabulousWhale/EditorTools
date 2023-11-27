@@ -20,4 +20,8 @@ public class Data
     public Vector3 rotOffset;
     public float scaleOffset;
     public Color32 BGColor;
+
+    public RuntimeAnimatorController animationController;
+    public string animName;
+    public float animFrame;
 }

@@ -81,6 +81,17 @@
     padding-left: 0;
 }
 
+.IconName > Label {
+    margin-top: 0;
+    margin-right: 27px;
+    margin-bottom: 0;
+    margin-left: 0;
+    -unity-font-style: normal;
+    padding-right: 50px;
+    width: 30%;
+    padding-left: 0;
+}
+
 .Vector3Style > VisualElement FloatInput {
     margin-top: 0;
     margin-right: 0;
