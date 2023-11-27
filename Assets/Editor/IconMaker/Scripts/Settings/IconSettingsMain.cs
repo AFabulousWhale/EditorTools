@@ -28,9 +28,10 @@ public class IconSettingsMain
     /// <param name="evt"></param>
     public virtual void ValueChangeDetection(IChangeEvent evt)
     {
-        if (currentSetting.currentPrefab != null)
+        if (currentSetting.currentPrefab != null && !iconMaker.updatingFields)
         {
             ChangeSingleValues(currentPrefab);
+            cameraView.style.backgroundImage = iconMaker.GetRenderTexture();
         }
     }
 
@@ -40,7 +41,6 @@ public class IconSettingsMain
     /// <param name="objectToUpdate"></param>
     public virtual void ChangeSingleValues(GameObject objectToUpdate)
     {
-        cameraView.style.backgroundImage = iconMaker.GetRenderTexture();
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class IconSettingsMain
                     Data data = new();
                     data.prefab = item;
                     data.name = item.name;
-                    data = currentSetting.iconMaker.CheckData(data);
+                    data = currentSetting.iconMaker.SaveData(data);
                     currentSetting.SaveIndividualData(data);
                     currentSetting.iconMaker.SaveIconData(data);
 

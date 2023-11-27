@@ -16,16 +16,16 @@ MonoBehaviour:
   - name: Character_Hologram_Female_01
     prefab: {fileID: 1318303238961424, guid: 3470766f22e216142aa097c5eaa5a1c1, type: 3}
     spriteName: Character_Hologram_Female_01
-    posOffset: {x: -4.38, y: -25.9}
-    rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 13.17
+    posOffset: {x: -1.78, y: -9.49}
+    rotOffset: {x: -1.88, y: 45.42, z: 0}
+    scaleOffset: 5.42
     BGColor:
       serializedVersion: 2
-      rgba: 0
+      rgba: 4278255410
     animationController: {fileID: 9100000, guid: 7d05b9f214b59c242924642c971ea4c4,
       type: 2}
     animName: BasicMotions@Cheer01
-    animFrame: 0.292
+    animFrame: 0.415
   - name: Character_Android_Female_01
     prefab: {fileID: 1675277247628234, guid: c071869dabd01174ba88c8f43a9cc9be, type: 3}
     spriteName: Character_Android_Female_01
@@ -114,16 +114,16 @@ MonoBehaviour:
   - name: Character_Cyber_Female_01
     prefab: {fileID: 1174504732505636, guid: 8b2f7c67154f424439e862a1239f81ea, type: 3}
     spriteName: Character_Cyber_Female_01
-    posOffset: {x: 0, y: -13.14}
+    posOffset: {x: 0, y: -6.7}
     rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 7.77
+    scaleOffset: 5.42
     BGColor:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 4278255410
     animationController: {fileID: 9100000, guid: dcd5548d975ff394289a98a126198789,
       type: 2}
     animName: BasicMotions@Run01 - BackwardsLeft
-    animFrame: 0.365
+    animFrame: 0.191
   - name: Character_Muscle_Male_01
     prefab: {fileID: 1828323517114020, guid: b65d2298e4019c14290e733669d947ba, type: 3}
     spriteName: Character_Muscle_Male_01
@@ -223,16 +223,17 @@ MonoBehaviour:
     animFrame: 0
   - name: Character_Cyber_Male_01
     prefab: {fileID: 1788802827204626, guid: 4ec55b0fc5a631142b1505018530d38b, type: 3}
-    spriteName: 
-    posOffset: {x: 0, y: -7}
-    rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 0
+    spriteName: Character_Cyber_Male_01
+    posOffset: {x: 0, y: -8.36}
+    rotOffset: {x: -0.25, y: 27.5, z: 0}
+    scaleOffset: 5.42
     BGColor:
       serializedVersion: 2
-      rgba: 0
-    animationController: {fileID: 0}
-    animName: 
-    animFrame: 0
+      rgba: 4278255410
+    animationController: {fileID: 9100000, guid: dcd5548d975ff394289a98a126198789,
+      type: 2}
+    animName: BasicMotions@Run01 - BackwardsLeft
+    animFrame: 0.395
   - name: Character_Junky_Female_01
     prefab: {fileID: 1752129967999806, guid: 9335937f22aa2ad40a7b14777c48f61c, type: 3}
     spriteName: Character_Junky_Female_01
@@ -374,6 +375,18 @@ MonoBehaviour:
     BGColor:
       serializedVersion: 2
       rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Prop_Cage_03
+    prefab: {fileID: 1129707343421066, guid: eb84224342a883d49a76493e407fce4c, type: 3}
+    spriteName: 
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 5.42
+    BGColor:
+      serializedVersion: 2
+      rgba: 4278255410
     animationController: {fileID: 0}
     animName: 
     animFrame: 0
