@@ -14,9 +14,9 @@ public class IconMaker : EditorWindow
     string selectedObjectCount = "No Object Currently Selected";
     Camera cam;
 
-    GameObject camOBJ, newPrefab, selectedOBJ;
+    GameObject camOBJ, spawnedObject, currentObject;
 
-    public int currentViewedObject = 0;
+    public int currentObjectIndex = 0;
 
     Label selectedGOLabel, iconNameLabel, iconUsedLabel, animationLabel;
     ProgressBar iconAmount;
@@ -31,7 +31,7 @@ public class IconMaker : EditorWindow
 
     public DatabaseMaker databaseMaker;
 
-    Data dataCheck;
+    Data iconDatabaseData;
 
     IconDataSO iconData, dataTest;
 
@@ -45,7 +45,7 @@ public class IconMaker : EditorWindow
 
     List<IconSettingsMain> settings => new() { pos, rot, scale, BG, spriteName };
 
-    public List<GameObject> objectForItems = new();
+    public List<GameObject> iconObjects = new();
 
     List<AnimationClip> animClips = new();
     List<string> animNames = new();
@@ -151,39 +151,39 @@ public class IconMaker : EditorWindow
     /// </summary>
     public void OnSelectionChange()
     {
-        objectForItems.Clear();
+        iconObjects.Clear();
 
         foreach (var item in Selection.gameObjects)
         {
             if (ChildRendCheck(item)) //checking if the selected object has a mesh renderer
             {
-                objectForItems.Add(item);
+                iconObjects.Add(item);
             }
         }
-        currentViewedObject = 0;
+        currentObjectIndex = 0;
         //displaying how many gameobjects have been selected
-        if (objectForItems.Count > 0)
+        if (iconObjects.Count > 0)
         {
             DatabaseToggleCheck();
             ObjectsSelected();
         }
-        else if (objectForItems.Count == 0) //resets everything if no gameobjects are selected
+        else if (iconObjects.Count == 0) //resets everything if no gameobjects are selected
         {
             iconLabels.style.display = DisplayStyle.Flex;
             generateAllIcons.style.display = DisplayStyle.None;
             rightButton.style.visibility = Visibility.Hidden;
             leftButton.style.visibility = Visibility.Hidden;
-            if (selectedOBJ != null)
+            if (currentObject != null)
             {
-                CheckApplyAll(selectedOBJ);
+                CheckApplyAll(currentObject);
             }
-            selectedOBJ = null;
+            currentObject = null;
             iconPreviewBox.style.display = DisplayStyle.None;
             selectedObjectCount = "No Object Currently Selected";
-            if (camOBJ != null && newPrefab != null)
+            if (camOBJ != null && spawnedObject != null)
             {
                 DestroyImmediate(camOBJ);
-                DestroyImmediate(newPrefab);
+                DestroyImmediate(spawnedObject);
             }
         }
         selectedGOLabel.text = selectedObjectCount;
@@ -201,7 +201,7 @@ public class IconMaker : EditorWindow
         rightButton.style.visibility = Visibility.Hidden;
         leftButton.style.visibility = Visibility.Hidden;
 
-        if (objectForItems.Count > 1)
+        if (iconObjects.Count > 1)
         {
             //shows all the toggles if more than 1 game object is selected
             applyToAllToggles.style.display = DisplayStyle.Flex;
@@ -218,21 +218,21 @@ public class IconMaker : EditorWindow
                 leftButton.style.visibility = Visibility.Visible;
             }
         }
-        if (objectForItems.Count > 0)
+        if (iconObjects.Count > 0)
         {
             //spawns a camera and sets all the values to show the object currently selected
             SpawnCamera();
-            if (selectedOBJ != null)
+            if (currentObject != null)
             {
-                CheckApplyAll(selectedOBJ);
+                CheckApplyAll(currentObject);
                 //ResetData();
             }
-            selectedOBJ = objectForItems[currentViewedObject];
+            currentObject = iconObjects[currentObjectIndex];
             iconPreviewBox.style.display = DisplayStyle.Flex;
             iconAmount.lowValue = 1;
-            iconAmount.highValue = objectForItems.Count;
-            iconAmount.value = (currentViewedObject + 1);
-            iconNameLabel.text = objectForItems[currentViewedObject].name;
+            iconAmount.highValue = iconObjects.Count;
+            iconAmount.value = (currentObjectIndex + 1);
+            iconNameLabel.text = iconObjects[currentObjectIndex].name;
             iconAmount.title = $"{iconAmount.value}/{iconAmount.highValue}";
             CheckDatabase();
         }
@@ -243,11 +243,11 @@ public class IconMaker : EditorWindow
     void DisplayAnimSettings()
     {
         //shows animation settings if the prefab has an animator
-        if (AnimationCheck(newPrefab))
+        if (AnimationCheck(spawnedObject))
         {
             animationSettings.style.display = DisplayStyle.Flex;
             animationLabel.style.display = DisplayStyle.None;
-            anim = newPrefab.GetComponent<Animator>();
+            anim = spawnedObject.GetComponent<Animator>();
             UpdateController();
         }
         else
@@ -357,7 +357,13 @@ public class IconMaker : EditorWindow
             anim.Play(currentAnimatorState.name, 0, animationFrame.value);
             anim.Update(Time.deltaTime);
 
-            cameraView.style.backgroundImage = GetRenderTexture();
+            EditorCoroutineUtility.StartCoroutineOwnerless(WaitForAnimStart());
+            IEnumerator WaitForAnimStart()//wait until the animation has processed as starting before rendering the camera
+            {
+                AnimatorStateInfo animInfo = anim.GetCurrentAnimatorStateInfo(0);
+                yield return new WaitUntil(() => animInfo.IsName($"{currentAnimatorState.name}") && animInfo.normalizedTime == animationFrame.value);
+                cameraView.style.backgroundImage = GetRenderTexture();
+            }
         }
     }
     #endregion End - Animation Settings
@@ -384,25 +390,23 @@ public class IconMaker : EditorWindow
     /// </summary>
     void SpawnPrefab()
     {
-        DestroyImmediate(newPrefab);
-        newPrefab = (GameObject)PrefabUtility.InstantiatePrefab(objectForItems[currentViewedObject]); //spawns in a new object in from of the camera for the camera to render
-        newPrefab.transform.position = pos.defaultValue;
-        newPrefab.transform.rotation = Quaternion.Euler(rot.defaultValue);
-        newPrefab.transform.localScale = new Vector3(scale.defaultValue, scale.defaultValue, scale.defaultValue);
-        newPrefab.name = "IconObjectPrefab";
-        anim = newPrefab.GetComponent<Animator>();
+        DestroyImmediate(spawnedObject);
+        spawnedObject = (GameObject)PrefabUtility.InstantiatePrefab(iconObjects[currentObjectIndex]); //spawns in a new object in from of the camera for the camera to render
+        spawnedObject.transform.position = pos.defaultValue;
+        spawnedObject.transform.rotation = Quaternion.Euler(rot.defaultValue);
+        spawnedObject.transform.localScale = new Vector3(scale.defaultValue, scale.defaultValue, scale.defaultValue);
+        spawnedObject.name = "IconObjectPrefab";
+        anim = spawnedObject.GetComponent<Animator>();
 
         foreach (var item in settings)
         {
-            item.currentPrefab = newPrefab;
+            item.currentPrefab = spawnedObject;
             item.cam = cam;
         }
-        prefabRend = rendererObject.GetComponent<Renderer>();
-        cam.orthographicSize = prefabRend.bounds.extents.y + prefabRend.bounds.extents.x;
         EditorCoroutineUtility.StartCoroutineOwnerless(WaitForObjectToSpawn());
         IEnumerator WaitForObjectToSpawn()
         {
-            yield return new WaitUntil(() => newPrefab != null);
+            yield return new WaitUntil(() => spawnedObject != null);
             DisplayAnimSettings();
         }
     }
@@ -454,13 +458,13 @@ public class IconMaker : EditorWindow
         pos.field.value = new Vector3(0, 0, 0);
         scale.field.value = 1;
         BG.field.value = new Color32(255, 255, 255, 0);
-        spriteName.field.value = selectedOBJ.name;
+        spriteName.field.value = currentObject.name;
         ResetAnimData();
     }
 
     void ResetAnimData()
     {
-        if (AnimationCheck(selectedOBJ))
+        if (AnimationCheck(currentObject))
         {
             animationController.value = null;
             animationFrame.value = 0;
@@ -471,7 +475,7 @@ public class IconMaker : EditorWindow
 
     void ResetName(ClickEvent evt)
     {
-        spriteName.field.value = selectedOBJ.name;
+        spriteName.field.value = currentObject.name;
     }
     #endregion End - Data Handling
 
@@ -555,37 +559,37 @@ public class IconMaker : EditorWindow
             iconUsedLabel.text = "The 'Icon Maker' is being used by the 'Database Maker'";
             iconUsedLabel.style.display = DisplayStyle.Flex;
             buttons.style.display = DisplayStyle.None;
-            objectForItems.Clear();
+            iconObjects.Clear();
             foreach (var item in databaseMaker.database.objectDatabase)
             {
-                objectForItems.Add(item.prefab);
+                iconObjects.Add(item.prefab);
             }
             foreach (var item in Selection.gameObjects)
             {
                 if (ChildRendCheck(item)) //checking if the selected object has a mesh renderer
                 {
-                    objectForItems.Add(item);
+                    iconObjects.Add(item);
                 }
             }
-            currentViewedObject = (objectForItems.Count - 1);
+            currentObjectIndex = (iconObjects.Count - 1);
         }
         else
         {
             usingOtherMaker = false;
             iconUsedLabel.style.display = DisplayStyle.None;
             buttons.style.display = DisplayStyle.Flex;
-            objectForItems.Clear();
+            iconObjects.Clear();
             if (Selection.gameObjects.Length > 0)
             {
                 foreach (var item in Selection.gameObjects)
                 {
                     if (ChildRendCheck(item)) //checking if the selected object has a mesh renderer
                     {
-                        objectForItems.Add(item);
+                        iconObjects.Add(item);
                     }
                 }
             }
-            currentViewedObject = 0;
+            currentObjectIndex = 0;
         }
     }
 
@@ -610,23 +614,23 @@ public class IconMaker : EditorWindow
     /// </summary>
     public void CheckDatabase()
     {
-        if(DatabaseCheck(selectedOBJ))
+        if(DatabaseCheck(currentObject))
         {
-            rot.field.value = dataCheck.rotOffset;
-            pos.field.value = dataCheck.posOffset;
-            scale.field.value = dataCheck.scaleOffset;
-            BG.field.value = dataCheck.BGColor;
-            spriteName.field.value = dataCheck.spriteName;
-            if (AnimationCheck(selectedOBJ))
+            rot.field.value = iconDatabaseData.rotOffset;
+            pos.field.value = iconDatabaseData.posOffset;
+            scale.field.value = iconDatabaseData.scaleOffset;
+            BG.field.value = iconDatabaseData.BGColor;
+            spriteName.field.value = iconDatabaseData.spriteName;
+            if (AnimationCheck(currentObject))
             {
-                animationFrame.value = dataCheck.animFrame;
-                animationController.value = dataCheck.animationController;
-                currentAnimName = dataCheck.animName;
+                animationFrame.value = iconDatabaseData.animFrame;
+                animationController.value = iconDatabaseData.animationController;
+                currentAnimName = iconDatabaseData.animName;
                 UpdateController();
             }
             foreach (var setting in settings)
             {
-                setting.ChangeSingleValues(newPrefab);
+                setting.ChangeSingleValues(spawnedObject);
             }
         }
         else
@@ -634,7 +638,7 @@ public class IconMaker : EditorWindow
             ResetData();
             foreach (var setting in settings)
             {
-                setting.ChangeSingleValues(newPrefab);
+                setting.ChangeSingleValues(spawnedObject);
             }
         }
     }
@@ -648,16 +652,16 @@ public class IconMaker : EditorWindow
     {
         if(DatabaseCheck(data.prefab))
         {
-            data.rotOffset = dataCheck.rotOffset;
-            data.posOffset = dataCheck.posOffset;
-            data.scaleOffset = dataCheck.scaleOffset;
-            data.BGColor = dataCheck.BGColor;
-            data.spriteName = dataCheck.spriteName;
+            data.rotOffset = iconDatabaseData.rotOffset;
+            data.posOffset = iconDatabaseData.posOffset;
+            data.scaleOffset = iconDatabaseData.scaleOffset;
+            data.BGColor = iconDatabaseData.BGColor;
+            data.spriteName = iconDatabaseData.spriteName;
             if (AnimationCheck(data.prefab))
             {
-                data.animationController = dataCheck.animationController;
-                data.animFrame = dataCheck.animFrame;
-                data.animName = dataCheck.animName;
+                data.animationController = iconDatabaseData.animationController;
+                data.animFrame = iconDatabaseData.animFrame;
+                data.animName = iconDatabaseData.animName;
             }
         }
         return data;
@@ -678,12 +682,12 @@ public class IconMaker : EditorWindow
             {
                 if (item.prefab == obj)
                 {
-                    dataCheck = item;
+                    iconDatabaseData = item;
                     return true;
                 }
             }
         }
-        dataCheck = null;
+        iconDatabaseData = null;
         return false;
     }
 
@@ -725,22 +729,22 @@ public class IconMaker : EditorWindow
     /// <param name="amount"></param>
     public void NextIcon(ClickEvent evt, int amount)
     {
-        CheckApplyAll(selectedOBJ);
-        currentViewedObject += amount;
-        currentViewedObject = Mathf.Clamp(currentViewedObject, 0, (objectForItems.Count - 1));
-        selectedOBJ = objectForItems[currentViewedObject];
-        iconNameLabel.text = objectForItems[currentViewedObject].name; //setting the name display to the currently selected item within the list
-        iconAmount.value = (currentViewedObject + 1);
+        CheckApplyAll(currentObject);
+        currentObjectIndex += amount;
+        currentObjectIndex = Mathf.Clamp(currentObjectIndex, 0, (iconObjects.Count - 1));
+        currentObject = iconObjects[currentObjectIndex];
+        iconNameLabel.text = iconObjects[currentObjectIndex].name; //setting the name display to the currently selected item within the list
+        iconAmount.value = (currentObjectIndex + 1);
         iconAmount.title = $"{iconAmount.value}/{iconAmount.highValue}";
         SpawnPrefab();
         CheckDatabase();
 
-        if (currentViewedObject == objectForItems.Count - 1) //if you're at the end of the list then can't go right anymore but can go left
+        if (currentObjectIndex == iconObjects.Count - 1) //if you're at the end of the list then can't go right anymore but can go left
         {
             rightButton.style.visibility = Visibility.Hidden;
             leftButton.style.visibility = Visibility.Visible;
         }
-        else if (currentViewedObject == 0) //if at the start of the list again then can go right but not left
+        else if (currentObjectIndex == 0) //if at the start of the list again then can go right but not left
         {
             leftButton.style.visibility = Visibility.Hidden;
             rightButton.style.visibility = Visibility.Visible;
@@ -761,13 +765,13 @@ public class IconMaker : EditorWindow
         if (FilePathCheck())
         {
             iconPopup.labelText = "All Icons Have Been Created Sucessfully!";
-            if (currentViewedObject != 0)
+            if (currentObjectIndex != 0)
             {
-                NextIcon(evt, -currentViewedObject);
+                NextIcon(evt, -currentObjectIndex);
             }
             IconGeneration(evt); //generates the first icon
 
-            for (int i = 0; i < (objectForItems.Count); i++) //progresses the icon and generates it for every selected gameobject
+            for (int i = 0; i < (iconObjects.Count); i++) //progresses the icon and generates it for every selected gameobject
             {
                 NextIcon(evt, 1);
                 IconGeneration(evt);
@@ -788,9 +792,9 @@ public class IconMaker : EditorWindow
         if (FilePathCheck())
         {
             iconPopup.labelText = "All Icons Have Been Created Sucessfully!";
-            spriteName.field.value = selectedOBJ.name;
+            spriteName.field.value = currentObject.name;
             GetIcon(GetRenderTexture());
-            if (objectForItems.Count == 1)
+            if (iconObjects.Count == 1)
             {
                 UnityEditor.PopupWindow.Show(popup.worldBound, iconPopup);
             }

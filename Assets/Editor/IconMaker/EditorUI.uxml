@@ -8,11 +8,11 @@
     </ui:VisualElement>
     <ui:VisualElement name="TabContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); display: flex;">
         <ui:VisualElement name="IconContent" style="flex-grow: 1; background-color: rgba(48, 26, 60, 0); border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; height: 100%; width: auto; flex-wrap: nowrap; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 1; flex-basis: auto; display: flex;">
-            <ui:VisualElement name="IconLabels" style="flex-grow: 0; flex-shrink: 0; top: auto; display: none;">
+            <ui:VisualElement name="IconLabels" style="flex-grow: 0; flex-shrink: 0; top: auto; display: flex;">
                 <ui:Label tabindex="-1" text="No Object Currently Selected" display-tooltip-when-elided="true" name="SelectedGOLabel" style="align-items: stretch; align-self: center;" />
                 <ui:Label tabindex="-1" text="Please select the Game Objects or Prefabs you would like &#10;to create icons for" display-tooltip-when-elided="true" name="LabelDesc" style="align-items: stretch; align-self: center; font-size: 9px; -unity-text-align: upper-center;" />
             </ui:VisualElement>
-            <ui:VisualElement name="IconPreviewBox" style="flex-grow: 1; background-color: rgba(56, 56, 56, 0); height: auto; display: flex;">
+            <ui:VisualElement name="IconPreviewBox" style="flex-grow: 1; background-color: rgba(56, 56, 56, 0); height: auto; display: none;">
                 <ui:VisualElement name="Display" style="flex-grow: 1; width: auto; height: auto; flex-shrink: 1; position: relative; bottom: auto;">
                     <ui:ProgressBar value="22" name="DisplayNumber" />
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="IconName" style="justify-content: flex-start; align-self: center; font-size: 12px; position: relative; top: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-text-align: upper-left;" />
@@ -69,8 +69,9 @@
                         </ui:VisualElement>
                     </ui:Foldout>
                     <ui:Foldout text="Animation Settings" value="true" name="IconAnimationSettings" class="foldout-style" style="margin-top: 5px; margin-bottom: 5px;">
-                        <ui:VisualElement name="AnimationSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row; margin-top: 0; margin-bottom: 0;">
-                            <ui:VisualElement name="Values" style="flex-grow: 1; width: 79%; flex-direction: row;">
+                        <ui:Label tabindex="-1" text="The Selected Object has no animator attached" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AnimationLabel" style="align-items: auto; align-self: center; -unity-text-align: upper-center; -unity-font-style: bold; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; justify-content: flex-start;" />
+                        <ui:VisualElement name="AnimationSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row; margin-top: 0; margin-bottom: 0; display: none;">
+                            <ui:VisualElement name="Values" style="flex-grow: 1; width: 79%; flex-direction: row; display: flex;">
                                 <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 100%; margin-right: 0; margin-left: 10px;">
                                     <uie:ObjectField name="AnimationController" type="UnityEditor.Animations.AnimatorController, UnityEditor.CoreModule" label="Animation Controller" allow-scene-objects="false" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />
                                     <ui:DropdownField index="-1" name="Animation" label="Animation" class="Vector3Style" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-grow: 1;" />

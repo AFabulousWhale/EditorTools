@@ -287,17 +287,17 @@ public class DatabaseMaker : EditorWindow
         bool iconGeneration = false;
         if (generateAllIconsToggle.value || generateEveryIconToggle.value || generateNewIconsToggle.value) //if any of the toggles are on then icons will be generated
         {
-            iconMaker.currentViewedObject = 0;
+            iconMaker.currentObjectIndex = 0;
             iconMaker.ObjectsSelected();
             iconGeneration = true;
         }
-        for (int i = 0; i < iconMaker.objectForItems.Count; i++)
+        for (int i = 0; i < iconMaker.iconObjects.Count; i++)
         {
             ObjectData data = new();
-            data.prefab = iconMaker.objectForItems[i];
+            data.prefab = iconMaker.iconObjects[i];
             data.name = data.prefab.name;
 
-            Debug.Log(iconMaker.currentViewedObject);
+            Debug.Log(iconMaker.currentObjectIndex);
             if (iconGeneration) //generate icons if any of the toggles are true
             {
                 CreateIcon(evt, data);
