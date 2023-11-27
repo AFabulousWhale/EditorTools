@@ -28,7 +28,7 @@ public class IconSettingsMain
     /// <param name="evt"></param>
     public virtual void ValueChangeDetection(IChangeEvent evt)
     {
-        if (currentSetting.currentPrefab != null && !iconMaker.updatingFields)
+        if (currentSetting.currentPrefab != null)
         {
             ChangeSingleValues(currentPrefab);
             cameraView.style.backgroundImage = iconMaker.GetRenderTexture();

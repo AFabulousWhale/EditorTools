@@ -8,7 +8,7 @@ public class Position : Vector3Type
     public Position(VisualElement root)
     {
         elementName = "Pos";
-        defaultValue = new(-500, 0, 10);
+        defaultValue = new(-500, 0, 6);
         this.root = root;
         base.currentSetting = this;
         base.Init();

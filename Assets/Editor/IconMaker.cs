@@ -14,7 +14,7 @@ public class IconMaker : EditorWindow
     string selectedObjectCount = "No Object Currently Selected";
     Camera cam;
 
-    GameObject camOBJ, spawnedObject, selectedObjectREF;
+    GameObject camOBJ, selectedObjectREF;
 
     public int currentObjectIndex = 0;
 
@@ -61,7 +61,7 @@ public class IconMaker : EditorWindow
 
     bool usingOtherMaker;
 
-    public bool updatingFields;
+    public GameObject spawnedObject;
     bool generationReady;
 
     private readonly VisualElement root;
@@ -249,7 +249,16 @@ public class IconMaker : EditorWindow
             animationSettings.style.display = DisplayStyle.Flex;
             animationLabel.style.display = DisplayStyle.None;
             anim = spawnedObject.GetComponent<Animator>();
-            UpdateController();
+            if (animationController.value)//only updates if an animation is applied
+            {
+                UpdateController();
+            }
+            else
+            {
+                animations.value = null;
+                cameraView.style.backgroundImage = GetRenderTexture();
+                ResetAnimData();
+            }
         }
         else
         {
@@ -460,19 +469,17 @@ public class IconMaker : EditorWindow
     }
     void ResetData()
     {
-        updatingFields = true;
         rot.field.value = new Vector3(0, 0, 0);
         pos.field.value = new Vector3(0, 0, 0);
         scale.field.value = 1;
         BG.field.value = new Color32(255, 255, 255, 0);
         ResetNameField();
-        updatingFields = false;
         ResetAnimData();
     }
 
     void ResetAnimData()
     {
-        if (AnimationCheck(selectedObjectREF))
+        if (AnimationCheck(spawnedObject))
         {
             animationController.value = null;
             animationFrame.value = 0;
@@ -488,9 +495,7 @@ public class IconMaker : EditorWindow
 
     void ResetNameField()
     {
-        updatingFields = true;
         spriteName.field.value = selectedObjectREF.name;
-        updatingFields = false;
     }
     #endregion End - Data Handling
 
@@ -629,7 +634,6 @@ public class IconMaker : EditorWindow
     /// </summary>
     public void DatabaseFieldUpdate()
     {
-        updatingFields = true;
         if (DatabaseCheck(selectedObjectREF)) //checks if the object is in the database currently
         {
             //updates field values
@@ -644,8 +648,7 @@ public class IconMaker : EditorWindow
                 animationController.value = iconDatabaseData.animationController;
                 currentAnimName = iconDatabaseData.animName;
             }
-            updatingFields = false;
-            SpawnCamera(); //spawns the camera and prefab
+            SpawnCamera();
             foreach (var setting in settings)
             {
                 setting.ChangeSingleValues(spawnedObject);
@@ -791,7 +794,7 @@ public class IconMaker : EditorWindow
             {
                 foreach (var obj in iconObjects)//progresses the icon and generates it for every selected gameobject
                 {
-                    if (AnimationCheck(spawnedObject))
+                    if (AnimationCheck(spawnedObject) && animationController.value)
                     {
                         yield return new WaitUntil(() => generationReady);
                     }
