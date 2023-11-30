@@ -5,24 +5,36 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
+using System.IO;
+using Unity.EditorCoroutines.Editor;
 
 public class MenuMaker : EditorWindow
 {
     SetValueMenu setValueClass => new(root);
     SelectionMenu selectionClass => new(root);
-    DatabaseMenu databaseClass => new(root);
+    public DatabaseMenu databaseClass => new(root, this);
     List<MenuSettingsMain> settings => new() {setValueClass, selectionClass, databaseClass };
 
     private readonly VisualElement root;
 
+    public ObjectDataBaseSO dataBase;
+
     public EnumField menuTypeField;
     public SliderInt buttonsPerRow;
-    public VisualElement row;
+    public VisualElement row, popup;
     public TextField buttonClass, VEName;
     public ObjectField UIObject;
     public Button createMenuButton;
+    public Toggle menuIconToggle, DBIcons;
+
+    public IconMaker iconMaker;
+    public DatabaseMaker databaseMaker;
+
+    public TextField saveLocation;
 
     int enumInt;
+
+    EditorPopup menuPopup = new();
 
     public MenuMaker(VisualElement root)
     {
@@ -36,6 +48,7 @@ public class MenuMaker : EditorWindow
         Database
     }
 
+    #region Setting Up
     public void CreateGUI()
     {
         menuTypeField = root.Q<EnumField>("TypeOfMenu");
@@ -47,6 +60,13 @@ public class MenuMaker : EditorWindow
         UIObject = root.Q<ObjectField>("UIObject");
 
         createMenuButton = root.Q<Button>("CreateMenuButton");
+
+        menuIconToggle = root.Q<Toggle>("MenuIconToggle");
+        DBIcons = root.Q<Toggle>("UseIconsFromDBToggle");
+
+        saveLocation = root.Q<TextField>("MenuSaveLocation");
+
+        popup = root.Q<VisualElement>("PopupLayout");
 
         createMenuButton.RegisterCallback<ClickEvent>(MenuChecks);
     }
@@ -60,6 +80,16 @@ public class MenuMaker : EditorWindow
             if (i == enumInt)
             {
                 settings[i].element.style.display = DisplayStyle.Flex;
+
+                if (enumInt == 1) //is the selection enum
+                {
+                    selectionClass.SelectionCheck();
+                }
+                if(enumInt == 2) //if the database enum
+                {
+                    databaseClass.IconCheck();
+                }
+
                 buttonsPerRow.RegisterValueChangedCallback(settings[i].UpdateButtonDisplay); //calls the updatebutton display on that setting menu
                 settings[i].ChangeRowDisplay();
             }
@@ -69,7 +99,8 @@ public class MenuMaker : EditorWindow
             }
         }
 
-        if(settings[enumInt].rowDisplayInt > 0)
+        Debug.Log(settings[enumInt].rowDisplayInt);
+        if (settings[enumInt].rowDisplayInt > 0)
         {
             createMenuButton.style.display = DisplayStyle.Flex;
         }
@@ -78,6 +109,7 @@ public class MenuMaker : EditorWindow
             createMenuButton.style.display = DisplayStyle.None;
         }
     }
+    #endregion End - Setting Up
 
     public void OnSelectionChange()
     {
@@ -87,7 +119,7 @@ public class MenuMaker : EditorWindow
         }
     }
 
-
+    #region Checks
     /// <summary>
     /// checks if a menu can be generated
     /// </summary>
@@ -97,13 +129,13 @@ public class MenuMaker : EditorWindow
         //will create popups
         if (UIObject.value == null) //if no UI object has been selected
         {
-            Debug.Log("No UI Selected");
+            ErrorPopup("There is No UI Doccument selected, please select one and try again");
         }
         else
         {
             if (VEName.value == "") //if no name for the visualelement has been entered
             {
-                Debug.Log("No Visual Element Name entered");
+                ErrorPopup("There is no Visual Element to attach to, please enter a name and try again");
             }
             else
             {
@@ -112,14 +144,14 @@ public class MenuMaker : EditorWindow
                 VisualElement elementToCreateUION = doc.rootVisualElement.Q<VisualElement>(VEName.value);
                 if (elementToCreateUION == null)
                 {
-                    Debug.Log("VEName doesn't exist");
+                    ErrorPopup("The Visual Element name you have entered doesn't exist on the specified UI Document, please enter a different one");
                 }
                 else
                 {
                     //checks if text has been entered for the button class
                     if(buttonClass.value == "")
                     {
-                        Debug.Log("No class entered");
+                        ErrorPopup("There is no button style class entered, please enter one and try again!");
                     }
                     else
                     {
@@ -131,29 +163,92 @@ public class MenuMaker : EditorWindow
     }
 
     /// <summary>
+    /// Checks if the save location entered exists
+    /// </summary>
+    /// <returns></returns>
+    bool FilePathCheck(string path)
+    {
+        //check if directory doesn't exit
+        if (Directory.Exists(path))
+        {
+            return true;
+        }
+        return false;
+    }
+    #endregion End - Checks
+
+    #region Menu Generation
+    void ErrorPopup(string errorText)
+    {
+        menuPopup.labelText = errorText;
+        UnityEditor.PopupWindow.Show(popup.worldBound, menuPopup);
+    }
+    /// <summary>
     /// Function to generate menu buttons based on set amount
     /// </summary>
     void GenerateMenu()
     {
-        MenuUISO menu = ScriptableObject.CreateInstance<MenuUISO>(); //creates a new scriptable object with all of the button data for the menus
-        menu.rowCount = buttonsPerRow.value;
-        menu.buttonStyle = buttonClass.value;
-
-        Debug.Log(settings[enumInt].rowDisplayInt);
-
-        for (int i = 0; i < settings[enumInt].rowDisplayInt; i++)
+        if (FilePathCheck(saveLocation.value) && FilePathCheck(iconMaker.saveLocation.value))
         {
-            ButtonData button = new();
-            button.name = "button" + i;
+            if (menuIconToggle.value)
+            {
+                iconMaker.currentObjectIndex = 0;
+                iconMaker.ObjectsSelected();
+            }
+            MenuUISO menu = ScriptableObject.CreateInstance<MenuUISO>(); //creates a new scriptable object with all of the button data for the menus
+            menu.rowCount = buttonsPerRow.value;
+            menu.buttonStyle = buttonClass.value;
 
-            menu.buttons.Add(button);
+            for (int i = 0; i < settings[enumInt].rowDisplayInt; i++)
+            {
+                ButtonData button = new();
+                button.name = "button" + i;
+
+                if (menuIconToggle.value)
+                {
+                    CreateIcon(button);
+                }
+                if (DBIcons.value)
+                {
+                    if (dataBase.objectDatabase[i].icon != null)
+                    {
+                        button.icon = dataBase.objectDatabase[i].icon;
+                    }
+                }
+                EditorUtility.SetDirty(menu);
+                menu.buttons.Add(button);
+            }
+
+                AssetDatabase.CreateAsset(menu, $"{saveLocation.value}/MenuSO.asset");
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+                UIController controller = GameObject.FindAnyObjectByType<UIController>();
+                controller.UI = menu;
+                controller.AddButtons();
         }
-
-        AssetDatabase.CreateAsset(menu, "Assets/Editor/IconMaker/MenuSO.asset");
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        UIController controller = GameObject.FindAnyObjectByType<UIController>();
-        controller.UI = menu;
-        controller.AddButtons();
+        if (!FilePathCheck(iconMaker.saveLocation.value))
+        {
+            ErrorPopup("The specified save location does not exist for the icons, please enter a valid file path");
+        }
+        if (!FilePathCheck(saveLocation.value))
+        {
+            ErrorPopup("The specified save location does not exist for the menu, please enter a valid file path");
+        }
     }
+
+    /// <summary>
+    /// calls the generate icon function on the icon maker and sets it in the database linked to the specific prefab
+    /// </summary>
+    /// <param name="evt"></param>
+    /// <param name="data"></param>
+    void CreateIcon(ButtonData data)
+    {
+        iconMaker.GetIcon(iconMaker.GetRenderTexture());
+        data.icon = iconMaker.iconSprite;
+        if (settings[enumInt].rowDisplayInt > 1)
+        {
+            iconMaker.ProgressIcon(1);
+        }
+    }
+    #endregion End - Menu Generation
 }

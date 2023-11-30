@@ -47,7 +47,12 @@ public class EditorWindowMain : EditorWindow
         databaseMaker.CreateGUI();
 
         databaseMaker.iconMaker = iconMaker;
+        databaseMaker.menuMaker = menuMaker;
         iconMaker.databaseMaker = databaseMaker;
+        menuMaker.iconMaker = iconMaker;
+        menuMaker.databaseMaker = databaseMaker;
+
+        databaseMaker.ButtonShowing();
 
         for (int i = 0; i < names.Length; i++)
         {

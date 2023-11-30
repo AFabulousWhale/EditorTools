@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using Unity.EditorCoroutines.Editor;
+using System.IO;
 
 public class DatabaseMaker : EditorWindow
 {
@@ -18,11 +19,12 @@ public class DatabaseMaker : EditorWindow
 
     int inDBCount = 0;
 
-    string filePath = "Assets/Editor/DatabaseMaker/";
-
     public IconMaker iconMaker;
+    public MenuMaker menuMaker;
 
     EditorPopup databasePopup = new();
+
+    public TextField saveLocation;
 
     public DatabaseMaker(VisualElement root)
     {
@@ -49,6 +51,8 @@ public class DatabaseMaker : EditorWindow
         popup = root.Q<VisualElement>("PopupLayout");
 
         inDBLabel = root.Q<Label>("InDatabaseLabel");
+
+        saveLocation = root.Q<TextField>("DBSaveLocation");
 
         generateDatabaseIconToggle.RegisterValueChangedCallback(ShowCreateIconsButton);
 
@@ -154,21 +158,21 @@ public class DatabaseMaker : EditorWindow
             case true: //if it's a new database and the selected objects are over 0 then can create a database from objects
                 addToDatabase.style.display = DisplayStyle.None;
                 clearDatabase.style.display = DisplayStyle.None;
+                GOLabels.style.display = DisplayStyle.Flex;
 
-                generateDBIconsToggle.style.display = DisplayStyle.Flex;
+                generateDBIconsToggle.style.display = DisplayStyle.None;
                 generateEveryIconToggle.style.display = DisplayStyle.None;
                 generateNewIconsToggle.style.display = DisplayStyle.None;
                 generateDatabaseIconToggle.style.display = DisplayStyle.None;
                 generateDatabaseIconToggle.value = false;
                 generateIcons.style.display = DisplayStyle.None;
+                newDatabase.style.display = DisplayStyle.None;
 
                 if (Selection.gameObjects.Length > 0)
                 {
+                    GOLabels.style.display = DisplayStyle.None;
                     newDatabase.style.display = DisplayStyle.Flex;
-                }
-                else
-                {
-                    newDatabase.style.display = DisplayStyle.None;
+                    generateDBIconsToggle.style.display = DisplayStyle.Flex;
                 }
                 break;
             case false: //if database already exists
@@ -208,76 +212,87 @@ public class DatabaseMaker : EditorWindow
     /// <param name="buttonType"></param>
     public void PopUpCheck(ClickEvent evt, string buttonType)
     {
-        databasePopup.twoButtons = true;
-        ValidDatabaseCheck();
-        database = dataTest;
-        switch (buttonType) //used to change the text displayed on the popup
+        if (FilePathCheck(saveLocation.value) && FilePathCheck(iconMaker.saveLocation.value))
         {
-            case "create":
-                databasePopup.labelText = $"This will create a new database with all {Selection.gameObjects.Length} selected objects";
-                if(generateDBIconsToggle.value)
-                {
-                    databasePopup.extraText = true;
-                    databasePopup.labelTextExtra = $"And create Icons for the {Selection.gameObjects.Length} selected objects";
-                }
-                else
-                {
-                    databasePopup.extraText = false;
-                }
-                break;
-            case "add":
-                databasePopup.labelText = $"This will add the {Selection.gameObjects.Length} selected objects into the database";
-                if(generateEveryIconToggle.value || generateNewIconsToggle.value)
-                {
-                    databasePopup.extraText = true;
-
-
-                    if (generateEveryIconToggle.value)
+            databasePopup.twoButtons = true;
+            ValidDatabaseCheck();
+            database = dataTest;
+            switch (buttonType) //used to change the text displayed on the popup
+            {
+                case "create":
+                    databasePopup.labelText = $"This will create a new database with all {Selection.gameObjects.Length} selected objects";
+                    if (generateDBIconsToggle.value)
                     {
-                        databasePopup.labelTextExtra = $"And create Icons for the {database.objectDatabase.Count} database items as well " +
-                            $"as the {Selection.gameObjects.Length} selected objects";
-                    }
-                    if (generateNewIconsToggle.value)
-                    {
+                        databasePopup.extraText = true;
                         databasePopup.labelTextExtra = $"And create Icons for the {Selection.gameObjects.Length} selected objects";
                     }
-                }
-                else
-                {
-                    databasePopup.extraText = false;
-                }
-                break;
-            case "clear":
-                databasePopup.labelText = $"This will clear the database of {database.objectDatabase.Count} items";
-                break;
-            case "icons":
-                databasePopup.labelText = $"This will create icons for the {database.objectDatabase.Count} items";
-                break;
-        }
-        EditorCoroutineUtility.StartCoroutineOwnerless(StartCheck());
-        IEnumerator StartCheck() //waits until the popup has either been cancelled or confirmed 
-        {
-            UnityEditor.PopupWindow.Show(popup.worldBound, databasePopup);
-            yield return new WaitUntil(() => databasePopup.popUpStage != "none");
+                    else
+                    {
+                        databasePopup.extraText = false;
+                    }
+                    break;
+                case "add":
+                    databasePopup.labelText = $"This will add the {Selection.gameObjects.Length} selected objects into the database";
+                    if (generateEveryIconToggle.value || generateNewIconsToggle.value)
+                    {
+                        databasePopup.extraText = true;
 
-            if(databasePopup.popUpStage == "confirm")
+
+                        if (generateEveryIconToggle.value)
+                        {
+                            databasePopup.labelTextExtra = $"And create Icons for the {database.objectDatabase.Count} database items as well " +
+                                $"as the {Selection.gameObjects.Length} selected objects";
+                        }
+                        if (generateNewIconsToggle.value)
+                        {
+                            databasePopup.labelTextExtra = $"And create Icons for the {Selection.gameObjects.Length} selected objects";
+                        }
+                    }
+                    else
+                    {
+                        databasePopup.extraText = false;
+                    }
+                    break;
+                case "clear":
+                    databasePopup.labelText = $"This will clear the database of {database.objectDatabase.Count} items";
+                    break;
+                case "icons":
+                    databasePopup.labelText = $"This will create icons for the {database.objectDatabase.Count} items in the database";
+                    break;
+            }
+            EditorCoroutineUtility.StartCoroutineOwnerless(StartCheck());
+            IEnumerator StartCheck() //waits until the popup has either been cancelled or confirmed 
             {
-                switch (buttonType) //used to call the specific functions
+                UnityEditor.PopupWindow.Show(popup.worldBound, databasePopup);
+                yield return new WaitUntil(() => databasePopup.popUpStage != "none");
+
+                if (databasePopup.popUpStage == "confirm")
                 {
-                    case "create":
-                        GenerateDatabase(evt);
-                        break;
-                    case "add":
-                        GenerateDatabase(evt);
-                        break;
-                    case "clear":
-                        ClearDatabase();
-                        break;
-                    case "icons":
-                        GenerateIcons(evt);
-                        break;
+                    switch (buttonType) //used to call the specific functions
+                    {
+                        case "create":
+                            GenerateDatabase(evt);
+                            break;
+                        case "add":
+                            GenerateDatabase(evt);
+                            break;
+                        case "clear":
+                            ClearDatabase();
+                            break;
+                        case "icons":
+                            GenerateIcons(evt);
+                            break;
+                    }
                 }
             }
+        }
+        if (!FilePathCheck(iconMaker.saveLocation.value))
+        {
+            ErrorPopup("The specified save location does not exist for the icons, please enter a valid file path");
+        }
+        if (!FilePathCheck(saveLocation.value))
+        {
+            ErrorPopup("The specified save location does not exist for the database, please enter a valid file path");
         }
     }
 
@@ -297,9 +312,29 @@ public class DatabaseMaker : EditorWindow
         }
         return false;
     }
+
+    /// <summary>
+    /// Checks if the save location entered exists
+    /// </summary>
+    /// <returns></returns>
+    bool FilePathCheck(string path)
+    {
+        //check if directory doesn't exit
+        if (Directory.Exists(path))
+        {
+            return true;
+        }
+        return false;
+    }
     #endregion End - Checks
 
     #region Database Creation
+
+    void ErrorPopup(string text)
+    {
+        databasePopup.labelText = text;
+        UnityEditor.PopupWindow.Show(popup.worldBound, databasePopup);
+    }
 
     /// <summary>
     /// generates just the icons for the database objects
@@ -386,7 +421,8 @@ public class DatabaseMaker : EditorWindow
         }
         if (ValidDatabaseCheck())
         {
-            AssetDatabase.CreateAsset(database, $"{filePath}{databaseName.value}.asset");
+            AssetDatabase.CreateAsset(database, $"{saveLocation.value}/{databaseName.value}.asset");
+            menuMaker.dataBase = database;
             if (iconGeneration)
             {
                 databasePopup.labelText = "Database and Icons Have Been Created Sucessfully!";
@@ -396,6 +432,10 @@ public class DatabaseMaker : EditorWindow
                 databasePopup.labelText = "Database Has Been Created Sucessfully!";
             }
         }
+        generateDBIconsToggle.value = false;
+        generateEveryIconToggle.value = false;
+        generateNewIconsToggle.value = false;
+        generateDatabaseIconToggle.value = false;
         EditorCoroutineUtility.StartCoroutineOwnerless(SaveDatabase());
     }
 
@@ -408,7 +448,7 @@ public class DatabaseMaker : EditorWindow
     {
         iconMaker.GetIcon(iconMaker.GetRenderTexture());
         data.icon = iconMaker.iconSprite;
-        iconMaker.NextIcon(evt, 1);
+        iconMaker.NextIconCaller(evt, 1);
     }
 
     /// <summary>
@@ -430,7 +470,7 @@ public class DatabaseMaker : EditorWindow
     /// <param name="evt"></param>
     void ClearDatabase()
     {
-        AssetDatabase.DeleteAsset($"{filePath}{databaseName.value}.asset");
+        AssetDatabase.DeleteAsset($"{saveLocation.value}/{databaseName.value}.asset");
         databasePopup.twoButtons = false;
         databasePopup.extraText = false;
         databasePopup.labelText = "Database Has Been Deleted Sucessfully!";
@@ -443,12 +483,20 @@ public class DatabaseMaker : EditorWindow
     /// <returns></returns>
     public bool ValidDatabaseCheck()
     {
-        dataTest = AssetDatabase.LoadAssetAtPath<ObjectDataBaseSO>($"{filePath}{databaseName.value}.asset");
+        dataTest = AssetDatabase.LoadAssetAtPath<ObjectDataBaseSO>($"{saveLocation.value}/{databaseName.value}.asset");
 
         if (dataTest == null)
         {
             dataTest = ScriptableObject.CreateInstance<ObjectDataBaseSO>();
+            if (menuMaker != null)
+            {
+                menuMaker.dataBase = dataTest;
+            }
             return true;
+        }
+        if (menuMaker != null)
+        {
+            menuMaker.dataBase = dataTest;
         }
         return false;
     }

@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Assets/Editor/IconMaker/Icon&amp;ButtonUI.uss?fileID=7433441132597879392&amp;guid=f690ff010b898514380ffcb9f087c3ce&amp;type=3#Icon&amp;ButtonUI" />
     <ui:VisualElement name="PopupLayout" style="flex-grow: 1; position: absolute; width: 350px; height: 175px; align-items: stretch; align-self: center; top: 0; opacity: 1; overflow: hidden; visibility: hidden;" />
-    <ui:VisualElement name="Tabs" style="flex-grow: initial; background-color: rgb(185, 183, 183); height: 27px; flex-shrink: initial; width: auto; align-self: auto; justify-content: flex-start;">
-        <ui:Label tabindex="-1" text="Icon Maker" display-tooltip-when-elided="true" name="IconTab" class="tab currentlySelectedTab" style="height: 21px;" />
+    <ui:VisualElement name="Tabs" style="flex-grow: initial; background-color: rgb(40, 40, 40); height: 21px; flex-shrink: initial; width: auto; align-self: auto; justify-content: flex-start; color: rgb(40, 40, 40);">
+        <ui:Label tabindex="-1" text="Icon Maker" display-tooltip-when-elided="true" name="IconTab" class="tab" style="height: 21px;" />
         <ui:Label tabindex="-1" text="Menu Maker" display-tooltip-when-elided="true" name="MenuTab" class="tab" />
         <ui:Label tabindex="-1" text="Database Maker" display-tooltip-when-elided="true" name="DatabaseTab" class="tab" />
     </ui:VisualElement>
@@ -84,67 +84,58 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="MenuContent" style="flex-grow: 1; background-color: rgba(34, 44, 75, 0); border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; height: auto; align-items: stretch; justify-content: flex-start; flex-direction: column; display: none; opacity: 1;">
+        <ui:VisualElement name="MenuContent" style="flex-grow: 1; background-color: rgba(34, 44, 75, 0); border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; height: auto; align-items: stretch; justify-content: flex-start; flex-direction: column; display: flex; opacity: 1;">
             <ui:Label tabindex="-1" text="The menu can only be used with Unity&apos;s UIToolkit" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; -unity-font-style: bold; color: rgb(144, 39, 39);" />
             <ui:VisualElement name="Settings" style="flex-grow: 1; height: auto;">
-                <ui:Foldout text="File Settings" name="MenuFileSettings" class="foldout-style" style="height: auto;" />
-                <ui:Foldout text="Setup Settings" name="SetUpSettings" class="foldout-style" style="flex-direction: column;">
-                    <ui:VisualElement name="Settings" style="flex-grow: 1; flex-direction: column;">
-                        <ui:VisualElement name="GenericFileSettings" style="flex-grow: 1; flex-direction: row;">
-                            <ui:VisualElement name="Text" class="text-VE">
-                                <ui:Label tabindex="-1" text="Type Of Menu" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TypeOfMenuLabel" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; width: auto;" />
+                <ui:Foldout text="File Settings" name="MenuFileSettings" class="foldout-style" style="height: auto;">
+                    <ui:VisualElement name="FileSettings" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; align-self: auto; margin-left: 3px; margin-right: 16px;">
+                        <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 79%; flex-direction: column; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                            <ui:VisualElement name="Save" style="flex-grow: 1; flex-direction: row; width: 100%; margin-right: 0; margin-left: 10px; position: relative;">
+                                <ui:TextField picking-mode="Ignore" label="Save Location" value="Assets/Editor/MenuMaker" name="MenuSaveLocation" class="IconStyle MenuStyle" style="margin-right: 4px; margin-left: 4px; flex-grow: 1; width: auto;" />
                             </ui:VisualElement>
-                            <ui:VisualElement name="Fields" class="field-VE">
-                                <ui:EnumField type="MenuMaker+MenuType, Assembly-CSharp-Editor" name="TypeOfMenu" include-obsolete-values="false" tooltip="The type of menu set up" value="SetValues" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 14px; -unity-font-style: normal;" />
+                            <ui:VisualElement name="Name" style="flex-grow: 1; flex-direction: row; padding-right: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; width: 100%;">
+                                <ui:TextField picking-mode="Ignore" label="File Name" value="MenuSO" name="MenuFileName" class="IconStyle MenuStyle" style="margin-right: 4px; margin-left: 4px; flex-grow: 1; width: auto;" />
                             </ui:VisualElement>
                         </ui:VisualElement>
-                        <ui:VisualElement name="UIToolkitSettings" style="flex-grow: 1; flex-direction: row; display: flex; visibility: visible;">
-                            <ui:VisualElement name="Text" class="text-VE">
-                                <ui:Label tabindex="-1" text="UI Object" parse-escape-sequences="true" display-tooltip-when-elided="true" name="UIObjectLabel" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
-                                <ui:Label tabindex="-1" text="Visual Element Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="UINameLabel" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-                                <ui:Label tabindex="-1" text="Button Style Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ButtonStyleNameLabel" />
-                            </ui:VisualElement>
-                            <ui:VisualElement name="Fields" class="field-VE">
-                                <uie:ObjectField allow-scene-objects="true" name="UIObject" type="UnityEngine.UIElements.UIDocument, UnityEngine.UIElementsModule" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 14px; -unity-font-style: normal;" />
-                                <ui:TextField picking-mode="Ignore" value="MainUIBase" name="UIName" auto-correction="false" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; -unity-font-style: normal; font-size: 14px;" />
-                                <ui:TextField picking-mode="Ignore" value="menu-button-style" name="ButtonStyleName" style="-unity-font-style: normal; font-size: 14px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+                    </ui:VisualElement>
+                </ui:Foldout>
+                <ui:Foldout text="Setup Settings" name="SetUpSettings" class="foldout-style" style="flex-direction: column;">
+                    <ui:VisualElement name="BasicSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row;">
+                        <ui:VisualElement name="Values" style="flex-grow: 1; flex-direction: row; width: 79%;">
+                            <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 100%; margin-left: 10px; margin-right: 0; flex-shrink: 1; height: auto;">
+                                <ui:EnumField type="MenuMaker+MenuType, Assembly-CSharp-Editor" name="TypeOfMenu" include-obsolete-values="false" tooltip="The type of menu set up" value="SetValues" label="Buttons count determined by" class="MenuStyle" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 14px; -unity-font-style: normal;" />
+                                <uie:ObjectField allow-scene-objects="true" name="UIObject" type="UnityEngine.UIElements.UIDocument, UnityEngine.UIElementsModule" label="Object with UI Document" class="MenuStyle" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 14px; -unity-font-style: normal;" />
+                                <ui:TextField picking-mode="Ignore" value="MainUIBase" name="UIName" auto-correction="false" label="Visual Element Name To Attach To" class="MenuStyle" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; -unity-font-style: normal; font-size: 14px;" />
+                                <ui:TextField picking-mode="Ignore" value="button-style" name="ButtonStyleName" label="Button Style Name" class="MenuStyle" style="-unity-font-style: normal; font-size: 14px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:Foldout>
                 <ui:Foldout text="Basic Settings" name="BasicSettings" class="foldout-style" style="flex-grow: 1; height: auto;">
-                    <ui:VisualElement name="Settings" style="flex-grow: 1; margin-left: 0; margin-right: 0; font-size: 14px; -unity-font-style: normal; flex-direction: column; margin-top: 0; margin-bottom: 0;">
-                        <ui:VisualElement name="GenericBasicSettings" style="flex-grow: 1; flex-direction: row;">
-                            <ui:VisualElement name="Text" class="text-VE" style="flex-grow: 0;">
-                                <ui:Label tabindex="-1" text="Buttons Per Row" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ButtonsPerRowLabel" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-                            </ui:VisualElement>
-                            <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1;">
-                                <ui:SliderInt picking-mode="Ignore" value="10" high-value="20" name="ButtonsPerRow" low-value="1" show-input-field="true" style="-unity-font-style: normal; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 14px;" />
-                            </ui:VisualElement>
-                        </ui:VisualElement>
-                        <ui:VisualElement name="SetMenu" style="flex-grow: 1; width: auto; height: 27px; display: none; font-size: 14px; flex-direction: row;">
-                            <ui:VisualElement name="Text" class="text-VE" style="flex-grow: 0;">
-                                <ui:Label tabindex="-1" text="Number Of Buttons" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumberOfButtonsLabel" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-                            </ui:VisualElement>
-                            <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1;">
-                                <ui:SliderInt picking-mode="Ignore" value="50" high-value="100" name="NumberOfButtons" low-value="1" show-input-field="true" inverted="false" direction="Horizontal" style="-unity-font-style: normal; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 14px;" />
-                            </ui:VisualElement>
-                        </ui:VisualElement>
-                        <ui:VisualElement name="DatabaseMenu" style="flex-grow: 1; height: auto; width: auto; display: none; flex-direction: column;">
-                            <ui:VisualElement name="Settings" style="flex-grow: 1; flex-direction: row;">
-                                <ui:VisualElement name="Text" class="text-VE" style="flex-grow: 1;">
-                                    <ui:Label tabindex="-1" text="Use Icons From Database?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="UseIconsToggleLabel" />
+                    <ui:VisualElement name="Settings" style="flex-grow: 1; margin-left: 0; margin-right: 0; font-size: 14px; -unity-font-style: normal; flex-direction: column; margin-top: 0; margin-bottom: 0;" />
+                    <ui:VisualElement name="BasicSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row;">
+                        <ui:VisualElement name="Values" style="flex-grow: 1; flex-direction: row; width: 79%;">
+                            <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 100%; margin-left: 10px; margin-right: 0; flex-shrink: 1; height: auto;">
+                                <ui:VisualElement name="GenericBasicSettings" style="flex-grow: 1; flex-direction: column;">
+                                    <ui:SliderInt picking-mode="Ignore" value="10" high-value="20" name="ButtonsPerRow" low-value="1" show-input-field="true" label="Buttons Per Row" class="MenuStyle" style="-unity-font-style: normal; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 14px;" />
                                 </ui:VisualElement>
-                                <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1;">
-                                    <ui:Toggle name="UseIconsToggle" style="align-self: auto; justify-content: flex-start; align-items: auto; -unity-text-align: upper-left; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+                                <ui:VisualElement name="SelectionMenu" style="flex-grow: 0; width: auto; height: auto; display: none; flex-direction: column; align-self: center;">
+                                    <ui:Toggle name="MenuIconToggle" label="Genereate Icons for Selected Objects to use as button icons" class="DBStyle" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; display: flex; flex-grow: 1; width: 98.5%;" />
+                                    <ui:Label tabindex="-1" text="This will use the Icon Maker for the Icons so you can customise them!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IconMenuLabel" style="-unity-text-align: upper-center; font-size: 10px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
+                                    <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SelectedGOCount" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; -unity-text-align: upper-left; width: auto; justify-content: flex-start; align-self: center; align-items: center; -unity-font-style: bold; font-size: 21px;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="DatabaseMenu" style="flex-grow: 1; height: auto; width: auto; display: none; flex-direction: column;">
+                                    <ui:Toggle name="UseIconsFromDBToggle" label="Use Icons From Database?" class="DBStyle" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; display: flex; flex-grow: 1; width: 98.5%;" />
+                                    <ui:Label tabindex="-1" text="The UI will be based on the number of objects in the database" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 11px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-shrink: 1; flex-grow: 1; height: auto; width: auto; -unity-font-style: normal; -unity-text-align: upper-center;" />
+                                    <ui:Label tabindex="-1" text="The Database can be set up within the &quot;Database Maker&quot; TAB" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 10px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-shrink: 1; flex-grow: 1; height: auto; width: auto; -unity-font-style: normal; -unity-text-align: upper-center;" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="SetMenu" style="flex-grow: 1; width: auto; height: auto; display: none; font-size: 14px; flex-direction: column; align-self: auto;">
+                                    <ui:SliderInt picking-mode="Ignore" value="50" high-value="100" name="NumberOfButtons" low-value="1" show-input-field="true" inverted="false" direction="Horizontal" label="Total Button Count" class="MenuStyle" style="-unity-font-style: normal; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 14px;" />
                                 </ui:VisualElement>
                             </ui:VisualElement>
-                            <ui:Label tabindex="-1" text="The UI will be based on the number of objects in the database" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 11px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-shrink: 1; flex-grow: 1; height: auto; width: auto; -unity-font-style: normal; -unity-text-align: upper-center;" />
-                            <ui:Label tabindex="-1" text="The Database can be set up within the &quot;Database Maker&quot; TAB" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 10px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; flex-shrink: 1; flex-grow: 1; height: auto; width: auto; -unity-font-style: normal; -unity-text-align: upper-center;" />
                         </ui:VisualElement>
-                        <ui:VisualElement name="SelectionMenu" style="flex-grow: 1; width: auto; height: auto; display: flex; flex-direction: row; align-self: center;">
-                            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SelectedGOCount" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; -unity-text-align: upper-left; width: auto; justify-content: flex-start; align-self: center; align-items: center;" />
-                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ButtonDisplayCount" style="flex-grow: 1;">
                         <ui:Label tabindex="-1" text="This will create 5 rows each with 10 buttons" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ButtonDisplayLabel" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 14px; -unity-font-style: normal; -unity-text-align: upper-center;" />
                         <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ButtonDisplayLabelExtra" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 14px; -unity-font-style: normal; -unity-text-align: upper-center; font-size: 9px; display: none;" />
                     </ui:VisualElement>
@@ -152,18 +143,14 @@
                 <ui:Button text="Create Menu" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreateMenuButton" style="width: auto; align-self: center;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="DatabaseContent" style="flex-grow: 1; background-color: rgba(48, 96, 59, 0); height: 33%; display: flex; opacity: 1;">
-            <ui:VisualElement name="DatabaseGOLabels" style="flex-grow: 1; display: flex;">
-                <ui:Label tabindex="-1" text="No Objects Currently Selected" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DatabaseGOLabel" style="align-items: center; justify-content: center; align-self: center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 19px;" />
-                <ui:Label tabindex="-1" text="Please selected the Gameobjects or Prefabs that you would like to create a database for" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DatabaseGOLabelExtra" style="-unity-font-style: normal; align-self: center; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 9px; -unity-text-align: upper-center; white-space: normal;" />
-            </ui:VisualElement>
+        <ui:VisualElement name="DatabaseContent" style="flex-grow: 1; background-color: rgba(48, 96, 59, 0); height: 33%; display: none; opacity: 1;">
             <ui:VisualElement name="Settings" style="flex-grow: 1; height: auto;">
                 <ui:Foldout text="File Settings" name="DatabaseFileSettings" class="foldout-style" style="height: auto;">
                     <ui:VisualElement name="FileSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row;">
                         <ui:VisualElement name="Values" style="flex-grow: 1; flex-direction: row; width: 79%;">
                             <ui:VisualElement name="DatabaseFileSettings" class="field-VE" style="flex-grow: 1; width: 100%; margin-left: 10px; margin-right: 0; flex-shrink: 1;">
                                 <ui:TextField picking-mode="Ignore" value="DatabaseSO" name="DatabaseName" label="Name Of Database" class="text-style IconStyle" style="flex-grow: 0; flex-shrink: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
-                                <ui:TextField picking-mode="Ignore" label="Save Location" value="Assets/Editor/IconMaker/Icons" name="IconSaveLocation" class="IconStyle" style="margin-right: 4px; margin-left: 4px; flex-grow: 1; width: auto;" />
+                                <ui:TextField picking-mode="Ignore" label="Save Location" value="Assets/Editor/DatabaseMaker" name="DBSaveLocation" class="IconStyle" style="margin-right: 4px; margin-left: 4px; flex-grow: 1; width: auto;" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>
@@ -180,6 +167,10 @@
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="InDatabaseLabel" style="-unity-font-style: bold; -unity-text-align: upper-center; color: rgb(154, 71, 71); margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 20px; display: none; white-space: normal;" />
+                    <ui:VisualElement name="DatabaseGOLabels" style="flex-grow: 1; display: flex;">
+                        <ui:Label tabindex="-1" text="No Objects Currently Selected" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DatabaseGOLabel" style="align-items: center; justify-content: center; align-self: center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; font-size: 19px;" />
+                        <ui:Label tabindex="-1" text="Please selected the Gameobjects or Prefabs that you would like to create a database for" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DatabaseGOLabelExtra" style="-unity-font-style: normal; align-self: center; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 9px; -unity-text-align: upper-center; white-space: normal;" />
+                    </ui:VisualElement>
                 </ui:Foldout>
             </ui:VisualElement>
             <ui:VisualElement name="DatabaseButtons" style="flex-grow: 1;">

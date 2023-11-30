@@ -22,15 +22,15 @@ public class IconMaker : EditorWindow
     ProgressBar iconAmount;
     Button leftButton, rightButton, generateIcon, generateAllIcons, autoNameButton;
     VisualElement iconPreviewBox, cameraView, popup, buttons, applyToAllToggles, iconLabels, animationSettings;
-    TextField saveLocation;
+    public TextField saveLocation;
 
-    Toggle databaseAllToggle, databaseEverythingToggle, databaseNewToggle, databaseDatabaseToggle;
+    Toggle databaseAllToggle, databaseEverythingToggle, databaseNewToggle, databaseDatabaseToggle, menuIconToggle;
     Label iconUsedLabel, databaseIconTypeLabel;
     List<GameObject> objectsInDatabase = new();
 
     DropdownField animations;
     Slider animationFrame;
-    ObjectField animationController;
+    public ObjectField animationController;
 
     public DatabaseMaker databaseMaker;
 
@@ -56,6 +56,7 @@ public class IconMaker : EditorWindow
     AnimatorState currentAnimatorState;
     Animator anim;
     string currentAnimName;
+    public bool generationReady;
 
     Renderer prefabRend;
     GameObject rendererObject;
@@ -65,7 +66,6 @@ public class IconMaker : EditorWindow
     bool usingDatabaseMaker;
 
     public GameObject spawnedObject;
-    bool generationReady;
 
     private readonly VisualElement root;
 
@@ -113,22 +113,24 @@ public class IconMaker : EditorWindow
         databaseEverythingToggle = root.Q<Toggle>("DatabaseEveryIcons");
         databaseNewToggle = root.Q<Toggle>("DatabaseNewIcons");
         databaseDatabaseToggle = root.Q<Toggle>("DatabaseDatabaseIcons");
+        menuIconToggle = root.Q<Toggle>("MenuIconToggle");
 
-        leftButton.RegisterCallback<ClickEvent, int>(NextIcon, -1);
-        rightButton.RegisterCallback<ClickEvent, int>(NextIcon, 1);
+        leftButton.RegisterCallback<ClickEvent, int>(NextIconCaller, -1);
+        rightButton.RegisterCallback<ClickEvent, int>(NextIconCaller, 1);
         generateIcon.RegisterCallback<ClickEvent>(IconGeneration);
         generateAllIcons.RegisterCallback<ClickEvent>(GenerateAllIcons);
         autoNameButton.RegisterCallback<ClickEvent>(AutoNameClickEvent);
 
-        databaseAllToggle.RegisterValueChangedCallback(ToggleChange);
-        databaseEverythingToggle.RegisterValueChangedCallback(ToggleChange);
-        databaseNewToggle.RegisterValueChangedCallback(ToggleChange);
-        databaseDatabaseToggle.RegisterValueChangedCallback(ToggleChange);
+        databaseAllToggle.RegisterValueChangedCallback(DatabaseToggleChange);
+        databaseEverythingToggle.RegisterValueChangedCallback(DatabaseToggleChange);
+        databaseNewToggle.RegisterValueChangedCallback(DatabaseToggleChange);
+        databaseDatabaseToggle.RegisterValueChangedCallback(DatabaseToggleChange);
+        menuIconToggle.RegisterValueChangedCallback(MenuToggleChange);
 
         iconPopup.twoButtons = false;
         iconPopup.labelText = "All Icons Have Been Created Sucessfully!";
 
-        DatabaseToggleCheck();
+        OtherMenusToggleCheck();
 
         //if objects are still there from testing then destroy them so it won't mess up the new icon display
         DestroyImmediate(GameObject.Find("IconObjectPrefab"));
@@ -149,19 +151,35 @@ public class IconMaker : EditorWindow
     /// is called when the database toggles are changed
     /// </summary>
     /// <param name="evt"></param>
-    void ToggleChange(IChangeEvent evt)
+    void DatabaseToggleChange(IChangeEvent evt)
     {
         databaseMaker.ValidDatabaseCheck(); //gets the reference to the database that will be used to generate icons
         databaseMaker.database = databaseMaker.dataTest;
-        DatabaseToggleCheck();
+        OtherMenusToggleCheck();
+        ObjectsSelected();
+    }
+
+    /// <summary>
+    /// is called when the menu toggles are changed
+    /// </summary>
+    /// <param name="evt"></param>
+    void MenuToggleChange(IChangeEvent evt)
+    {
+        OtherMenusToggleCheck();
         ObjectsSelected();
     }
 
     /// <summary>
     /// checks if the database is being used for icon generation
     /// </summary>
-    void DatabaseToggleCheck()
+    void OtherMenusToggleCheck()
     {
+        if(menuIconToggle.value)
+        {
+            iconUsedLabel.text = "The 'Icon Maker' is being used by the 'Menu Maker'";
+            iconUsedLabel.style.display = DisplayStyle.Flex;
+            buttons.style.display = DisplayStyle.None;
+        }
         if(databaseEverythingToggle.value || databaseAllToggle.value || databaseNewToggle.value || databaseDatabaseToggle.value) //if any toggle is selected
         {
             usingDatabaseMaker = true;
@@ -197,7 +215,7 @@ public class IconMaker : EditorWindow
             }
             currentObjectIndex = 0;
         }
-        else if (!databaseEverythingToggle.value && !databaseAllToggle.value && !databaseNewToggle.value && !databaseDatabaseToggle.value) //if no toggles
+        else if (!databaseEverythingToggle.value && !databaseAllToggle.value && !databaseNewToggle.value && !databaseDatabaseToggle.value && !menuIconToggle.value) //if no toggles
         {
             usingDatabaseMaker = false;
             iconUsedLabel.style.display = DisplayStyle.None;
@@ -238,7 +256,7 @@ public class IconMaker : EditorWindow
         //displaying how many gameobjects have been selected
         if (iconObjects.Count > 0)
         {
-            DatabaseToggleCheck();
+            OtherMenusToggleCheck();
             ObjectsSelected();
         }
         else if (iconObjects.Count == 0) //resets everything if no gameobjects are selected
@@ -365,7 +383,7 @@ public class IconMaker : EditorWindow
     /// updates the drop down display for the clips you can play
     /// </summary>
     /// <param name="evt"></param>
-    void UpdateController()
+    public void UpdateController()
     {
         if (animationController.value && anim)
         {
@@ -596,7 +614,7 @@ public class IconMaker : EditorWindow
     /// </summary>
     /// <param name="objectToCheck"></param>
     /// <returns></returns>
-    bool AnimationCheck(GameObject objectToCheck)
+    public bool AnimationCheck(GameObject objectToCheck)
     {
         if(objectToCheck.GetComponent<Animator>())
         {
@@ -779,12 +797,17 @@ public class IconMaker : EditorWindow
         UnityEditor.PopupWindow.Show(popup.worldBound, iconPopup);
     }
 
+    public void NextIconCaller(ClickEvent evt, int amount)
+    {
+        ProgressIcon(amount);
+    }
+
     /// <summary>
     /// shows the next icon in the Gameobject Selection array
     /// </summary>
     /// <param name="evt"></param>
     /// <param name="amount"></param>
-    public void NextIcon(ClickEvent evt, int amount)
+    public void ProgressIcon(int amount)
     {
         CheckApplyAll(selectedObjectREF);
         currentObjectIndex += amount;
@@ -845,9 +868,10 @@ public class IconMaker : EditorWindow
                         yield return new WaitUntil(() => generationReady);
                     }
                     IconGeneration(evt);
+
                     if (currentObjectIndex != iconObjects.Count)
                     {
-                        NextIcon(evt, 1);
+                        NextIconCaller(evt, 1);
                     }
                 }
                 UnityEditor.PopupWindow.Show(popup.worldBound, iconPopup);

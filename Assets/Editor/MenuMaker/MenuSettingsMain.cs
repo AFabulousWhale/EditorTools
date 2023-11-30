@@ -13,6 +13,7 @@ public class MenuSettingsMain
     public Label buttonCountDisplay, buttonCountDisplayExtra;
 
     public MenuSettingsMain currentSetting;
+    public MenuMaker menuMaker;
 
     /// <summary>
     /// setting up varaible values and finding the elements within the editor window root
