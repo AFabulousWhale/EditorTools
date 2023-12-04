@@ -15,5 +15,9 @@ MonoBehaviour:
   rowCount: 10
   buttonStyle: button-style
   buttons:
-  - icon: {fileID: 21300000, guid: e498fe064b2c51e479291b40b25fd2af, type: 3}
+  - icon: {fileID: 21300000, guid: c4b47d0c07981f14492cd8408c5fc231, type: 3}
     name: button0
+  - icon: {fileID: 21300000, guid: d5dc0738a80d3d748915d57909f5f23a, type: 3}
+    name: button1
+  - icon: {fileID: 21300000, guid: 504f1454995d55b48b680ee6e28c2910, type: 3}
+    name: button2

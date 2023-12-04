@@ -14,22 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectDatabase:
   - cost: 0
-    prefab: {fileID: 1082716667173560, guid: 54903e98cb7da0047ab01d65018f1d4f, type: 3}
-    icon: {fileID: 21300000, guid: d3d9e5c6aa34f8f40a5b279a02fe40be, type: 3}
-    name: aa
-  - cost: 0
-    prefab: {fileID: 1661159153272266, guid: f9a80be48a6254344b5f885cfff4bbb0, type: 3}
-    icon: {fileID: 21300000, guid: be55f59022eb1c94db254cac019596ff, type: 3}
-    name: SM_Prop_Advertisement_Pillar_01
-  - cost: 0
-    prefab: {fileID: 1544087946698594, guid: 7b5c2f4e59886dc448873ceb3e338f97, type: 3}
-    icon: {fileID: 21300000, guid: 96d1dff6b294d2f4597da0071bd98e69, type: 3}
-    name: SM_Prop_AirConditioningGrid_01
-  - cost: 0
-    prefab: {fileID: 1054224122226918, guid: 481f055a844be084eae4eefebdd9a49f, type: 3}
-    icon: {fileID: 21300000, guid: bbe92d47c3ecd14429c4844fb2791c3a, type: 3}
-    name: SM_Prop_AirConditioningUnit_01
-  - cost: 0
-    prefab: {fileID: 1124226066067632, guid: c4de1579d85603245ab9ad2a03114629, type: 3}
-    icon: {fileID: 21300000, guid: e812308693ae90441b6f4ae1b05b2698, type: 3}
-    name: SM_Prop_AirConditioningUnit_02
+    prefab: {fileID: 1915812027166286, guid: 71043590938610d4784abb3b88fa0d80, type: 3}
+    icon: {fileID: 21300000, guid: d6eae21f75c9da0408f77fc4ffa47c71, type: 3}
+    name: SM_Wep_Ammo_Rifle_01

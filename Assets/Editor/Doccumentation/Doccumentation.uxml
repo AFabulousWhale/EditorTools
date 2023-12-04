@@ -1,19 +1,31 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Editor/Doccumentation/Doccumentation.uss?fileID=7433441132597879392&amp;guid=07ca57cc593bc4c468e20644e63fca0d&amp;type=3#Doccumentation" />
-    <ui:VisualElement style="flex-grow: 1; flex-direction: row; height: 604px;">
-        <ui:VisualElement name="Left-Panel" style="flex-grow: 0; background-color: rgba(56, 56, 56, 0); width: 30%;">
-            <ui:Button text="Icon Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IconMaker" class="tab-section" />
-            <ui:Button text="Menu Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MenuMaker" class="tab-section" />
-            <ui:Button text="Database Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DatabaseMaker" class="tab-section" />
+    <ui:VisualElement style="flex-grow: 1; flex-direction: column; height: 604px;">
+        <ui:VisualElement name="Top-Panel" style="flex-grow: 0; background-color: rgb(40, 40, 40); width: auto; flex-direction: row; align-self: auto; height: auto; flex-shrink: 1; align-items: center; justify-content: flex-start;">
+            <ui:Button text="Home Page" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MainMenu" class="tab-section" style="width: 25%;" />
+            <ui:Button text="Icon Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IconMaker" class="tab-section" style="width: 25%;" />
+            <ui:Button text="Menu Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MenuMaker" class="tab-section" style="width: 25%;" />
+            <ui:Button text="Database Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DatabaseMaker" class="tab-section" style="width: 25%;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Right-Panel" style="flex-grow: 1; display: flex;">
-            <ui:VisualElement name="Image" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Editor/Doccumentation/Gifs/spritesheet.gif?fileID=21300000&amp;guid=0eb5123166f691443a55b9fb5d3aded1&amp;type=3#spritesheet&apos;); margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px; height: 213px;" />
-            <ui:VisualElement name="Arrows" style="flex-grow: 1; flex-direction: row; height: 11px;">
-                <ui:VisualElement name="LArrow" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&amp;guid=9ef36b0b1379b134c8eb8dfabe4665b2&amp;type=3#arrow-left@2x&apos;);" />
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Text" style="font-size: 36px; -unity-text-align: upper-center; text-overflow: clip; white-space: normal;" />
-                <ui:VisualElement name="RArrow" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-1087164816274819069&amp;guid=9ef36b0b1379b134c8eb8dfabe4665b2&amp;type=3#arrow-right@2x&apos;);" />
+        <ui:VisualElement name="Middle-Panel" style="flex-grow: 0; background-color: rgb(40, 40, 40); width: auto; flex-direction: row; align-self: auto; height: auto; flex-shrink: 1; align-items: center; justify-content: flex-start; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; display: flex; visibility: hidden;">
+            <ui:Button text="Basic Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="FirstSection" class="tab-section" style="width: 25%;" />
+            <ui:Button text="Animation Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SecondSection" class="tab-section" style="width: 25%;" />
+            <ui:Button text="Multiple Icons" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ThirdSection" class="tab-section" style="width: 25%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Bottom-Panel" style="flex-grow: 1; display: flex; width: auto;">
+            <ui:VisualElement name="Main" style="flex-grow: 1; display: none;">
+                <ui:ProgressBar value="0" name="Progress" low-value="1" style="margin-top: 10px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                <ui:VisualElement name="Image" style="flex-grow: 0; background-image: url(&apos;project://database/Assets/Editor/Doccumentation/Gifs/Menu/Set/Total/frame_00_delay-0.13s.gif?fileID=21300000&amp;guid=e68ab5fff8b47e4479b7e5cd7906a641&amp;type=3#frame_00_delay-0.13s&apos;); margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px; height: 80%; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-left-color: rgba(0, 0, 0, 0.69); border-right-color: rgba(0, 0, 0, 0.69); border-top-color: rgba(0, 0, 0, 0.69); border-bottom-color: rgba(0, 0, 0, 0.69); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-background-scale-mode: scale-to-fit;" />
+                <ui:VisualElement name="Arrows" style="flex-grow: 0; flex-direction: row; height: auto; justify-content: center;">
+                    <ui:VisualElement name="LArrow" style="flex-grow: 0; background-image: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&amp;guid=9ef36b0b1379b134c8eb8dfabe4665b2&amp;type=3#arrow-left@2x&apos;); width: 20px; height: 20px; justify-content: flex-start; align-self: center; display: flex; visibility: hidden;" />
+                    <ui:Label tabindex="-1" text="Position" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SectionTitle" style="font-size: 18px; -unity-text-align: middle-center; text-overflow: clip; white-space: normal; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 35%; -unity-font-style: bold;" />
+                    <ui:VisualElement name="RArrow" style="flex-grow: 0; background-image: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-1087164816274819069&amp;guid=9ef36b0b1379b134c8eb8dfabe4665b2&amp;type=3#arrow-right@2x&apos;); width: 20px; height: 20px; align-self: center;" />
+                </ui:VisualElement>
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Description" style="-unity-text-align: upper-center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; white-space: normal;" />
             </ui:VisualElement>
-            <ui:ProgressBar value="0" name="Progress" />
+            <ui:VisualElement name="Start" style="flex-grow: 1; display: flex;">
+                <ui:Label tabindex="-1" text="Welcome To" parse-escape-sequences="true" display-tooltip-when-elided="true" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; -unity-font-style: bold; -unity-text-align: upper-center; font-size: 24px;" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
