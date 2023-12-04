@@ -773,3 +773,28 @@ MonoBehaviour:
     animationController: {fileID: 0}
     animName: 
     animFrame: 0
+  - name: Character_Android_Female_01
+    prefab: {fileID: 1675277247628234, guid: c071869dabd01174ba88c8f43a9cc9be, type: 3}
+    spriteName: Character_Android_Female_01
+    posOffset: {x: 0, y: -0.09}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0.11
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 9100000, guid: 7d05b9f214b59c242924642c971ea4c4,
+      type: 2}
+    animName: BasicMotions@Cheer01
+    animFrame: 0.286
+  - name: Position
+    prefab: {fileID: 0}
+    spriteName: 
+    posOffset: {x: 0, y: -0.09}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0
+    BGColor:
+      serializedVersion: 2
+      rgba: 0
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0

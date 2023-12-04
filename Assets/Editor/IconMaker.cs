@@ -475,6 +475,14 @@ public class IconMaker : EditorWindow
             }
         }
     }
+
+    public void OnInspectorUpdate()
+    {
+        if (cam != null)
+        {
+            cameraView.style.backgroundImage = GetRenderTexture();
+        }
+    }
     #endregion End - Animation Settings
 
     #region Icon Setup

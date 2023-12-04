@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Editor/Doccumentation/Doccumentation.uss?fileID=7433441132597879392&amp;guid=07ca57cc593bc4c468e20644e63fca0d&amp;type=3#Doccumentation" />
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; height: 604px;">
+        <ui:VisualElement name="Left-Panel" style="flex-grow: 0; background-color: rgba(56, 56, 56, 0); width: 30%;">
+            <ui:Button text="Icon Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IconMaker" class="tab-section" />
+            <ui:Button text="Menu Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MenuMaker" class="tab-section" />
+            <ui:Button text="Database Maker" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DatabaseMaker" class="tab-section" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right-Panel" style="flex-grow: 1; display: flex;">
+            <ui:VisualElement name="Image" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Editor/Doccumentation/Gifs/spritesheet.gif?fileID=21300000&amp;guid=0eb5123166f691443a55b9fb5d3aded1&amp;type=3#spritesheet&apos;); margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px; height: 213px;" />
+            <ui:VisualElement name="Arrows" style="flex-grow: 1; flex-direction: row; height: 11px;">
+                <ui:VisualElement name="LArrow" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&amp;guid=9ef36b0b1379b134c8eb8dfabe4665b2&amp;type=3#arrow-left@2x&apos;);" />
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Text" style="font-size: 36px; -unity-text-align: upper-center; text-overflow: clip; white-space: normal;" />
+                <ui:VisualElement name="RArrow" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=-1087164816274819069&amp;guid=9ef36b0b1379b134c8eb8dfabe4665b2&amp;type=3#arrow-right@2x&apos;);" />
+            </ui:VisualElement>
+            <ui:ProgressBar value="0" name="Progress" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

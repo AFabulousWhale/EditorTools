@@ -96,4 +96,9 @@ public class EditorWindowMain : EditorWindow
         iconMaker.OnGUI();
         menuMaker.OnGUI();
     }
+
+    void OnInspectorUpdate()
+    {
+        iconMaker.OnInspectorUpdate();
+    }
 }

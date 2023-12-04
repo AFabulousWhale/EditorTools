@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 17658e0b204cf1942bd0d80481c56dfb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - tree: {fileID: 9197481963319205126, guid: 03c046a5b95e91542b3f085bc61a45e4, type: 3}
+  - VideoPlayerGO: {fileID: 2867408342666466591, guid: e75814d37b8e39e46bbeba5c8a701592,
+      type: 3}
+  - rend: {fileID: 8400000, guid: 14ef83167c1cad04bbf12eb9bf8fcad2, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
