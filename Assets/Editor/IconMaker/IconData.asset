@@ -1111,3 +1111,111 @@ MonoBehaviour:
     animationController: {fileID: 0}
     animName: 
     animFrame: 0
+  - name: SM_Prop_Bottle_01
+    prefab: {fileID: 1095600368890880, guid: 21e1771c27a671147b188378c5b1da6e, type: 3}
+    spriteName: SM_Prop_Bottle_01
+    posOffset: {x: 0, y: -0.08}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0.48
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Sign_Ad_19
+    prefab: {fileID: 1717660596662996, guid: 3acfb70a95b23e7479df8fc81248a5c0, type: 3}
+    spriteName: SM_Sign_Ad_19
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Sign_Ad_20
+    prefab: {fileID: 1480970401439394, guid: 1495c81c19a2e654584e02b52d89cce9, type: 3}
+    spriteName: SM_Sign_Ad_20
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Sign_Ad_14
+    prefab: {fileID: 1441326850303092, guid: 418cf332268c941478526f77b130a40d, type: 3}
+    spriteName: SM_Sign_Ad_14
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Sign_Ad_29
+    prefab: {fileID: 1759157314590748, guid: 0a906f5ecd6c85a4a9e88c5cfb9b3342, type: 3}
+    spriteName: SM_Sign_Ad_29
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Sign_Ad_30
+    prefab: {fileID: 1953466011515394, guid: fd3bb278568bfd2498d9ccbc73113504, type: 3}
+    spriteName: SM_Sign_Ad_30
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Sign_Ad_31
+    prefab: {fileID: 1108377079784158, guid: 4f5cff1dda2e3f04b9c2181537d0599a, type: 3}
+    spriteName: SM_Sign_Ad_31
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Sign_Ad_32
+    prefab: {fileID: 1441626531945358, guid: 723e499b127f6b546968673b244a7caa, type: 3}
+    spriteName: SM_Sign_Ad_32
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Sign_Ad_13
+    prefab: {fileID: 1403202643120034, guid: ace9aade42ef57f4d99670bf0bcb54bc, type: 3}
+    spriteName: 
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0
+    BGColor:
+      serializedVersion: 2
+      rgba: 0
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0

@@ -63,20 +63,43 @@ public class Doccumentation : EditorWindow
         "This is an example of a menu created using a database and its icons!"
     };
     #endregion Menus
+    #region Database
+    List<string> newDBSettings = new() { "Default Database", "Creating Database" };
+    List<string> newDBDesc = new()
+    {
+        "If you don't have any objects selected then you can't create a database.",
+        "Once selecting objects, you will be given the option to add these items to a scriptable object database."
+    };
+    List<string> existingDBSettings = new() { "Already In Database", "Add To Database", "Clear Database" };
+    List<string> existingDBDesc = new()
+    {
+        "If an object is already within the database, you will get a message saying they won't be re-added. This doesn't affect icons, just the object itself.",
+        "The Database can be changed, and more objects can be added at any time.",
+        "You can also clear the database of all of its content."
+    };
+    List<string> DBIconSettings = new() { "Creation Icons", "Selected Object Icons", "All Icons", "Database Icons" };
+    List<string> DBIconDesc = new()
+    {
+        "When first creating the database, you can also create icons with the objects, that can be customised in the 'Icon Maker' TAB.",
+        "When adding new items to the database, you can choose to generate icons only for the new objects you are adding",
+        "Or you can generate icons for everything within the database AND the new objects.",
+        "Even if objects aren't selected, you can choose to generate icons for the objects currently within the database!"
+    };
+    #endregion Database
     List<List<string>> iconStages => new() { iconBasicSettings, iconAnimationSettings, multipleIconSettings };
     List<List<string>> menuStages => new() { setMenuSettings, selectionMenuSettings, DBMenuSettings};
-    List<List<string>> DBStages;
+    List<List<string>> DBStages => new() { newDBSettings, existingDBSettings, DBIconSettings };
 
     List<List<string>> iconDesc => new() { iconBasicDesc, iconAnimDesc, iconMultiDesc };
     List<List<string>> menuDesc => new() { setMenuDesc, selectionMenuDesc, DBMenuDesc };
-    List<List<string>> DBDesc => new() { };
+    List<List<string>> DBDesc => new() { newDBDesc, existingDBDesc, DBIconDesc};
 
     List<string> iconSubTabNames = new() { "Basic Settings", "Animation Settings", "Multiple Icons"};
     List<string> menuSubTabNames = new() { "Set Values", "Selected Objects", "Database"};
-    List<string> DBSubTabNames = new() { };
+    List<string> DBSubTabNames = new() { "New Database", "Existing Database", "Icons"};
 
-    List<List<List<string>>> stages => new() { iconStages, menuStages};
-    List<List<List<string>>> descriptions => new() { iconDesc, menuDesc};
+    List<List<List<string>>> stages => new() { iconStages, menuStages, DBStages};
+    List<List<List<string>>> descriptions => new() { iconDesc, menuDesc, DBDesc};
 
     List<List<string>> subTabNames => new() { iconSubTabNames, menuSubTabNames, DBSubTabNames };
     #endregion Menu Setup
@@ -87,8 +110,8 @@ public class Doccumentation : EditorWindow
 
     ProgressBar progress;
 
-    Button iconMaker, menuMaker, DBMaker;
-    List<Button> tabs => new() { iconMaker, menuMaker, DBMaker };
+    Button homePage, iconMaker, menuMaker, DBMaker;
+    List<Button> tabs => new() { homePage, iconMaker, menuMaker, DBMaker };
     List<Button> subTabList => new() { subTab1, subTab2, subTab3 };
     string tabClass = "selectedTAB";
 
@@ -117,6 +140,7 @@ public class Doccumentation : EditorWindow
         VisualElement UXMLFile = tree.Instantiate();
         root.Add(UXMLFile);
 
+        homePage = root.Q<Button>("MainMenu");
         iconMaker = root.Q<Button>("IconMaker");
         menuMaker = root.Q<Button>("MenuMaker");
         DBMaker = root.Q<Button>("DatabaseMaker");
@@ -146,6 +170,7 @@ public class Doccumentation : EditorWindow
         rArrow.RegisterCallback<ClickEvent, int>(ProgressStage, 1);
         lArrow.RegisterCallback<ClickEvent, int>(ProgressStage, -1);
 
+        homePage.RegisterCallback<ClickEvent>(MainMenu);
         iconMaker.RegisterCallback<ClickEvent, string>(ChangeMakerType, "icon");
         menuMaker.RegisterCallback<ClickEvent, string>(ChangeMakerType, "menu");
         DBMaker.RegisterCallback<ClickEvent, string>(ChangeMakerType, "DB");
@@ -156,7 +181,6 @@ public class Doccumentation : EditorWindow
         {
             sprite = (GameObject)PrefabUtility.InstantiatePrefab(VideoPlayerGO);
             anim = sprite.GetComponent<Animator>();
-            anim.Play($"{stages[selectedMenuIndex][selectedSubMenuIndex][(int)progress.value]}");
         }
     }
 
@@ -185,13 +209,13 @@ public class Doccumentation : EditorWindow
             switch (type)
             {
                 case "icon":
-                    SelectTab(0);
-                    break;
-                case "menu":
                     SelectTab(1);
                     break;
-                case "DB":
+                case "menu":
                     SelectTab(2);
+                    break;
+                case "DB":
+                    SelectTab(3);
                     break;
             }
             progress.title = $"1/{progress.highValue}";
@@ -201,6 +225,23 @@ public class Doccumentation : EditorWindow
         }
     }
 
+    /// <summary>
+    /// called by the homepage button to show the start "menu"
+    /// </summary>
+    /// <param name="evt"></param>
+    void MainMenu(ClickEvent evt)
+    {
+        mainDisplay.style.display = DisplayStyle.None;
+        startDisplay.style.display = DisplayStyle.Flex;
+        subTabs.style.visibility = Visibility.Hidden;
+        SelectTab(0);
+    }
+
+    /// <summary>
+    /// changed which sub menu is selected and shows the correct image/description
+    /// </summary>
+    /// <param name="evt"></param>
+    /// <param name="index"></param>
     void ChangeSubMenu(ClickEvent evt, int index)
     {
         SelectSubTab(index);
@@ -209,6 +250,11 @@ public class Doccumentation : EditorWindow
         ArrowChange();
     }
 
+    /// <summary>
+    /// progresses the stage in each sub menu
+    /// </summary>
+    /// <param name="evt"></param>
+    /// <param name="value"></param>
     void ProgressStage(ClickEvent evt, int value)
     {
         progress.value = progress.value + value;
@@ -217,6 +263,9 @@ public class Doccumentation : EditorWindow
         ChangeDisplayValues();
     }
 
+    /// <summary>
+    /// decides what arrows need to be shown/hidden
+    /// </summary>
     void ArrowChange()
     {
         lArrow.style.visibility = Visibility.Visible;
@@ -231,17 +280,24 @@ public class Doccumentation : EditorWindow
             rArrow.style.visibility = Visibility.Hidden;
         }
     }
+
+    /// <summary>
+    /// changed what's displayed and updates the progress bar
+    /// </summary>
     void ChangeDisplayValues()
     {
-        subTab1.text = subTabNames[selectedMenuIndex][0];
-        subTab2.text = subTabNames[selectedMenuIndex][1];
-        subTab3.text = subTabNames[selectedMenuIndex][2];
+        Debug.Log(selectedMenuIndex);
+        int currentTab = (selectedMenuIndex - 1);
+        Debug.Log(currentTab);
+        subTab1.text = subTabNames[currentTab][0];
+        subTab2.text = subTabNames[currentTab][1];
+        subTab3.text = subTabNames[currentTab][2];
 
-        progress.highValue = stages[selectedMenuIndex][selectedSubMenuIndex].Count;
-        Desc.text = $"{descriptions[selectedMenuIndex][selectedSubMenuIndex][((int)progress.value - 1)]}";
-        sectionTitle.text = $"{stages[selectedMenuIndex][selectedSubMenuIndex][((int)progress.value - 1)]}";
+        progress.highValue = stages[currentTab][selectedSubMenuIndex].Count;
+        Desc.text = $"{descriptions[currentTab][selectedSubMenuIndex][((int)progress.value - 1)]}";
+        sectionTitle.text = $"{stages[currentTab][selectedSubMenuIndex][((int)progress.value - 1)]}";
         progress.title = $"{progress.value}/{progress.highValue}";
-        anim.Play($"{stages[selectedMenuIndex][selectedSubMenuIndex][((int)progress.value - 1)]}"); //plays the specified animation name "for the gif to play"
+        anim.Play($"{stages[currentTab][selectedSubMenuIndex][((int)progress.value - 1)]}"); //plays the specified animation name "for the gif to play"
     }
 
     void DeselectTab()
@@ -255,7 +311,10 @@ public class Doccumentation : EditorWindow
         selectedMenuIndex = index;
 
         tabs[selectedMenuIndex].AddToClassList(tabClass); //this tab is selected
-        ChangeDisplayValues();
+        if (index != 0)
+        {
+            ChangeDisplayValues();
+        }
     }
 
     void DeselectSubTab()

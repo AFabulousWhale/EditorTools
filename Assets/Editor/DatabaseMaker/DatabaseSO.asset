@@ -14,6 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectDatabase:
   - cost: 0
-    prefab: {fileID: 1915812027166286, guid: 71043590938610d4784abb3b88fa0d80, type: 3}
-    icon: {fileID: 21300000, guid: d6eae21f75c9da0408f77fc4ffa47c71, type: 3}
-    name: SM_Wep_Ammo_Rifle_01
+    prefab: {fileID: 1074479540433288, guid: 29483335d76a5fe4a83ef35542fcaa38, type: 3}
+    icon: {fileID: 21300000, guid: 6c7bab7dce3879a4b9cc7088a2f68c19, type: 3}
+    name: SM_Sign_Ad_02
+  - cost: 0
+    prefab: {fileID: 1596237586132462, guid: 98bbf55310f51aa428423eb2b05530d9, type: 3}
+    icon: {fileID: 21300000, guid: 32f483ba3d95381408b4f000affe5790, type: 3}
+    name: SM_Sign_Ad_03
+  - cost: 0
+    prefab: {fileID: 1025787435600640, guid: aa2a1e2d744d70245877eeff0ac0d9c2, type: 3}
+    icon: {fileID: 21300000, guid: 0f921ca8881045f42b3a78d9db7c370e, type: 3}
+    name: SM_Sign_Ad_04
+  - cost: 0
+    prefab: {fileID: 1686579414691458, guid: 00ac70221b65ac845b5fe74dac83db9a, type: 3}
+    icon: {fileID: 21300000, guid: ec06fe4228e721843aa15450568333cb, type: 3}
+    name: SM_Sign_Ad_05
+  - cost: 0
+    prefab: {fileID: 1759157314590748, guid: 0a906f5ecd6c85a4a9e88c5cfb9b3342, type: 3}
+    icon: {fileID: 21300000, guid: aa348408cf9d7d742aef302946279e51, type: 3}
+    name: SM_Sign_Ad_29
+  - cost: 0
+    prefab: {fileID: 1953466011515394, guid: fd3bb278568bfd2498d9ccbc73113504, type: 3}
+    icon: {fileID: 21300000, guid: 28d8c9e03f1d7d94da96df1c06f5dad2, type: 3}
+    name: SM_Sign_Ad_30
+  - cost: 0
+    prefab: {fileID: 1108377079784158, guid: 4f5cff1dda2e3f04b9c2181537d0599a, type: 3}
+    icon: {fileID: 21300000, guid: 7619862828a068a4ca2c9635794f7735, type: 3}
+    name: SM_Sign_Ad_31
+  - cost: 0
+    prefab: {fileID: 1441626531945358, guid: 723e499b127f6b546968673b244a7caa, type: 3}
+    icon: {fileID: 21300000, guid: 8d2b729cf144af24ba2f962745717133, type: 3}
+    name: SM_Sign_Ad_32
+  - cost: 0
+    prefab: {fileID: 1403202643120034, guid: ace9aade42ef57f4d99670bf0bcb54bc, type: 3}
+    icon: {fileID: 21300000, guid: 11ac561977c50e940b88c8dea0206c56, type: 3}
+    name: SM_Sign_Ad_13

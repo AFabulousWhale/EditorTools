@@ -92,37 +92,7 @@ public class DatabaseMaker : EditorWindow
         {
             GOLabels.style.display = DisplayStyle.None;
             buttonsVE.style.display = DisplayStyle.Flex;
-
-            //loops through the selection of gameobjects to see if any are already in the database
-            inDBCount = 0;
-            foreach (var item in Selection.gameObjects)
-            {
-                if(AlreadyInDatabaseCheck(item))
-                {
-                    inDBCount++;
-                }
-            }
-
-            if(inDBCount > 0) //showing if objects are already in database, if the only object selected is then it can't be added to the database again
-            {
-                inDBLabel.style.display = DisplayStyle.Flex;
-                if (Selection.gameObjects.Length != inDBCount)
-                {
-                    inDBLabel.text = $"{inDBCount} selected objects are already in the database and won't be re-added";
-                    generateDBIconsToggle.style.display = DisplayStyle.Flex;
-                    generateEveryIconToggle.style.display = DisplayStyle.Flex;
-                    generateNewIconsToggle.style.display = DisplayStyle.Flex;
-                    buttonsVE.style.display = DisplayStyle.Flex;
-                }
-                else
-                {
-                    inDBLabel.text = $"The objects you have selected is already in the database, please select another";
-                    generateDBIconsToggle.style.display = DisplayStyle.None;
-                    generateEveryIconToggle.style.display = DisplayStyle.None;
-                    generateNewIconsToggle.style.display = DisplayStyle.None;
-                    buttonsVE.style.display = DisplayStyle.None;
-                }
-            }
+            AlreadyAdded();
         }
         else
         {
@@ -130,6 +100,40 @@ public class DatabaseMaker : EditorWindow
             generateDBIconsToggle.style.display = DisplayStyle.None;
             generateEveryIconToggle.style.display = DisplayStyle.None;
             generateNewIconsToggle.style.display = DisplayStyle.None;
+        }
+    }
+
+    void AlreadyAdded()
+    {
+        //loops through the selection of gameobjects to see if any are already in the database
+        inDBCount = 0;
+        foreach (var item in Selection.gameObjects)
+        {
+            if (AlreadyInDatabaseCheck(item))
+            {
+                inDBCount++;
+            }
+        }
+
+        if (inDBCount > 0) //showing if objects are already in database, if the only object selected is then it can't be added to the database again
+        {
+            inDBLabel.style.display = DisplayStyle.Flex;
+            if (Selection.gameObjects.Length != inDBCount)
+            {
+                inDBLabel.text = $"{inDBCount} selected objects are already in the database and won't be re-added";
+                generateDBIconsToggle.style.display = DisplayStyle.Flex;
+                generateEveryIconToggle.style.display = DisplayStyle.Flex;
+                generateNewIconsToggle.style.display = DisplayStyle.Flex;
+                buttonsVE.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                inDBLabel.text = $"The objects you have selected is already in the database, please select another";
+                generateDBIconsToggle.style.display = DisplayStyle.None;
+                generateEveryIconToggle.style.display = DisplayStyle.None;
+                generateNewIconsToggle.style.display = DisplayStyle.None;
+                buttonsVE.style.display = DisplayStyle.None;
+            }
         }
     }
     #endregion End - Editor Window Setup
@@ -156,6 +160,7 @@ public class DatabaseMaker : EditorWindow
         switch (ValidDatabaseCheck())
         {
             case true: //if it's a new database and the selected objects are over 0 then can create a database from objects
+                buttonsVE.style.display = DisplayStyle.Flex;
                 addToDatabase.style.display = DisplayStyle.None;
                 clearDatabase.style.display = DisplayStyle.None;
                 GOLabels.style.display = DisplayStyle.Flex;
@@ -176,6 +181,7 @@ public class DatabaseMaker : EditorWindow
                 }
                 break;
             case false: //if database already exists
+                buttonsVE.style.display = DisplayStyle.Flex;
                 newDatabase.style.display = DisplayStyle.None;
                 clearDatabase.style.display = DisplayStyle.Flex;
 
@@ -462,6 +468,7 @@ public class DatabaseMaker : EditorWindow
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         ButtonShowing();
+        AlreadyAdded();
     }
 
     /// <summary>
