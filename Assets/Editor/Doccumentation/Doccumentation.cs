@@ -15,6 +15,12 @@ public class Doccumentation : EditorWindow
     #region Menu Setup
 
     #region Icons
+    List<string> iconMain = new() { "Icons Save Location", "Icons File Name" };
+    List<string> iconMainDesc = new()
+    {
+        "The save location is the folder in which the icons will be saved to.",
+        "The name of each icon can be changed, or by pressing the 'Auto Name' button, it resets to the name of the selected object."
+    };
     List<string> iconBasicSettings = new() { "Position", "Rotation", "Scale", "Background" };
     List<string> iconBasicDesc = new()
     {
@@ -41,6 +47,16 @@ public class Doccumentation : EditorWindow
     };
     #endregion Icons
     #region Menus
+    List<string> menuMain = new() { "Menu Save Location", "Menu File Name", "Menu Type", "UI Document", "Visual Element", "Button Style" };
+    List<string> menuMainDesc = new()
+    {
+        "The Save Location is where the scriptable object containing the menu information will be saved.",
+        "The file name is the name of this scriptable object, meaning you can create multiple menus.",
+        "The Menu Type is what controls the total amount of buttons, such as selected objects or a slider.",
+        "The UI Document, is attached to a game object within the scene, and is the UI document that the menu you create will be attached to.",
+        "The Name of the Visual Element is the name of the element within the UI that you want your menu to attach to, for example you could produce a popup menu within your UI.",
+        "The button style name is the style sheet name you want to use to determin the look of the buttons."
+    };
     List<string> setMenuSettings = new() { "Total Button Count", "Set Value Menu Example"};
     List<string> setMenuDesc = new()
     {
@@ -64,6 +80,12 @@ public class Doccumentation : EditorWindow
     };
     #endregion Menus
     #region Database
+    List<string> DBMain = new() { "Database Save Location", "Database Name" };
+    List<string> DBMainDesc = new()
+    {
+        "The save location is where the database, holding all of your objects and their potential icons, will be saved.",
+        "This is the name of the Database you are currently creating."
+    };
     List<string> newDBSettings = new() { "Default Database", "Creating Database" };
     List<string> newDBDesc = new()
     {
@@ -86,17 +108,17 @@ public class Doccumentation : EditorWindow
         "Even if objects aren't selected, you can choose to generate icons for the objects currently within the database!"
     };
     #endregion Database
-    List<List<string>> iconStages => new() { iconBasicSettings, iconAnimationSettings, multipleIconSettings };
-    List<List<string>> menuStages => new() { setMenuSettings, selectionMenuSettings, DBMenuSettings};
-    List<List<string>> DBStages => new() { newDBSettings, existingDBSettings, DBIconSettings };
+    List<List<string>> iconStages => new() { iconMain, iconBasicSettings, iconAnimationSettings, multipleIconSettings };
+    List<List<string>> menuStages => new() { menuMain, setMenuSettings, selectionMenuSettings, DBMenuSettings};
+    List<List<string>> DBStages => new() { DBMain, newDBSettings, existingDBSettings, DBIconSettings };
 
-    List<List<string>> iconDesc => new() { iconBasicDesc, iconAnimDesc, iconMultiDesc };
-    List<List<string>> menuDesc => new() { setMenuDesc, selectionMenuDesc, DBMenuDesc };
-    List<List<string>> DBDesc => new() { newDBDesc, existingDBDesc, DBIconDesc};
+    List<List<string>> iconDesc => new() { iconMainDesc, iconBasicDesc, iconAnimDesc, iconMultiDesc };
+    List<List<string>> menuDesc => new() { menuMainDesc, setMenuDesc, selectionMenuDesc, DBMenuDesc };
+    List<List<string>> DBDesc => new() { DBMainDesc, newDBDesc, existingDBDesc, DBIconDesc};
 
-    List<string> iconSubTabNames = new() { "Basic Settings", "Animation Settings", "Multiple Icons"};
-    List<string> menuSubTabNames = new() { "Set Values", "Selected Objects", "Database"};
-    List<string> DBSubTabNames = new() { "New Database", "Existing Database", "Icons"};
+    List<string> iconSubTabNames = new() { "Icon Setup", "Basic Settings", "Animation Settings", "Multiple Icons"};
+    List<string> menuSubTabNames = new() { "Menu Setup", "Set Values", "Selected Objects", "Database"};
+    List<string> DBSubTabNames = new() { "Database Setup", "New Database", "Existing Database", "Icons"};
 
     List<List<List<string>>> stages => new() { iconStages, menuStages, DBStages};
     List<List<List<string>>> descriptions => new() { iconDesc, menuDesc, DBDesc};
@@ -112,12 +134,12 @@ public class Doccumentation : EditorWindow
 
     Button homePage, iconMaker, menuMaker, DBMaker;
     List<Button> tabs => new() { homePage, iconMaker, menuMaker, DBMaker };
-    List<Button> subTabList => new() { subTab1, subTab2, subTab3 };
+    List<Button> subTabList => new() { subTab1, subTab2, subTab3, subTab4 };
     string tabClass = "selectedTAB";
 
     VisualElement lArrow, rArrow;
     VisualElement imageDisplay, subTabs;
-    Button subTab1, subTab2, subTab3;
+    Button subTab1, subTab2, subTab3, subTab4;
     Label sectionTitle, Desc;
 
     Animator anim;
@@ -125,11 +147,14 @@ public class Doccumentation : EditorWindow
 
     VisualElement mainDisplay, startDisplay;
 
-    [MenuItem("Window/UI Toolkit/Doccumentation")]
+    [MenuItem("Editor Tools//Documentation")]
     public static void ShowExample()
     {
         Doccumentation wnd = GetWindow<Doccumentation>();
-        wnd.titleContent = new GUIContent("Doccumentation");
+        wnd.titleContent = new GUIContent("Documentation");
+
+        wnd.maxSize = new Vector2(423f, 442f);
+        wnd.minSize = wnd.maxSize;
     }
 
     public void CreateGUI()
@@ -162,10 +187,12 @@ public class Doccumentation : EditorWindow
         subTab1 = root.Q<Button>("FirstSection");
         subTab2 = root.Q<Button>("SecondSection");
         subTab3 = root.Q<Button>("ThirdSection");
+        subTab4 = root.Q<Button>("FourthSection");
 
         subTab1.RegisterCallback<ClickEvent, int>(ChangeSubMenu, 0);
         subTab2.RegisterCallback<ClickEvent, int>(ChangeSubMenu, 1);
         subTab3.RegisterCallback<ClickEvent, int>(ChangeSubMenu, 2);
+        subTab4.RegisterCallback<ClickEvent, int>(ChangeSubMenu, 3);
 
         rArrow.RegisterCallback<ClickEvent, int>(ProgressStage, 1);
         lArrow.RegisterCallback<ClickEvent, int>(ProgressStage, -1);
@@ -186,7 +213,7 @@ public class Doccumentation : EditorWindow
 
     private void OnInspectorUpdate()
     {
-        if (anim != null)
+        if (anim != null) //constantly reloads the image to display the animation of the gif playing
         {
             anim.Update(Time.deltaTime);
             imageDisplay.style.backgroundImage = Background.FromSprite(sprite.GetComponent<SpriteRenderer>().sprite);

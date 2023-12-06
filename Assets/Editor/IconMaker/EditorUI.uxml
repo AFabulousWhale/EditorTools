@@ -47,7 +47,7 @@
                         <ui:VisualElement name="BasicSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row;">
                             <ui:VisualElement name="Values" style="flex-grow: 1; flex-direction: row; width: 79%;">
                                 <ui:VisualElement name="Fields" class="field-VE" style="flex-grow: 1; width: 100%; margin-left: 10px; margin-right: 0; flex-shrink: 1;">
-                                    <ui:Vector3Field name="PosIconChanges" usage-hints="None" label="Position Offset" class="IconStyle" style="margin-left: 4px; margin-right: 4px; flex-grow: 1; flex-shrink: 0;" />
+                                    <ui:Vector2Field label="Position Offset" name="PosIconChanges" class="IconStyle" style="margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
                                     <ui:Vector3Field name="RotIconChanges" label="Rotation Offset" class="IconStyle" style="margin-right: 4px; margin-left: 4px; flex-shrink: 0; flex-grow: 1; font-size: 14px;" />
                                     <ui:FloatField value="1" name="ScaleIconChanges" label="Scale Multiplier" class="IconStyle" style="margin-right: 4px; margin-left: 4px; flex-shrink: 0; flex-grow: 1; font-size: 14px;" />
                                     <uie:ColorField value="#FFFFFF00" name="BGIconChanges" show-alpha="true" show-eye-dropper="true" label="Background Color" class="IconStyle" style="margin-left: 4px; margin-right: 4px; flex-shrink: 0; flex-grow: 1; flex-direction: row; width: auto; margin-top: 4px; margin-bottom: 4px; font-size: 14px;" />
@@ -149,8 +149,8 @@
                     <ui:VisualElement name="FileSettings" style="flex-grow: 1; margin-right: 12px; margin-left: 7px; flex-direction: row;">
                         <ui:VisualElement name="Values" style="flex-grow: 1; flex-direction: row; width: 79%;">
                             <ui:VisualElement name="DatabaseFileSettings" class="field-VE" style="flex-grow: 1; width: 100%; margin-left: 10px; margin-right: 0; flex-shrink: 1;">
-                                <ui:TextField picking-mode="Ignore" value="DatabaseSO" name="DatabaseName" label="Name Of Database" class="text-style IconStyle" style="flex-grow: 0; flex-shrink: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
                                 <ui:TextField picking-mode="Ignore" label="Save Location" value="Assets/Editor/DatabaseMaker" name="DBSaveLocation" class="IconStyle" style="margin-right: 4px; margin-left: 4px; flex-grow: 1; width: auto;" />
+                                <ui:TextField picking-mode="Ignore" value="DatabaseSO" name="DatabaseName" label="Name Of Database" class="text-style IconStyle" style="flex-grow: 0; flex-shrink: 0; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>

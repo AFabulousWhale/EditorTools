@@ -26,7 +26,9 @@ public class EditorWindowMain : EditorWindow
     [MenuItem("Editor Tools/Icon, Menu and Database Creator")]
     public static void ShowExample()
     {
-        EditorWindow window = GetWindow<EditorWindowMain>("Icon, Menu and Database Creator"); //shows the icon window if not already displayed
+        EditorWindow wnd = GetWindow<EditorWindowMain>("Icon, Menu and Database Creator"); //shows the icon window if not already displayed
+        wnd.maxSize = new Vector2(559f, 706f);
+        wnd.minSize = wnd.maxSize;
     }
 
     public void CreateGUI()

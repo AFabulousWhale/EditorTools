@@ -509,7 +509,7 @@ public class IconMaker : EditorWindow
     {
         DestroyImmediate(spawnedObject);
         spawnedObject = (GameObject)PrefabUtility.InstantiatePrefab(iconObjects[currentObjectIndex]); //spawns in a new object in from of the camera for the camera to render
-        spawnedObject.transform.position = pos.defaultValue;
+        spawnedObject.transform.position = new Vector3(-500, 0, 6);
         spawnedObject.transform.rotation = Quaternion.Euler(rot.defaultValue);
         spawnedObject.transform.localScale = new Vector3(scale.defaultValue, scale.defaultValue, scale.defaultValue);
         spawnedObject.name = "IconObjectPrefab";
@@ -572,7 +572,7 @@ public class IconMaker : EditorWindow
     void ResetData()
     {
         rot.field.value = new Vector3(0, 0, 0);
-        pos.field.value = new Vector3(0, 0, 0);
+        pos.field.value = new Vector2(0, 0);
         scale.field.value = 1;
         BG.field.value = new Color32(255, 255, 255, 0);
         ResetNameField();

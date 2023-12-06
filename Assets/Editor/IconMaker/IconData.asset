@@ -64,7 +64,7 @@ MonoBehaviour:
   - name: SM_Icon_Lightning
     prefab: {fileID: 1637145686889916, guid: 9baabcdff9f934e4f93321577d7858e5, type: 3}
     spriteName: SM_Icon_Lightning
-    posOffset: {x: 0, y: 0}
+    posOffset: {x: -0.01, y: 0}
     rotOffset: {x: 0, y: 0, z: 0}
     scaleOffset: 1
     BGColor:
@@ -484,13 +484,13 @@ MonoBehaviour:
     animFrame: 0
   - name: SM_Icon_Spanners
     prefab: {fileID: 1656211306410468, guid: 32713ca9df7701740ab3e8677019c63a, type: 3}
-    spriteName: SM_Icon_Spanners
-    posOffset: {x: 0, y: 0}
+    spriteName: 
+    posOffset: {x: -0.02, y: -0.01}
     rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 1
+    scaleOffset: 0
     BGColor:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 0
     animationController: {fileID: 0}
     animName: 
     animFrame: 0
@@ -1068,7 +1068,7 @@ MonoBehaviour:
     spriteName: SM_Prop_Bank_Door_01
     posOffset: {x: 0, y: 0}
     rotOffset: {x: 0, y: 0, z: 0}
-    scaleOffset: 1
+    scaleOffset: -0.17
     BGColor:
       serializedVersion: 2
       rgba: 16777215
@@ -1216,6 +1216,90 @@ MonoBehaviour:
     BGColor:
       serializedVersion: 2
       rgba: 0
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Prop_Cage_02
+    prefab: {fileID: 1028058750505042, guid: e1c74edc720c4d74cbd5375f4ff3525f, type: 3}
+    spriteName: SM_Prop_Cage_02
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0.37
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Prop_Door_05
+    prefab: {fileID: 1614123765330388, guid: eb2cbf3d027e36349836843fcefb51bb, type: 3}
+    spriteName: SM_Prop_Door_05
+    posOffset: {x: 5.25, y: 3.5}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0.31
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Prop_JarFull_01
+    prefab: {fileID: 1531698821763358, guid: a75c2bc785b116240bedc72e0d023963, type: 3}
+    spriteName: SM_Prop_JarFull_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 0.58
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Prop_Paper_Lantern_01
+    prefab: {fileID: 1723357088762678, guid: d71ef14e65958ca4cb303cb74b7c1f3d, type: 3}
+    spriteName: SM_Prop_Paper_Lantern_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Prop_Plant_Vase_01
+    prefab: {fileID: 1632137552401554, guid: 7de50d5a3b0d1c74bb541e18a0d30f0a, type: 3}
+    spriteName: SM_Prop_Plant_Vase_01
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Prop_Plant_Vase_02
+    prefab: {fileID: 1051544926179456, guid: 92cda5d9d5371c6458ab649792ba5e60, type: 3}
+    spriteName: SM_Prop_Plant_Vase_02
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
+    animationController: {fileID: 0}
+    animName: 
+    animFrame: 0
+  - name: SM_Prop_Pipes_02
+    prefab: {fileID: 1226519306786090, guid: 4a04ac585c75e09439142d5def79782b, type: 3}
+    spriteName: SM_Prop_Pipes_02
+    posOffset: {x: 0, y: 0}
+    rotOffset: {x: 0, y: 0, z: 0}
+    scaleOffset: 1
+    BGColor:
+      serializedVersion: 2
+      rgba: 16777215
     animationController: {fileID: 0}
     animName: 
     animFrame: 0

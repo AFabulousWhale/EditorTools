@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Position : Vector3Type
+public class Position : Vector2Type
 { 
     public Position(VisualElement root)
     {
         elementName = "Pos";
-        defaultValue = new(-500, 0, 6);
+        defaultValue = new(-500, 0);
         this.root = root;
         base.currentSetting = this;
         base.Init();
@@ -16,7 +16,7 @@ public class Position : Vector3Type
 
     public override void ChangeSingleValues(GameObject objectToUpdate)
     {
-        objectToUpdate.transform.position = defaultValue + field.value;
+        objectToUpdate.transform.position = new Vector3((-500 + field.value.x), (0 + field.value.y), 6);
         base.ChangeSingleValues(objectToUpdate);
     }
 

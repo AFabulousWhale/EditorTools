@@ -15,9 +15,103 @@ MonoBehaviour:
   rowCount: 10
   buttonStyle: button-style
   buttons:
-  - icon: {fileID: 21300000, guid: c4b47d0c07981f14492cd8408c5fc231, type: 3}
+  - icon: {fileID: 0}
     name: button0
-  - icon: {fileID: 21300000, guid: d5dc0738a80d3d748915d57909f5f23a, type: 3}
+  - icon: {fileID: 0}
     name: button1
-  - icon: {fileID: 21300000, guid: 504f1454995d55b48b680ee6e28c2910, type: 3}
+  - icon: {fileID: 0}
     name: button2
+  - icon: {fileID: 0}
+    name: button3
+  - icon: {fileID: 0}
+    name: button4
+  - icon: {fileID: 0}
+    name: button5
+  - icon: {fileID: 0}
+    name: button6
+  - icon: {fileID: 0}
+    name: button7
+  - icon: {fileID: 0}
+    name: button8
+  - icon: {fileID: 0}
+    name: button9
+  - icon: {fileID: 0}
+    name: button10
+  - icon: {fileID: 0}
+    name: button11
+  - icon: {fileID: 0}
+    name: button12
+  - icon: {fileID: 0}
+    name: button13
+  - icon: {fileID: 0}
+    name: button14
+  - icon: {fileID: 0}
+    name: button15
+  - icon: {fileID: 0}
+    name: button16
+  - icon: {fileID: 0}
+    name: button17
+  - icon: {fileID: 0}
+    name: button18
+  - icon: {fileID: 0}
+    name: button19
+  - icon: {fileID: 0}
+    name: button20
+  - icon: {fileID: 0}
+    name: button21
+  - icon: {fileID: 0}
+    name: button22
+  - icon: {fileID: 0}
+    name: button23
+  - icon: {fileID: 0}
+    name: button24
+  - icon: {fileID: 0}
+    name: button25
+  - icon: {fileID: 0}
+    name: button26
+  - icon: {fileID: 0}
+    name: button27
+  - icon: {fileID: 0}
+    name: button28
+  - icon: {fileID: 0}
+    name: button29
+  - icon: {fileID: 0}
+    name: button30
+  - icon: {fileID: 0}
+    name: button31
+  - icon: {fileID: 0}
+    name: button32
+  - icon: {fileID: 0}
+    name: button33
+  - icon: {fileID: 0}
+    name: button34
+  - icon: {fileID: 0}
+    name: button35
+  - icon: {fileID: 0}
+    name: button36
+  - icon: {fileID: 0}
+    name: button37
+  - icon: {fileID: 0}
+    name: button38
+  - icon: {fileID: 0}
+    name: button39
+  - icon: {fileID: 0}
+    name: button40
+  - icon: {fileID: 0}
+    name: button41
+  - icon: {fileID: 0}
+    name: button42
+  - icon: {fileID: 0}
+    name: button43
+  - icon: {fileID: 0}
+    name: button44
+  - icon: {fileID: 0}
+    name: button45
+  - icon: {fileID: 0}
+    name: button46
+  - icon: {fileID: 0}
+    name: button47
+  - icon: {fileID: 0}
+    name: button48
+  - icon: {fileID: 0}
+    name: button49
